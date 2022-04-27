@@ -49,6 +49,9 @@
     <TypeScriptCompile Include="Scripts\controllers\WarningController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\WindowLevelCustomController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\SeriesLayoutController.ts" />
+    <Content Include="Config\22\config.js" />
+    <Content Include="Config\22\index.html" />
+    <Content Include="Config\config.js" />
     <Content Include="css\ag-grid.css" />
     <Content Include="css\bootstrap-colorpicker.css" />
     <Content Include="css\codemirror.css" />
