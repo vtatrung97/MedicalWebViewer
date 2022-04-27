@@ -1,0 +1,133 @@
+﻿<div class="modal-content">
+   <div class="modal-header">
+      <h3 class="modal-title">{{'DIALOGS_EXPORT_TITLE' | translate}}</h3>
+   </div>
+   <div class="divider"></div>
+   <div class="modal-body">
+       <div class="form-horizontal" style="padding: 0 15px !important">
+
+
+
+
+
+           <table style="table-layout:fixed; width:98%">
+               <tr>
+                   <td style="padding-top:1px; width:120px"><label for="format" class="sendLinkLabels">Selection:</label></td>
+                   <td style="padding-top:1px;">
+                       <select id="formats" class="item-margin form-control form-control-lg ng-pristine ng-valid ng-touched" ng-model="source.exportType"
+                               ng-options="exportSource.displayName for exportSource in exportSources"></select>
+                   </td>
+
+               </tr>
+
+               <tr ng-show="source.exportType.value!='PrintCurrentView'">
+
+                   <td style="padding-top:1px; width:120px"><label for="format" class="sendLinkLabels">Format:</label></td>
+                   <td style="padding-top:1px;">
+                       <select id="formats" class="item-margin form-control form-control-lg ng-pristine ng-valid ng-touched" ng-model="source.selectedFormat"
+                               ng-options="format.DisplayName for format in exportFormats" ng-disabled="source.exportType.value=='PrintCurrentView'"></select>
+                   </td>
+               </tr>
+
+
+               <tr ng-show="source.exportType.value!='PrintCurrentView' && (source.selectedFormat.Format=='Jpeg' || source.selectedFormat.Format=='Cmp')">
+                   <td style="padding-top:1px; width:120px"><label for="format" class="sendLinkLabels">Compression:</label></td>
+                   <td style="padding-top:1px;">
+                       <select id="quality" class="item-margin form-control form-control-lg ng-pristine ng-valid ng-touched" ng-disabled="source.selectedFormat.Format!='Jpeg' && source.selectedFormat.Format!='Cmp'" ng-model="exportOptions.ImageCompression">
+                           <option value=0>Low</option>
+                           <option value=1>Medium</option>
+                           <option value=2>High</option>
+                       </select>
+                   </td>
+               </tr>
+
+               <tr ng-show="source.exportType.value!='PrintCurrentView' && source.selectedFormat.Format=='DicomGray'">
+                   <td style="padding-top:1px; width:120px"><label for="format" class="sendLinkLabels">Zip Type:</label></td>
+                   <td style="padding-top:1px;">
+                       <select id="quality" class="item-margin form-control form-control-lg ng-pristine ng-valid ng-touched" ng-model="exportOptions.ZipType">
+                           <option value="dcz">Dcz (Password Protected)</option>
+                           <option value="zip">Zip</option>
+                       </select>
+                   </td>
+               </tr>
+
+               <tr ng-show="source.exportType.value!='PrintCurrentView' && source.selectedFormat.Format=='DicomGray' && exportOptions.ZipType=='dcz'">
+                   <td style="padding-top:1px; width:120px"><label for="format" class="sendLinkLabels">Password:</label></td>
+                   <td style="padding-top:1px;">
+                       <input type="password" class="item-margin text-field" id="dczPassword" ng-class="{'ng-invalid': exportOptions.ZipType=='dcz'}" ng-required="exportOptions.ZipType=='dcz'"
+                              ng-model="exportOptions.DczPassword" />
+                   </td>
+               </tr>
+
+
+               <tr>
+                   <td style="padding-top:1px; width:120px"></td>
+                   <td style="padding-top:1px;" ng-show="isDICOM()">
+
+                       <label class="checkBoxLabelContainer" style="padding-left: 35px;">
+                           Create DICOMDIR
+                           <input type="checkbox" checked="checked" id="createDicomDir" ng-disabled="source.selectedFormat.Format!='DicomGray' " ng-model="exportOptions.CreateDICOMDIR"> <span class="checkmark"></span>
+                       </label>
+
+                   </td>
+               </tr>
+
+               <tr>
+                   <td style="padding-top:1px; width:120px"></td>
+                   <td style="padding-top:1px;" ng-show="source.exportType.value!='PrintCurrentView' && source.selectedFormat.Format !='DicomGray'">
+                       <label class="checkBoxLabelContainer" style="padding-left: 35px;">Burn Saved Annotations<input type="checkbox" checked="checked" id="burnAnnotations" ng-disabled="source.exportType.value=='PrintCurrentView'" ng-model="exportOptions.BurnAnnotations"> <span class="checkmark"></span></label>
+                   </td>
+               </tr>
+
+               <tr>
+                   <td style="padding-top:1px; width:120px"></td>
+                   <td style="padding-top:1px;" ng-show="source.exportType.value!='PrintCurrentView' && source.selectedFormat.Format !='DicomGray'">
+                       <label class="checkBoxLabelContainer" style="padding-left: 35px;">Burn Displayed Annotations<input type="checkbox" checked="checked" id="burnAnnotations" ng-model="exportOptions.BurnDisplayedAnnotations"> <span class="checkmark"></span></label>
+                   </td>
+               </tr>
+
+
+               <tr>
+                   <td style="padding-top:1px; width:120px"></td>
+                   <td style="padding-top:1px;" ng-show="isDICOM()">
+
+                       <label class="checkBoxLabelContainer" style="padding-left: 35px;">
+                           Anonymize
+                           <input type="checkbox" checked="checked" id="anonymize" ng-disabled="source.selectedFormat.Format!='DicomGray'" ng-model="exportOptions.Anonymize"> <span class="checkmark"></span>
+                       </label>
+
+                   </td>
+               </tr>
+
+               <tr>
+                   <td style="padding-top:1px; width:120px"></td>
+                   <td style="padding-top:1px;" ng-show="isDICOM()">
+
+                       <label class="checkBoxLabelContainer" style="padding-left: 35px;">
+                           Include Viewer
+                           <input type="checkbox" checked="checked" id="includeViewer" ng-disabled="source.selectedFormat.Format!='DicomGray'" ng-model="exportOptions.IncludeViewer"> <span class="checkmark"></span>
+                       </label>
+
+                   </td>
+               </tr>
+
+               <tr>
+                   <td style="padding-top:1px; width:120px"></td>
+                   <td style="padding-top:1px;" ng-show="isPDF()">
+                       <label class="checkBoxLabelContainer" style="padding-left: 35px;">
+                           Print patient Info
+                           <input type="checkbox" checked="checked" value="" id="patientInfo" ng-disabled="source.selectedFormat.Format!='PDF'" ng-model="exportOptions.PatientInfo"> <span class="checkmark"></span>
+                       </label>
+
+                   </td>
+               </tr>
+           </table>
+
+       </div>
+   </div>
+   <div class="divider"></div>
+   <div class="modal-footer">
+      <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="exportOptions.ZipType=='dcz' && !passwordValid()"></a>
+      <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
+   </div>
+</div>

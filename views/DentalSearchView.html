@@ -1,0 +1,61 @@
+﻿<form>
+    <fieldset>
+
+        <div class="row search-row" style="margin-left:0px !important;margin-right:0px">
+
+                <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'ID' | translate}}:" class="search-text-field first-search-text-field" ng-model="queryOptions.PatientsOptions.PatientID" typeahead="patient for patient in patientids($viewValue)" ng-enter="doSearch()" />
+
+                <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'NAME' | translate}}:" class="search-text-field" ng-model="queryOptions.PatientsOptions.PatientName" typeahead="patient for patient in patientNames($viewValue)" ng-enter="doSearch()" />
+
+                <input id="seriesDescription" name="seriesDescription" type="text" placeholder="{{ 'SERIES' | translate }}&nbsp;{{ 'DESCRIPTION' | translate}}:" class="search-text-field" ng-model="queryOptions.SeriesOptions.SeriesDescription" ng-enter="doSearch()" />
+
+                <input id="seriesFrom" name="seriesFrom" type="date"  placeholder="Series Date From" onfocusout="this.placeholder='Series Date From'" ng-mousedown="textFocused($event)" class="search-text-field" ng-model="queryOptions.SeriesOptions.SeriesDateStart" ng-enter="doSearch()" />
+
+                <input id="seriesTo" name="seriesTo" type="date" placeholder="Series Date To" onfocusout="this.placeholder='Series Date To'"  ng-mousedown="textFocused($event)" class="search-text-field" ng-model="queryOptions.SeriesOptions.SeriesDateEnd" ng-enter="doSearch()" />
+
+            <div class="button-container">
+                <button id="searchButton" class="btn" ng-click="doSearch()" translate="SEARCH"></button>
+                <button id="clearButton" class="btn" ng-click="clear()" translate="CLEAR"></button>
+            </div>
+        </div>
+
+        <div class="pacsQueryRow" ng-include src="showPacsQuery ? 'views/PacsQuery.html' : null"></div>
+    </fieldset>
+</form>
+<div >
+<div elheightresize="" class="vbox boxItem">
+        <div style="height:50%">
+            <div id="searchResults" ag-grid="gridOptions" class="ag-fresh" style="height:{{toolbar_height}}">
+            </div>
+            <div style="height:40px" ng-show="showPagingTool()">
+                <div style="display:flex;height: 100%; user-select:none">
+                    <div class="page-summary-panel">
+                        <button class="page-control" type="button" ng-click="firstPage()" ng-disabled="cantPageBackward()" disabled="disabled"><div class="first-triangle"><div class="first-bar"></div></div></button>
+                        <button class="page-control" type="button" ng-click="previousPage()" ng-disabled="cantPageBackward()" disabled="disabled"><div class="first-triangle prev-triangle"></div></button>
+
+                        <!--<input type="number" ng-model="grid.options.paginationCurrentPage" min="1" max="2" required="" class="ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required">-->
+
+                        <span style="margin-top:auto;margin-bottom: auto;">
+                            <span class="page-control-text">Page</span>
+                            <span class="page-control-text page-summary-panel-number">{{patient_data_page_from}}</span>
+                            <span class="page-control-text">of</span>
+                            <span class="page-control-text page-summary-panel-number">{{patient_data_page_total}}</span>
+                        </span>
+
+                        <button class="page-control" type="button" ng-click="nextPage()" ng-disabled="cantPageForward()"><div class="last-triangle next-triangle"></div></button>
+                        <button class="page-control" type="button" ng-click="lastPage()" ng-disabled="cantPageForward()"><div class="last-triangle"><div class="last-bar"></div></div></button>
+
+                    </div>
+                    <span class="page-summary-panel">
+                        <span class="page-control-text page-summary-panel-number">{{patient_data_from}}</span>
+                        <span class="page-control-text">to</span>
+                        <span class="page-control-text page-summary-panel-number">{{patient_data_to}}</span>
+                        <span class="page-control-text">of</span>
+                        <span class="page-control-text page-summary-panel-number">{{patient_data_total}}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div id="searchResultsSeries" ag-grid="gridOptionsSeries" class="ag-fresh" ></div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿<!--6 digit authentication. window-->
+<div class="verify" ng-show="enableTwoFactorsAuthentication">
+
+    <div class="authenticaion-box">
+        <div style="font-family:sans-serif; font-size: 250%; text-align:center;margin-bottom:50px;letter-spacing: 11px; white-space: nowrap;">SECURITY CODE</div>
+        <label style="text-align: justify">Please enter the 6 characters code that has been sent to {{phoneNumber}}  <p class="sendAgainLink" ng-click="sendAgain()" style="text-decoration:underline;cursor:pointer">Send Again</p></label>
+
+        <table style="border: solid #5f7998;border-width:3px;">
+            <tr ng-show="supportsTouch">
+                <td><input type="text" class="symbolBox alternateSymbolInput" id="sixSymbolText" oncontextmenu="event.stopPropagation(); return true;" style="width:420px;" maxlength="6" /></td>
+            </tr>
+            <tr ng-show="!supportsTouch" style="background-color:black">
+                <td style="position:relative"><div contenteditable="true" tabindex="1" class="symbolBox" id="key1" oncontextmenu="event.stopPropagation(); return true;" ng-paste="pasteHandler($event)" ng-keypress="keyPressed($event)" ng-keydown="keyDown($event)"></div></td>
+                <td style="position:relative"><div contenteditable="true" class="symbolBox" style="width:24px"><div id="sep1" ng-click="sepclick($event)">-</div></div></td>
+                <td style="position:relative"><div contenteditable="true" tabindex="2" class="symbolBox" id="key2" oncontextmenu="event.stopPropagation(); return true;" ng-paste="pasteHandler($event)" ng-keypress="keyPressed($event)" ng-keydown="keyDown($event)"></div></td>
+                <td style="position:relative"><div contenteditable="true" class="symbolBox" style="width:24px"><div id="sep2" ng-click="sepclick($event)">-</div></div></td>
+                <td style="position:relative"><div contenteditable="true" tabindex="3" class="symbolBox" id="key3" oncontextmenu="event.stopPropagation(); return true;" ng-paste="pasteHandler($event)" ng-keypress="keyPressed($event)" ng-keydown="keyDown($event)"></div></td>
+                <td style="position:relative"><div contenteditable="true" class="symbolBox" style="width:24px"><div id="sep3" ng-click="sepclick($event)">-</div></div></td>
+                <td style="position:relative"><div contenteditable="true" tabindex="4" class="symbolBox" id="key4" oncontextmenu="event.stopPropagation(); return true;" ng-paste="pasteHandler($event)" ng-keypress="keyPressed($event)" ng-keydown="keyDown($event)"></div></td>
+                <td style="position:relative"><div contenteditable="true" class="symbolBox" style="width:24px"><div id="sep4" ng-click="sepclick($event)">-</div></div></td>
+                <td style="position:relative"><div contenteditable="true" tabindex="5" class="symbolBox" id="key5" oncontextmenu="event.stopPropagation(); return true;" ng-paste="pasteHandler($event)" ng-keypress="keyPressed($event)" ng-keydown="keyDown($event)"></div></td>
+                <td style="position:relative"><div contenteditable="true" class="symbolBox" style="width:24px"><div id="sep5" ng-click="sepclick($event)">-</div></div></td>
+                <td style="position:relative"><div contenteditable="true" tabindex="6" class="symbolBox" id="key6" oncontextmenu="event.stopPropagation(); return true;" ng-paste="pasteHandler($event)" ng-keypress="keyPressed($event)" ng-keydown="keyDown($event)"></div></td>
+            </tr>
+        </table>
+        <label style="margin-bottom:20px; color:#ff7f4d">{{codeInvalid}}</label>
+        <div id="tempAuthenticaionLoading" style="visibility:hidden;" class="dot-flashing"> </div>
+        <input id="tempAuthenticaionSubmitButton" class="login-button" type="button" ng-click="sixDigitSubmit()" value="Submit" />
+    </div>
+</div>
+
+<div style="position: absolute; width: 100%; height: auto;margin-top:20px" ng-show="!enableTwoFactorsAuthentication">
+    <label style="margin-top:20px; font-size: 50px; align-items: center; text-align: center; width: 100%; color:#f00">{{urlInvalid}}</label>
+</div>
+
+    <div class="container" ng-show="!verifyURLScreen">
+    <form class="login-holder" name="form" novalidate shake-that submitted="submitted" ng-submit="submit()">
+        <div>
+            <div class="logo">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="dividerAnimation"></div>
+
+            <div class="alert alert-danger" ng-hide="!Invalid">
+                {{authenticationMessage}}
+            </div>
+            <div>
+                <div ng-class="{'has-error': form.username.$invalid && submitted}">
+                    <input type="text"
+                           class="text-field login-username"
+                           id="username"
+                           name="username"
+                           placeholder="User Name"
+                           ng-model="Username"
+                           required
+                           width="inherit"
+                           autofocus
+                           autocomplete="off">
+                </div>
+                <div ng-class="{'has-error': form.password.$invalid && submitted}">
+                    <input type="password"
+                           class="text-field"
+                           id="password"
+                           name="password"
+                           placeholder="Password"
+                           ng-model="Password"
+                           required>
+                </div>
+                <div>
+
+                    <!--fancy checkBox-->
+                    <label class="checkBoxLabelContainer checkBoxTextFormat">Remember Me <input type="checkbox" checked="checked" ng-model="RememberMe"> <span class="checkmark"></span></label>
+
+
+                </div> <br />
+                <div class="stage">
+                    <div id="loginloading" style="visibility:hidden;" class="dot-flashing">
+                    </div>
+                    <input id="submitButton" type="submit" value="Login " class="login-button" />
+                </div>
+                <div class="divider" ng-show="shibbolethIsEnabled||oktaIsEnabled"></div>
+                <div class="checkbox-label">
+                    <table style="width:100%; ">
+                        <tr class="hover-item" ng-show="oktaIsEnabled">
+                            <td ng-click="loginOkta();$event.stopPropagation(); $event.preventDefault();" style="width:75px; ">
+                                <button type="button" class="cine-controls okta-button" data-toggle="tooltip" title="Okta"><i></i></button>
+                            </td>
+                            <td ng-click="loginOkta();$event.stopPropagation(); $event.preventDefault();">
+                                <button class="cine-controls" style="width:100%; text-align:left; color:#AEAEAE">Sign in with Okta</button>
+                            </td>
+                            <td data-toggle="tooltip" title="Learn about Okta sign-in" ng-show="oktaHelpIsEnabled">
+                                <button class="cine-controls help-button" ng-click="loginOktaHelp();  $event.stopPropagation(); $event.preventDefault();"></button>
+                            </td>
+                        </tr>
+                        <tr ng-show="shibbolethIsEnabled">
+                            <td style="width:75px; border-bottom: 1px solid #2f333d;"></td>
+                            <td style="border-bottom: 1px solid #2f333d;"></td>
+                            <td style="border-bottom: 1px solid #2f333d;"></td>
+                        </tr>
+                        <tr class="hover-item" ng-show="shibbolethIsEnabled">
+                            <td ng-click="loginShibboleth();$event.stopPropagation(); $event.preventDefault();" style="width:75px; ">
+                                <button type="button" class="cine-controls shibboleth-button" data-toggle="tooltip" title="Shibboleth"><i></i></button>
+                            </td>
+                            <td ng-click="loginShibboleth();$event.stopPropagation(); $event.preventDefault();">
+                                <button class="cine-controls" style="width:100%; text-align:left; color:#AEAEAE">Sign in with Shibboleth</button>
+                            </td>
+                            <td data-toggle="tooltip" title="Learn about Shibboleth sign-in">
+                                <button class="cine-controls help-button" ng-click="loginShibbolethHelp();  $event.stopPropagation(); $event.preventDefault();"></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="alert alert-success message" ng-show="showMessage">Well done!</div>
+    <div class="copyright-holder">
+        <p class="copyright">Copyright (c) 1991-{{currentYear}} LEAD Technologies, Inc.</p>
+        <!--&copy; {{Copyright}}-->
+    </div>
+</div>

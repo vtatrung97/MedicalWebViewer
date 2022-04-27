@@ -1,0 +1,28 @@
+﻿<form class="form">
+    <fieldset>
+        <div class="row search-row" style="margin-left: 0px !important; margin-right: 0px !important">
+                <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'ID' | translate}}:" class="search-text-field first-search-text-field" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.PatientsOptions.PatientID"
+                    typeahead="patient for patient in patientids($viewValue)" ng-enter="doSearch()" />
+                <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'NAME' | translate}}:" class="search-text-field" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.PatientsOptions.PatientName"
+                    typeahead="patient for patient in patientNames($viewValue)" ng-enter="doSearch()" />
+                <input type="text" placeholder="Accession #:" class="search-text-field mobile-accession" id="accessionNum" name="accessionNum" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.AccessionNumber"
+                    ng-enter="doSearch()" />
+                <input type="text" placeholder="Referring Dr. Name:" class="search-text-field" id="referringDr" name="referringDr" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.ReferDoctorName"
+                    ng-enter="doSearch()" />
+                <input type="text" placeholder=" Modality:" class="search-text-field mobile-modality" id="modality" name="modality" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.ModalitiesInStudy"
+                    ng-enter="doSearch()" />
+            
+            <div class="button-container">
+                <button style="color:#9099A0 !important" id="searchButton" class="btn" ng-click="doSearch()" translate="SEARCH"></button>
+                <button style="color:#9099A0 !important" id="clearButton" class="btn" ng-click="clear()" translate="CLEAR"></button>
+            </div>
+        </div>
+    <div  class="pacsQueryRow"  ng-include src="showPacsQuery ? 'views/PacsQuery.html' : null"></div>
+    </fieldset>
+    
+</form>
+
+<div elheightresize="" class="vbox boxItem">
+    <div id="searchResults" ag-grid="gridOptions" class="ag-fresh" style="height:50%"></div>
+    <div id="searchResultsSeries" ag-grid="gridOptionsSeries" class="ag-fresh" style="height:50%"></div>
+</div>

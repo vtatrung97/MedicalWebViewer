@@ -1,0 +1,34 @@
+﻿<form name="updateRoleForm" ng-controller="Controllers.UpdateRoleController" novalidate>
+    <div class="form-group">
+        <label for="username">{{'ROLE' | translate}}:</label>
+        <div class="input-group">
+            <!--<select id="formats" class="item-margin form-control form-control-lg ng-pristine ng-valid ng-touched" ng-model="role"
+            ng-options="r.Name for r in roles" ng-change="roleChanged(user)" force-blur></select>
+
+    <select class="study-dropdown w-dropdown" ng-model="role" ng-options="r.Name for r in roles" force-blur ng-change="roleChanged(role)"></select>-->
+
+            <div style="position:relative">
+                <input class="text-field" ng-keydown="keyPressed($event)" ng-change="textChanged($event)" ng-click="textChanged($event)" ng-model="roleName">
+                <div style="max-height:230px; overflow:auto; visibility:hidden; position:absolute; width:100%; z-index:99; box-shadow: black 5px 3px 9px 0px;" id="userNameList">
+                </div>
+            </div>
+
+            <span class="input-group-btn">
+                <!--<a class="btn btn-default" type="button" ng-click="deleteRole(role)" ng-disabled="role==null || role.Name=='Administrators'"><i class="fa fa-minus"></i></a>-->
+                <button style="margin-left:20px;" class="cine-controls minus-button" ng-click="deleteRole(role)" ng-disabled="role==null || role.Name=='Administrators'"></button>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="availablePermissions" >{{'PERMISSIONS' | translate}}:</label>
+        <div style="height:150px; overflow:auto">
+        <div class="checkbox" id="availablePermissions" ng-repeat="permission in permissions" ng-show="!disableFeaturesForFDA(permission.Name)">
+            <label ng-show="!disableFeaturesForFDA(permission.Name)">
+                <input type='checkbox' value="{{permission.Name}}" check-list='selectedPermissions' ng-disabled="role==null || role.Name=='Administrators' || disableFeaturesForFDA(permission.Name)" >
+            {{permission.FriendlyName}}
+            </label>
+            </div>
+        </div>
+    </div>   
+    <a class="form-btn" ng-disabled="role==null || role.Name=='Administrators'" ng-click="updateRole(role, selectedPermissions)">Update</a>
+</form>

@@ -1,0 +1,52 @@
+<div style="width:100%; height:100%; font-size:12px; font-family:arial; background-color:#353942; color:#9099A0;">
+
+    <div class="modelssDialog-titlebar">
+        <label style="line-height: 43px; font-weight: 500; font-size: 18px; padding-left: 20px; text-transform:uppercase; font-family:sans-serif">Remap Toolbox</label>
+        <span class="closeModlessDialog">&times;</span>
+    </div>
+
+    <div style="display:flex;height:calc(100% - 136px);padding-right: 20px;padding-top: 20px">
+
+        <div style="height:100%; width:40px;display:inline-block">
+            <label style="display:block; padding-right:5px; height:50%;text-align:right"></label>
+            <div style="display:flex; height:50%">
+                <label style="display: flex; padding-right:5px; width:100%;align-items: flex-end; justify-content: flex-end; padding-right:5px"></label>
+            </div>
+        </div>
+        <div style="width:calc(100% - 52px);height:calc(100% - 2px);display:inline-block;">
+            <canvas id="histogram" class="histogram" style="width:100%; height:100%"></canvas>
+        </div>
+
+    </div>
+
+    <div style="width:auto; height:auto; display:flex; margin-left:40px">
+
+        <div style="width:100%; display:block;margin-right:35px">
+            <label class="windowLevelRange" style="float:left;">-32000</label>
+            <label class="windowLevelRange" style="float:right;">65535</label>
+        </div>
+
+    </div>
+
+
+    <div style="width:100%; height:auto; display:flex">
+
+        <div style="display:block;margin-left:auto; margin-right:auto;padding-top:4px">
+            <label>Width</label>
+            <input type="number" min="1" max"65535" class="modelssDialog-input" id="width">
+            <label>Center</label>
+            <input type="number" min="-65535" max="65535" class="modelssDialog-input" id="center">
+            <input id="resetWindowLevel" type="submit" value="Reset" style="border: 1px solid #5ba2f3; background-color:transparent; margin-left:20px" />
+        </div>
+
+    </div>  
+
+    <div style="width:100%; height:auto; display:flex">
+
+        <div style="display:block;margin-left:auto; margin-right:auto;padding-top:4px">
+            <label class="checkBoxLabelContainer" style="display:inline;padding-left: 30px; line-height: 1.8;">Inverted<input type="checkbox" checked="checked" id="invertLUT"> <span class="checkmark"></span></label>
+        </div>
+
+
+    </div>
+</div>

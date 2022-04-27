@@ -1,0 +1,117 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">{{'DIALOGS_SENDURL_FILE_TITLE' | translate}}</h3>
+</div>
+<div class="divider"></div>
+<div class="modal-body" ng-keydown="keyDown($event)">
+
+    <table style="table-layout:fixed; width:auto">
+        <tr>
+            <td style="width:120px"><label class="sendLinkLabels">First Name:</label></td>
+            <td><label ng-bind="firstName" style="display:block"></label></td>
+        </tr>
+        <tr>
+            <td style="width:120px"><label class="sendLinkLabels" style="display:block">Last Name:</label></td>
+            <td><label ng-bind="lastName" style="display:block"></label></td>
+        </tr>
+        <tr>
+            <td style="width:120px"><label class="sendLinkLabels">Date of Birth: </label></td>
+            <td><label ng-bind="dateOfBirth" style="display:block"></label></td>
+        </tr>
+        <tr>
+            <td style="width:120px"><label class="sendLinkLabels" style="display:block">Sex:</label></td>
+            <td><label ng-bind="sex" style="display:block"></label></td>
+        </tr>
+        <tr>
+            <td style="width:120px"><label class="sendLinkLabels">PatientID: </label></td>
+            <td><label ng-bind="patientID" style="display:block">something</label></td>
+        </tr>
+
+    </table>
+
+
+    <div class="divider"></div>
+
+
+    <table style="table-layout:fixed; width:98%">
+        <!--<tr>
+        <td style="padding-top:10px; width:150px"><label class="sendLinkLabels">Destination:</label></td>
+
+        <td style="padding-top:5px;">
+            <label class="radioLabelContainer" style="margin-right:50px">In Network E-mail<input name="destination" type="radio" ng-checked="InNetwork"> <span class="radioCheckmark"></span></label>
+            <label class="radioLabelContainer">External Recepient<input type="radio" name="destination" ng-checked="External"> <span class="radioCheckmark"></span></label>
+        </td>
+    </tr>-->
+        <tr>
+            <td style="padding-top:1px; width:120px"><label class="sendLinkLabels">E-Mail:</label></td>
+            <td style="padding-top:1px;"><input type="text" class="text-field" id="email" name="email" ng-change="textChanged()" placeholder="E-Mail" ng-model="parameters.Email" required width="inherit" tabindex="0" autofocus="true" autocomplete="off"></td>
+        </tr>
+        <tr>
+            <td style="padding-top:1px; width:120px"><label class="sendLinkLabels">Confirm E-Mail:</label></td>
+            <td style="padding-top:1px;"><input type="text" class="text-field" id="confirmEmail" name="confirmEmail" placeholder="Confirm E-Mail" ng-model="parameters.confirmEmail" ng-change="textChanged()" required width="inherit" tabindex="1" autocomplete="off"></td>
+        </tr>
+
+        <tr>
+            <td style="padding-top:6px; width:120px"><label class="sendLinkLabels">Properties</label></td>
+            <td style="padding-top:5px;">
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="padding-top:5px;">
+                            <label class="radioLabelContainer" style="margin-right:50px">Mini Toolbar<input name="toolbar" type="radio" ng-model="parameters.miniToolbar" value="mini" ng-change="miniToolbarChanged()"> <span class="radioCheckmark"></span></label>
+                            <label class="radioLabelContainer">Full Toolbar<input type="radio" name="toolbar" ng-model="parameters.miniToolbar" value="full" ng-change="miniToolbarChanged()"> <span class="radioCheckmark"></span></label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td style="width:120px"><label class="sendLinkLabels"></label></td>
+            <td>
+                <table style="width:100%">
+                    <tr>
+                        <td style="padding-top:5px;">
+                            <label class="checkBoxLabelContainer" style="padding-left: 35px;">Require Authentication<input type="checkbox" checked="checked" ng-model="parameters.requireAuthentication"> <span class="checkmark"></span></label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input type="text" autocomplete="off" placeholder="E-mail Title" class="email-field" id="title" name="title" ng-model="parameters.title" style="height:auto"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><textarea type="text" autocomplete="off" placeholder="E-mail Body" class="email-field" id="body" name="body" ng-model="parameters.body"></textarea></td>
+        </tr>
+
+
+
+        <!--<tr>
+        <td style="padding-top:10px; width:150px; vertical-align: top;"><label class="sendLinkLabels">Shared Link:</label></td>
+
+
+
+        <td style="padding-top:5px;"><textarea style="padding-top:10px; height:220px" class="text-field" id="sharedLink" name="sharedLink" placeholder="Shared Link" ng-model="parameters.sharedLink" required width="inherit" tabindex="2" autocomplete="off" /></td>
+    </tr>-->
+
+
+
+    </table>
+</div>
+<div class="divider"></div>
+<div class="modal-footer">
+    <a class="form-btn" ng-click="send()" style='margin-right: 0px;' translate="DIALOGS_SEND" />
+
+    <div style='float: right'>
+        <a class="form-btn" ng-click="troubleShoot()" style='margin-right: 10px;' translate="DIALOGS_TROUBLESHOOTING" />
+        <a class="form-btn" ng-click="cancel()" style='margin-right: 0px;' translate="DIALOGS_CANCEL" />
+    </div>
+</div>
+
+
+
+
