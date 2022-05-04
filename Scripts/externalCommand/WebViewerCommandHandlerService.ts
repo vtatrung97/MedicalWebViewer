@@ -86,7 +86,6 @@ class WebViewerCommandHandlerService {
     public FindPatient(patientID, findPatientOptions, errorHandler, successHandler) {
         var __this = this;
         var options: Models.QueryOptions = new Models.QueryOptions();
-
         options.PatientsOptions.PatientID = patientID;
         options.PatientsOptions.PatientName = "";
         options.StudiesOptions.AccessionNumber = "";

@@ -88,6 +88,7 @@ class AuthenticationService {
     private _permissions; 
     private _window: ng.IWindowService;   
     private _isTempAuthentication: boolean;
+    private _isExternalAuthentication: boolean;
 
 
     public get permissions() {
@@ -102,13 +103,21 @@ class AuthenticationService {
         this._isTempAuthentication = value;
     }
 
+    public get isExternalAuthentication() {
+        return this._isExternalAuthentication;
+    }
+
+    public set isExternalAuthentication(value : boolean) {
+        this._isExternalAuthentication = value;
+    }
+
     constructor(config, $http: ng.IHttpService, $location: ng.ILocationService, eventService: EventService,$window:ng.IWindowService) {
         this._httpService = $http;
         this._eventService = eventService;
         this._locationService = $location;
         this._window = $window;        
         this._isTempAuthentication = false;
-
+        this._isExternalAuthentication = false;
         this.authenticationCode = "";
         this.authenticationMessage = "";
         this._authUrl = config.urls.serviceUrl + config.urls.authenticationServiceName;
@@ -388,6 +397,15 @@ class AuthenticationService {
         };
 
         return this._httpService.post(this._authUrl + "/tempAuthenticate", JSON.stringify(parameters));
+    }
+
+    public externalAuthenticate(cookie: string, protocol: string): ng.IHttpPromise<any> {
+        var parameters = {
+            authenticationCookie: this._authenticationCode,
+            cookie: cookie,
+            protocol: protocol
+        };
+        return this._httpService.post(this._authUrl + "/ExternalAuthenticate", JSON.stringify(parameters));
     }
 
     public implicitAuthenticate(cookie: string, protocol: string): ng.IHttpPromise<any> {

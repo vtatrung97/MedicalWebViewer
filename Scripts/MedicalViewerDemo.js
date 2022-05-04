@@ -6130,7 +6130,8 @@ app.config(["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarP
                 deferredQ: ["$q", function ($q) {
                         return $q;
                     }],
-                loggedIn: ["$q", "authenticationService", "eventService", "sharedPropertiesService", "$route", function ($q, authenticationService, eventService, sharedPropertiesService, $route) {
+                loggedIn: ["$q", "authenticationService", "eventService", "sharedPropertiesService", "$route",
+                    function ($q, authenticationService, eventService, sharedPropertiesService, $route) {
                         LogUtils.DebugLog("--- $routeProvider [/automate-v2.0]");
                         if (!authenticationService.isAuthenticated()) {
                             var deferred = $q.defer();
@@ -6146,6 +6147,44 @@ app.config(["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarP
                             LogUtils.DebugLog("   $route.current.params.protocol: " + $route.current.params.protocol);
                             LogUtils.DebugLog("   $route.current.params.token: " + $route.current.params.token);
                             authenticationService.isTempAuthentication = true;
+                        }
+                    }]
+            }
+        })
+            .when('/login/autoExternal/:protocol/:token*', {
+            templateUrl: 'views/login.html',
+            caseInsensitiveMatch: true,
+            controller: Controllers.LoginController,
+            resolve: {
+                linkToken: ["$route", function ($route) {
+                        return $route.current.params.token;
+                    }],
+                linkProtocol: ["$route", function ($route) {
+                        return $route.current.params.protocol;
+                    }],
+                sharedProperties: ["sharedPropertiesService", function (sharedPropertiesService) {
+                        return sharedPropertiesService;
+                    }],
+                deferredQ: ["$q", function ($q) {
+                        return $q;
+                    }],
+                loggedIn: ["$q", "authenticationService", "eventService", "sharedPropertiesService", "$route",
+                    function ($q, authenticationService, eventService, sharedPropertiesService, $route) {
+                        LogUtils.DebugLog("--- $routeProvider [/automate-v2.0]");
+                        if (!authenticationService.isAuthenticated()) {
+                            var deferred = $q.defer();
+                            eventService.subscribe("AuthenticationService/AuthenticationFailed", function (event, message) {
+                                sharedPropertiesService.SetAutoMode(false);
+                                deferred.resolve(false);
+                            });
+                            eventService.subscribe("AuthenticationService/AuthenticationSuccess", function (event, data) {
+                                sharedPropertiesService.SetAutoMode(true);
+                                deferred.resolve(true);
+                            });
+                            LogUtils.DebugLog("   calling tempAuthenticate: ");
+                            LogUtils.DebugLog("   $route.current.params.protocol: " + $route.current.params.protocol);
+                            LogUtils.DebugLog("   $route.current.params.token: " + $route.current.params.token);
+                            authenticationService.isExternalAuthentication = true;
                         }
                     }]
             }
@@ -9369,6 +9408,7 @@ var AuthenticationService = /** @class */ (function () {
         this._locationService = $location;
         this._window = $window;
         this._isTempAuthentication = false;
+        this._isExternalAuthentication = false;
         this.authenticationCode = "";
         this.authenticationMessage = "";
         this._authUrl = config.urls.serviceUrl + config.urls.authenticationServiceName;
@@ -9387,6 +9427,16 @@ var AuthenticationService = /** @class */ (function () {
         },
         set: function (value) {
             this._isTempAuthentication = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(AuthenticationService.prototype, "isExternalAuthentication", {
+        get: function () {
+            return this._isExternalAuthentication;
+        },
+        set: function (value) {
+            this._isExternalAuthentication = value;
         },
         enumerable: false,
         configurable: true
@@ -9624,6 +9674,14 @@ var AuthenticationService = /** @class */ (function () {
             key: key
         };
         return this._httpService.post(this._authUrl + "/tempAuthenticate", JSON.stringify(parameters));
+    };
+    AuthenticationService.prototype.externalAuthenticate = function (cookie, protocol) {
+        var parameters = {
+            authenticationCookie: this._authenticationCode,
+            cookie: cookie,
+            protocol: protocol
+        };
+        return this._httpService.post(this._authUrl + "/ExternalAuthenticate", JSON.stringify(parameters));
     };
     AuthenticationService.prototype.implicitAuthenticate = function (cookie, protocol) {
         var parameters = {
@@ -12108,6 +12166,7 @@ var AutoService = /** @class */ (function () {
         var commandId = command.Item1;
         var commandName = command.Item2;
         var commandParam = JSON.parse(command.Item3);
+        console.log(command);
         if (commandName === ExternalCommandNames.LogOut) {
             __this._controller.LogOut();
         }
@@ -31976,8 +32035,35 @@ var Controllers;
                 }
                 //});
             };
+            $scope.externalSubmit = function () {
+                __this.loginLoad(true, "tempAuthenticaionLoading", "tempAuthenticaionSubmitButton", "SUBMIT");
+                var myAuthenticationInfoResult;
+                authenticationService.externalAuthenticate(linkToken, linkProtocol).success(function (authenticationInfoResult) {
+                    myAuthenticationInfoResult = authenticationInfoResult;
+                    sharedProperties.SetToken(authenticationInfoResult.Cookie);
+                    sharedProperties.SetPolling(true);
+                    document.getElementById('verionNumberFooter').innerHTML = "";
+                    authenticationService.autologin(myAuthenticationInfoResult.UserName, authenticationInfoResult.Cookie);
+                }).error(function (error) {
+                    __this._scope.urlInvalid = error.Message;
+                    __this._scope.codeInvalid = "Invalid code... Please try again.";
+                    __this.loginLoad(false, "tempAuthenticaionLoading", "tempAuthenticaionSubmitButton", "SUBMIT");
+                    var message = "";
+                    if (error) {
+                        if (error.Message)
+                            message = error.Message;
+                        else
+                            message = error;
+                    }
+                    LogUtils.DebugLog("tempAuthenticate error: " + error.Message);
+                });
+            };
             $scope.enableTwoFactorsAuthentication = false; //optionsService.get(OptionNames.EnableTwoFactorsAuthentication);
-            $scope.verifyURLScreen = authenticationService.isTempAuthentication;
+            $scope.verifyURLScreen = authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication;
+            if (authenticationService.isExternalAuthentication === true) {
+                $scope.externalSubmit();
+                return;
+            }
             if ($scope.verifyURLScreen) {
                 $scope.supportsTouch = lt.LTHelper.supportsTouch || (lt.LTHelper.browser == lt.LTBrowser.internetExplorer);
                 // send the e-mail
@@ -32210,13 +32296,13 @@ var Controllers;
                         tab = tabService.add_tab(UUID.generate(), "Search", "views/SearchView.html", Controllers.SearchViewController);
                         tab.type = TabTypes.Search;
                         // don't show search bar for temporary users.
-                        tab.visible = !authenticationService.isTempAuthentication;
+                        tab.visible = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                     }
                     else {
                         tab = tabService.add_tab(UUID.generate(), "Search", "views/DentalSearchView.html", Controllers.DentalSearchViewController);
                         tab.type = TabTypes.Search;
                         // don't show search bar for temporary users.
-                        tab.visible = !authenticationService.isTempAuthentication;
+                        tab.visible = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                     }
                 }
                 if ($commangular != null) {
@@ -32233,6 +32319,7 @@ var Controllers;
                     if (!sharedPropertiesService.GetExternalControlMode() && authenticationService.hasPermission(PermissionNames.CanDownloadImages) && optionsService.get(OptionNames.ShowPacsQuery)) {
                         var tab = tabService.add_tab(UUID.generate(), "User Queue", "views/UserQueueView.html", Controllers.UserQueueController);
                         tab.type = TabTypes.UserQueue;
+                        tab.visible = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                     }
                 }
             }
@@ -32626,8 +32713,11 @@ var Controllers;
             $scope.canShare = function () {
                 return authenticationService.hasPermission(PermissionNames.CanStore);
             };
-            $scope.isNotTemp = function () {
-                return !authenticationService.isTempAuthentication;
+            $scope.isNotTempOrExter = function () {
+                return !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
+            };
+            $scope.isNotExt = function () {
+                return !authenticationService.isExternalAuthentication;
             };
             $scope.canStore = function () {
                 return authenticationService.hasPermission(PermissionNames.CanStore);
@@ -32877,7 +32967,7 @@ var Controllers;
                         seriesManagerService.set_seriesInfo(series.InstanceUID, series);
                         if (data.args.id != null)
                             seriesManagerService.set_activeCell(data.args.id);
-                        tabInfo.tab.canDelete = true;
+                        tabInfo.tab.canDelete = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                         if (lt.LTHelper.device == lt.LTDevice.mobile) {
                             tabInfo.tab.title = 'Viewer';
                         }

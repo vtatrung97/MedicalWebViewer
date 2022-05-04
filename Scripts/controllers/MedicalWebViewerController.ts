@@ -58,7 +58,8 @@ module Controllers {
         canSend();
         canStore(): boolean;
         canShare(): boolean;
-        isNotTemp(): boolean;
+        isNotTempOrExter(): boolean;
+        isNotExt(): boolean;
     }
 
     export class MedicalWebViewerController {
@@ -113,13 +114,13 @@ module Controllers {
                         tab = tabService.add_tab(UUID.generate(), "Search", "views/SearchView.html", Controllers.SearchViewController);
                         tab.type = TabTypes.Search;
                         // don't show search bar for temporary users.
-                        tab.visible = !authenticationService.isTempAuthentication;
+                        tab.visible = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                     }
                     else {
                         tab = tabService.add_tab(UUID.generate(), "Search", "views/DentalSearchView.html", Controllers.DentalSearchViewController);
                         tab.type = TabTypes.Search;
                         // don't show search bar for temporary users.
-                        tab.visible = !authenticationService.isTempAuthentication;
+                        tab.visible = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                     }
                 }
 
@@ -143,6 +144,7 @@ module Controllers {
                     var tab: Models.Tab = tabService.add_tab(UUID.generate(), "User Queue", "views/UserQueueView.html", Controllers.UserQueueController);
 
                     tab.type = TabTypes.UserQueue;
+                    tab.visible = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                 }
             }
             }
@@ -622,8 +624,12 @@ module Controllers {
                 return authenticationService.hasPermission(PermissionNames.CanStore);
             }
 
-            $scope.isNotTemp = function () {
-                return !authenticationService.isTempAuthentication;
+            $scope.isNotTempOrExter = function () {
+                return !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
+            }
+
+            $scope.isNotExt = function () {
+                return !authenticationService.isExternalAuthentication;
             }
 
             $scope.canStore = function () {                
@@ -868,7 +874,6 @@ module Controllers {
 
                     tabInfo = __this.get_patientTab(series, data.args.series, viewUrl, viewController, forCompare);
 
-
                     if (style && style === 'medicor') {
                         optionsService.set(OptionNames.UseMedicoreLogo, true);
                     }
@@ -967,7 +972,7 @@ module Controllers {
                         if (data.args.id != null)
                             seriesManagerService.set_activeCell(data.args.id);
 
-                        tabInfo.tab.canDelete = true;
+                        tabInfo.tab.canDelete = !(authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication);
                         if (lt.LTHelper.device == lt.LTDevice.mobile) {
                             tabInfo.tab.title = 'Viewer';
                         }

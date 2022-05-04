@@ -5,7 +5,7 @@
         </tab-heading>
         <div class="vbox boxItem" ng-include="tab.templateUrl" ng-controller="tab.controller" ng-init="tabId=tab.id" ng-show="tab.visible" style="width:100%"></div>
     </tab>
-    <li class="dropdown pull-right" ng-show="isNotTemp()">
+    <li class="dropdown pull-right" ng-show="isNotTempOrExter()">
         <a class="dropdown-toggle" href="javascript:void(0)">{{ user }}<b class="caret"></b></a>
         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
             <li><a href="javascript:void(0)" tabindex="-1" ng-click="openChangePassword()" ng-show="isAdmin()">{{ 'PASSWORD' | translate}}</a></li>
@@ -34,7 +34,7 @@
         </ul>
     </li>
     <li class="pull-right">
-        <a href="javascript:void(0)" ng-click="doUpload(this.files)" ng-show="canStore() && isNotTemp()" style="border-top: 2px solid #5ba2f3">{{ 'UPLOAD' | translate}}&nbsp;<i class="fa fa-upload"></i></a>
+        <a href="javascript:void(0)" ng-click="doUpload(this.files)" ng-show="canStore() && isNotTempOrExter()" style="border-top: 2px solid #5ba2f3">{{ 'UPLOAD' | translate}}&nbsp;<i class="fa fa-upload"></i></a>
     </li>
     <li class="pull-right">
         <a href="javascript:void(0)" ng-click="doSend(this.files)" ng-show="canSharePatients() && canSend()" id="" style="border-top: 2px solid #5ba2f3">{{ 'EMAIL' | translate}}&nbsp;<i class="fa fa-envelope"></i></a>

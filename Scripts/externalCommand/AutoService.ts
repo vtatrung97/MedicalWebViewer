@@ -87,7 +87,6 @@ class AutoService {
             this._webViewerAuthenticationToken = this._sharedPropertiesService.GetToken();            
             this._shouldStopPolling = !this._sharedPropertiesService.GetPolling();
             this._controller = new WebViewerCommandHandlerService(this._authenticationService, this._webViewerAuthenticationToken, window);
-
             this.CheckAutomation();
         }
         else {
@@ -136,7 +135,6 @@ class AutoService {
     }
 
     private CheckAutomation(): void {
-
         var request: string = this._autoServiceUrl + '/IsAutomated?' + 'token=' + encodeURIComponent(this._webViewerAuthenticationToken);
         LogUtils.DebugLog(request);
         this.GET(request,
@@ -193,7 +191,6 @@ class AutoService {
         var patientID = commandParam.patientID;
         var style = commandParam.style;
         var seriesInstanceUID = commandParam.seriesInstanceUID;
-
         var found = false;
         var __this = this;
         __this._controller.FindSeriesExt(patientID, null, null,
@@ -265,11 +262,10 @@ class AutoService {
             patientID = null,
             patientInfo = null,
             style = null;
-
         var commandId = command.Item1;
         var commandName = command.Item2;
         var commandParam = JSON.parse(command.Item3);
-
+        console.log(command);
         if (commandName === ExternalCommandNames.LogOut) {
             __this._controller.LogOut();
         }

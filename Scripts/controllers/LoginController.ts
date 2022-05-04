@@ -35,6 +35,7 @@ module Controllers {
         codeInvalid: string;
         urlInvalid: string;
         sixDigitSubmit: Function;
+        externalSubmit: Function;
         verifyURLScreen: boolean;
         enableTwoFactorsAuthentication: boolean;
         supportsTouch: boolean;
@@ -109,14 +110,44 @@ module Controllers {
                 //});
             }
 
+            $scope.externalSubmit = function () {
+                __this.loginLoad(true, "tempAuthenticaionLoading", "tempAuthenticaionSubmitButton", "SUBMIT");
+                var myAuthenticationInfoResult;
+                authenticationService.externalAuthenticate(linkToken, linkProtocol).success(function (authenticationInfoResult) {
+                    myAuthenticationInfoResult = authenticationInfoResult;
+                    sharedProperties.SetToken(authenticationInfoResult.Cookie);
+                    sharedProperties.SetPolling(true);
+                    document.getElementById('verionNumberFooter').innerHTML = "";
+                    authenticationService.autologin(myAuthenticationInfoResult.UserName, authenticationInfoResult.Cookie);
+                }).error(function (error) {
+                    __this._scope.urlInvalid = error.Message;
+                    __this._scope.codeInvalid = "Invalid code... Please try again.";
+                    __this.loginLoad(false, "tempAuthenticaionLoading", "tempAuthenticaionSubmitButton", "SUBMIT");
+                    var message = "";
+                    if (error) {
+                        if (error.Message)
+                            message = error.Message;
+                        else
+                            message = error;
+                    }
+
+                    LogUtils.DebugLog("tempAuthenticate error: " + error.Message);
+
+                });
+            }
+
 
             $scope.enableTwoFactorsAuthentication = false;//optionsService.get(OptionNames.EnableTwoFactorsAuthentication);
-            $scope.verifyURLScreen = authenticationService.isTempAuthentication;
-
+            $scope.verifyURLScreen = authenticationService.isTempAuthentication || authenticationService.isExternalAuthentication;
+            if (authenticationService.isExternalAuthentication === true) {
+                $scope.externalSubmit();
+                return;
+            }
             if ($scope.verifyURLScreen) {
                 $scope.supportsTouch = lt.LTHelper.supportsTouch || (lt.LTHelper.browser == lt.LTBrowser.internetExplorer);
                 // send the e-mail
                 authenticationService.sendPatientURLVerification(linkProtocol, linkToken).then(function (data) {
+                    
 
                     if (!data.data.NeedsVerification) {
                         $scope.sixDigitSubmit();

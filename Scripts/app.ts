@@ -345,7 +345,7 @@ app.config(
                            sharedPropertiesService.SetPolling(true);
 
                            authenticationService.autologin(myAuthenticationInfoResult.UserName, $route.current.params.token);
-                           return deferred.promise;
+                            return deferred.promise;
                         }).error(function (error) {
                            LogUtils.DebugLog("getAuthenticationInfo error");
                         });
@@ -371,7 +371,8 @@ app.config(
                    deferredQ: ["$q", function ($q: ng.IQService) {
                        return $q;
                    }],
-                  loggedIn: ["$q", "authenticationService", "eventService", "sharedPropertiesService", "$route", function ($q: ng.IQService, authenticationService: AuthenticationService, eventService: EventService, sharedPropertiesService: SharedPropertiesService, $route) {
+                   loggedIn: ["$q", "authenticationService", "eventService", "sharedPropertiesService", "$route",
+                       function ($q: ng.IQService, authenticationService: AuthenticationService, eventService: EventService, sharedPropertiesService: SharedPropertiesService, $route) {
 
                      LogUtils.DebugLog("--- $routeProvider [/automate-v2.0]");
                      if (!authenticationService.isAuthenticated()) {
@@ -396,6 +397,50 @@ app.config(
                   }]
                }
             })
+             .when('/login/autoExternal/:protocol/:token*', <ng.route.IRoute>{
+
+                 templateUrl: 'views/login.html',
+                 caseInsensitiveMatch: true,
+                 controller: Controllers.LoginController,
+                 resolve: {
+                     linkToken: ["$route", function ($route) {
+                         return $route.current.params.token;
+                     }],
+                     linkProtocol: ["$route", function ($route) {
+                         return $route.current.params.protocol;
+                     }],
+                     sharedProperties: ["sharedPropertiesService", function (sharedPropertiesService: SharedPropertiesService) {
+                         return sharedPropertiesService;
+                     }],
+                     deferredQ: ["$q", function ($q: ng.IQService) {
+                         return $q;
+                     }],
+                     loggedIn: ["$q", "authenticationService", "eventService", "sharedPropertiesService", "$route",
+                         function ($q: ng.IQService, authenticationService: AuthenticationService, eventService: EventService, sharedPropertiesService: SharedPropertiesService, $route) {
+
+                             LogUtils.DebugLog("--- $routeProvider [/automate-v2.0]");
+                             if (!authenticationService.isAuthenticated()) {
+                                 var deferred = $q.defer();
+                                 eventService.subscribe("AuthenticationService/AuthenticationFailed", function (event, message) {
+                                     sharedPropertiesService.SetAutoMode(false);
+                                     deferred.resolve(false);
+                                 });
+
+                                 eventService.subscribe("AuthenticationService/AuthenticationSuccess", function (event, data) {
+                                     sharedPropertiesService.SetAutoMode(true);
+                                     deferred.resolve(true);
+                                 });
+
+                                 LogUtils.DebugLog("   calling tempAuthenticate: ");
+                                 LogUtils.DebugLog("   $route.current.params.protocol: " + $route.current.params.protocol);
+                                 LogUtils.DebugLog("   $route.current.params.token: " + $route.current.params.token);
+
+                                 authenticationService.isExternalAuthentication = true;
+
+                             }
+                         }]
+                 }
+             })
             .when('/login/implicit/:protocol/:token*', <ng.route.IRoute>{
 
                templateUrl: 'views/login.html',

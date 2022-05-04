@@ -1,0 +1,7 @@
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\bin\MedicalWebViewerDemo.dll.config
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\bin\MedicalWebViewerDemo.dll
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\bin\MedicalWebViewerDemo.pdb
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\obj\Release\MedicalWebViewerDemo.csproj.AssemblyReference.cache
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\obj\Release\MedicalWebViewerDemo.csproj.CoreCompileInputs.cache
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\obj\Release\MedicalWebViewerDemo.dll
+D:\LEADTOOLS22\Examples\Viewers\DotNet\MedicalWebViewer\MedicalWebViewerDemo\obj\Release\MedicalWebViewerDemo.pdb
