@@ -382,7 +382,7 @@ app.config(
                         });
 
                         eventService.subscribe("AuthenticationService/AuthenticationSuccess", function (event, data) {
-                           sharedPropertiesService.SetAutoMode(true);
+                            sharedPropertiesService.SetAutoMode(true);
                             deferred.resolve(true);
                         });
 
