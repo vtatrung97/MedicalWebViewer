@@ -12,3 +12,10 @@ F:\medicalwebViewer\file22\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csp
 F:\medicalwebViewer\file22\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.CoreCompileInputs.cache
 F:\medicalwebViewer\file22\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.dll
 F:\medicalwebViewer\file22\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.pdb
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\bin\MedicalWebViewerDemo.dll.config
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\bin\MedicalWebViewerDemo.dll
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\bin\MedicalWebViewerDemo.pdb
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.AssemblyReference.cache
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.CoreCompileInputs.cache
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.dll
+F:\medicalwebViewer\file21-medicalViewer21\file2\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.pdb

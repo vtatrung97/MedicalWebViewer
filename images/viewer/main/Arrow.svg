@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="Arrow">
-	<path style="fill:#5280DF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z M25,1.905C12.265,1.905,1.905,12.265,1.905,25S12.265,48.095,25,48.095S48.095,37.735,48.095,25
-		S37.735,1.905,25,1.905z"/>
-	<path style="fill:#5280DF;" d="M13.095,22.817c-0.526,0-0.952-0.426-0.952-0.952v-8.77c0-0.526,0.426-0.952,0.952-0.952h8.77
-		c0.526,0,0.952,0.426,0.952,0.952c0,0.526-0.426,0.952-0.952,0.952h-7.817v7.817C14.048,22.391,13.621,22.817,13.095,22.817z"/>
-	<path style="fill:#5280DF;" d="M36.905,37.857c-0.244,0-0.487-0.093-0.673-0.279l-23.81-23.81c-0.372-0.372-0.372-0.975,0-1.347
-		c0.372-0.372,0.975-0.372,1.347,0l23.81,23.81c0.372,0.372,0.372,0.975,0,1.347C37.392,37.764,37.148,37.857,36.905,37.857z"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1{stroke:#232323;stroke-miterlimit:10;fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="305.78" y1="102.64" x2="305.78" y2="526.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f2f2f2"/><stop offset="0.78" stop-color="#d5d5d5"/><stop offset="1" stop-color="#ccc"/></linearGradient></defs><path id="Arrow" class="cls-1" d="M501.3,480.21,156.43,135.54H257A14.8,14.8,0,1,0,257,106H120.68a15,15,0,0,0-2.9.3c-.43.09-.83.25-1.24.37s-1,.27-1.51.47-.93.48-1.39.73a10.87,10.87,0,0,0-1.16.63,14.68,14.68,0,0,0-4.1,4.1c-.23.36-.4.76-.61,1.13a15.85,15.85,0,0,0-.74,1.42,12.79,12.79,0,0,0-.45,1.49,11.49,11.49,0,0,0-.37,1.27,14.28,14.28,0,0,0-.3,2.9V257a14.81,14.81,0,0,0,29.61,0V156.48L480.37,501.13a14.8,14.8,0,1,0,20.93-20.92Z"/></svg>

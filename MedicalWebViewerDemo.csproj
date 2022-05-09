@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <UseIISExpress>false</UseIISExpress>
@@ -93,6 +93,10 @@
     <Content Include="images\shibboleth.svg" />
     <Content Include="images\StopButton.svg" />
     <Content Include="images\tags.svg" />
+    <Content Include="images\viewer\back-login.png" />
+    <Content Include="images\viewer\bvmocchau.jpg" />
+    <Content Include="images\viewer\delta-shortcut.ico" />
+    <Content Include="images\viewer\deltapacs.png" />
     <Content Include="images\viewer\disabled\AlignBottom.svg" />
     <Content Include="images\viewer\disabled\AlignCenter.svg" />
     <Content Include="images\viewer\disabled\AlignLeft.svg" />
@@ -199,6 +203,14 @@
     <Content Include="images\viewer\disabled\WaveformBasicAudio.svg" />
     <Content Include="images\viewer\disabled\WindowLevel.svg" />
     <Content Include="images\viewer\disabled\WindowLevelCustom.svg" />
+    <Content Include="images\viewer\gmail.svg" />
+    <Content Include="images\viewer\Intubation and Mechanical Ventilation.mp4" />
+    <Content Include="images\viewer\logo-50.png" />
+    <Content Include="images\viewer\logo-vnpt.png" />
+    <Content Include="images\viewer\logo20.png" />
+    <Content Include="images\viewer\logodelta-50.png" />
+    <Content Include="images\viewer\logodelta.svg" />
+    <Content Include="images\viewer\ma-so-ma-vach.jpg" />
     <Content Include="images\viewer\main\AlignBottom.svg" />
     <Content Include="images\viewer\main\AlignCenter.svg" />
     <Content Include="images\viewer\main\AlignLeft.svg" />
@@ -485,6 +497,7 @@
     <Content Include="images\viewer\rollover\zoom.svg" />
     <Content Include="images\viewer\rollover\ZoomIn.svg" />
     <Content Include="images\viewer\rollover\ZoomOut.svg" />
+    <Content Include="images\viewer\zalo.svg" />
     <Content Include="lib\LEADTOOLS\bootstrap\bootstrap.d.ts" />
     <Content Include="Samples\ExternalController\ExternalControllerDemo.htm" />
     <Content Include="Samples\ExternalController\JS\addPatient.js" />

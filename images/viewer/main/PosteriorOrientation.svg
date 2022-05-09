@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="PosteriorOrientation">
-	<path style="fill:#5280DF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z M25,1.905C12.265,1.905,1.905,12.265,1.905,25S12.265,48.095,25,48.095S48.095,37.735,48.095,25
-		S37.735,1.905,25,1.905z"/>
-	<path style="fill:#5280DF;" d="M17.619,37.857c-0.526,0-0.952-0.426-0.952-0.952v-23.81c0-0.526,0.426-0.952,0.952-0.952h8.81
-		c3.807,0,6.905,3.098,6.905,6.905s-3.098,6.905-6.905,6.905h-7.857v10.952C18.571,37.431,18.145,37.857,17.619,37.857z
-		 M18.571,24.048h7.857c2.757,0,5-2.243,5-5s-2.243-5-5-5h-7.857V24.048z"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1{stroke:#232323;stroke-miterlimit:10;fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="306.3" y1="106" x2="306.3" y2="506.75" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset="0.6" stop-color="#e2e2e2"/><stop offset="1" stop-color="#ccc"/></linearGradient></defs><g id="PosteriorOrientation"><path class="cls-1" d="M209.93,506.75c-6.86,0-12.43-6.64-12.43-14.84V120.84c0-8.19,5.57-14.84,12.43-14.84H325c49.71,0,90.15,48.27,90.15,107.61S374.66,321.22,325,321.22H222.37V491.91C222.37,500.1,216.8,506.75,209.93,506.75Zm12.44-215.22H325c36,0,65.28-34.95,65.28-77.92S361,135.68,325,135.68H222.37Z"/></g></svg>

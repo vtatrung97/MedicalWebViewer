@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="LastFrameButton">
-	<g>
-		<path style="fill:#C7CEDD;" d="M50,46.667C50,48.509,48.509,50,46.667,50H3.333C1.491,50,0,48.509,0,46.667V3.333
-			C0,1.494,1.491,0,3.333,0h43.333C48.509,0,50,1.494,50,3.333V46.667z"/>
-		<path style="fill:#333333;" d="M32.057,12.249c-0.921,0-1.667,0.746-1.667,1.667v8.662L17.93,12.425
-			c-0.823-0.492-1.862,0.104-1.862,1.064v23.024c0,0.96,1.039,1.553,1.862,1.065l12.461-10.153v8.662
-			c0,0.98,0.895,1.667,1.875,1.667c0.921,0,1.667-0.745,1.667-1.667V13.916C33.932,12.936,33.037,12.249,32.057,12.249z"/>
-	</g>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1,.cls-2{stroke:#232323;stroke-miterlimit:10;}.cls-1{fill:url(#linear-gradient);}.cls-2{fill:url(#linear-gradient-2);}</style><linearGradient id="linear-gradient" x1="306" y1="281" x2="306" y2="331" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset="0.6" stop-color="#e2e2e2"/><stop offset="1" stop-color="#ccc"/></linearGradient><linearGradient id="linear-gradient-2" y1="293.25" y2="318.75" xlink:href="#linear-gradient"/></defs><g id="LastFrameButton"><path class="cls-1" d="M331,327.67a3.33,3.33,0,0,1-3.33,3.33H284.33a3.33,3.33,0,0,1-3.33-3.33V284.33a3.33,3.33,0,0,1,3.33-3.33h43.34a3.33,3.33,0,0,1,3.33,3.33Z"/><path class="cls-2" d="M313.06,293.25a1.67,1.67,0,0,0-1.67,1.67v8.66l-12.46-10.15a1.23,1.23,0,0,0-1.86,1.06v23a1.23,1.23,0,0,0,1.86,1.07l12.46-10.16v8.67a1.77,1.77,0,0,0,1.88,1.66,1.66,1.66,0,0,0,1.66-1.66V294.92A1.77,1.77,0,0,0,313.06,293.25Z"/></g></svg>

@@ -398,6 +398,7 @@ span.fancytree-title {
 }
 
 .toolBarItemText {
+    font-family: OpenSans !important;
     border: 0px;
     cursor: pointer;
     margin-top: 4px;
@@ -410,9 +411,12 @@ span.fancytree-title {
     font-style: normal;
     font-weight: normal;
     text-shadow: 0 1px 0 #252525;
-    color: rgb(77, 126, 219);
+    color: #c9c9c9;
     white-space: normal;
     line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     /*letter-spacing: 0.15em;*/
 }
 
@@ -688,7 +692,6 @@ input:-webkit-autofill:focus {
         transform: translateY(0);
     }
 }
-
 
 
 .logo {
@@ -3242,3 +3245,43 @@ a.list-group-item {
       border-color: #353942;
       background-image: none !important;
    }
+
+
+/*=========================================================================================== DELTA - FIX - BUTTON VIEWER */
+
+
+.logo {
+    background-image: url('../images/viewer/logodelta.svg');
+}
+
+
+.scroll-body {
+    /* background-color: #353942; */
+    background-color: #333333;
+}
+
+.btn-group {
+    background-color: #333333 !important;
+}
+
+.btn-group .caret {
+    color: white;
+}
+
+.toolBarItem {
+    background-color: #333333 !important;
+}
+
+.btn-group > .btn + .dropdown-toggle {
+    background: transparent;
+    /* background-color: #5A616B !important; */
+    background-color: #333333;
+    margin-left: 0px !important;
+    box-shadow: unset;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-image: linear-gradient(to bottom,#333333 0,#333333 100%);
+    background-repeat: repeat-x;
+    background-color: #333333;
+}

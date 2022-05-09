@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="Select">
-	<path style="fill:#5280DF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z M25,1.905C12.265,1.905,1.905,12.265,1.905,25S12.265,48.095,25,48.095S48.095,37.735,48.095,25
-		S37.735,1.905,25,1.905z"/>
-	<path style="fill:#5280DF;" d="M28.757,37.857c-0.008,0-0.017,0-0.026,0c-0.416-0.011-0.777-0.292-0.891-0.692l-3.297-11.64
-		l-11.722-3.509c-0.397-0.119-0.672-0.482-0.679-0.896c-0.007-0.415,0.255-0.787,0.648-0.919l23.81-8.008
-		c0.344-0.115,0.723-0.026,0.979,0.231c0.256,0.257,0.343,0.637,0.226,0.98l-8.148,23.81C29.526,37.599,29.163,37.857,28.757,37.857
-		z M16.24,21.05l9.351,2.799c0.312,0.093,0.554,0.34,0.643,0.653l2.608,9.21l6.536-19.099L16.24,21.05z"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1{stroke:#232323;stroke-miterlimit:10;fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="306" y1="106.84" x2="306" y2="505.16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset="0.6" stop-color="#e2e2e2"/><stop offset="1" stop-color="#ccc"/></linearGradient></defs><path id="Select" class="cls-1" d="M364.37,505.16H364A14,14,0,0,1,350.89,495L299.54,313.53l-182.6-54.7a14,14,0,0,1-.45-26.73L486.58,107.57a14,14,0,0,1,17.73,17.84L377.65,495.69A14.05,14.05,0,0,1,364.37,505.16ZM167.24,244.62,315,288.86a14,14,0,0,1,9.47,9.61l41.23,145.65,102.93-300.9Z"/></svg>
