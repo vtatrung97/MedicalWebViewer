@@ -814,3 +814,4 @@ declare module "jquery" {
 }
 declare var jQuery: JQueryStatic;
 declare var $: JQueryStatic;
+declare var signalR: Signalr;

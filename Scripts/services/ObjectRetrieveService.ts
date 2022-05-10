@@ -60,7 +60,20 @@ class ObjectRetrieveService {
     }
 
 
+    public GetConclusionImage(frame, annFileName: string, maxWidth, maxHeight, xDpi, yDpi, userData): ng.IHttpPromise<string> {
+        var q = "&bp=0&qf=0";
+        var maxSize = "";
 
+        if (maxWidth && maxHeight) {
+            maxSize = '&cx=' + maxWidth + '&cy=' + maxHeight;
+        }
+        else {
+            maxSize = '&cx=0&cy=0';
+        }
+
+        userData = userData == undefined ? "" : userData;
+        return this._http.get(this._retrieveLocalUrl + '/GetConclusionImage?auth=' + encodeURIComponent(this._authenticationService.authenticationCode) + '&studyUID=' + frame.Instance.StudyInstanceUID + '&instance=' + frame.Instance.SOPInstanceUID + '&frame=' + frame.FrameNumber + q + maxSize + '&annotationFileName=' + encodeURIComponent(annFileName) + '&xDpi=' + xDpi + '&yDpi=' + yDpi + '&data=' + userData);
+    }
 
     public GetImageUrlPreprocessed(frame, maxWidth, maxHeight, functions, random?:boolean): string {        
         var data: any = {};

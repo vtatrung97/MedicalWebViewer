@@ -7,7 +7,9 @@
     fancytree: Function; 
     contextMenu: Function;   
 } 
-
+interface Signalr {
+    HubConnectionBuilder: any;
+}
 interface JQueryStatic {   
     tmplParse(format: string, data: any): string;
     template(format: string): string; 

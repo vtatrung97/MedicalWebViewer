@@ -241,7 +241,7 @@ class ExportManagerService {
       }
    }
 
-   private buildIpArray(cellFrame: lt.Controls.Medical.Frame): Array<any> {
+   public buildIpArray(cellFrame: lt.Controls.Medical.Frame): Array<any> {
        var ipArray: Array<any> = new Array<any>();
        var ipItems: Array<lt.ImageProcessing> = cellFrame.imageProcessingList.toArray();
        var foundItems: Array<lt.ImageProcessing>;       
