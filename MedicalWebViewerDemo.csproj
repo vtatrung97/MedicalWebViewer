@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <UseIISExpress>false</UseIISExpress>
@@ -545,6 +545,7 @@
     <Content Include="Scripts\esprima.min.js" />
     <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\jquery\jquery.contextMenu.min.js" />
+    <Content Include="Scripts\jquery\jquery.signalR-2.4.1.js" />
     <Content Include="Scripts\jquery\jquery.ui.position.min.js" />
     <Content Include="Scripts\jquery\jquery.ui.touch-punch.min.js" />
     <TypeScriptCompile Include="Scripts\externalCommand\AutoService.ts" />
@@ -553,6 +554,7 @@
     <TypeScriptCompile Include="Scripts\services\TemplateEditorService.ts" />
     <TypeScriptCompile Include="Scripts\services\TemplateService.ts" />
     <Content Include="Scripts\LEADTOOLS\Leadtools.Controls.Medical.js" />
+    <Content Include="Scripts\microsoft\signalr.js" />
     <Content Include="SeriesLayouts.xml" />
     <Content Include="css\angular-block-ui.css" />
     <Content Include="css\app.css" />

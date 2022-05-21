@@ -10153,6 +10153,18 @@ var ObjectRetrieveService = /** @class */ (function () {
     ObjectRetrieveService.prototype.GetMPRFrame = function (id, mprType, index) {
         return this._threedLocalUrl + "/GetMPRImage?" + "auth=" + encodeURIComponent(this._authenticationService.authenticationCode) + "&id=" + id + "&mprType=" + mprType + "&index=" + index;
     };
+    ObjectRetrieveService.prototype.GetConclusionImage = function (frame, annFileName, maxWidth, maxHeight, xDpi, yDpi, userData) {
+        var q = "&bp=0&qf=0";
+        var maxSize = "";
+        if (maxWidth && maxHeight) {
+            maxSize = '&cx=' + maxWidth + '&cy=' + maxHeight;
+        }
+        else {
+            maxSize = '&cx=0&cy=0';
+        }
+        userData = userData == undefined ? "" : userData;
+        return this._http.get(this._retrieveLocalUrl + '/GetConclusionImage?auth=' + encodeURIComponent(this._authenticationService.authenticationCode) + '&studyUID=' + frame.Instance.StudyInstanceUID + '&instance=' + frame.Instance.SOPInstanceUID + '&frame=' + frame.FrameNumber + q + maxSize + '&annotationFileName=' + encodeURIComponent(annFileName) + '&xDpi=' + xDpi + '&yDpi=' + yDpi + '&data=' + userData);
+    };
     ObjectRetrieveService.prototype.GetImageUrlPreprocessed = function (frame, maxWidth, maxHeight, functions, random) {
         var data = {};
         var maxSize = "";
@@ -37900,7 +37912,7 @@ var Controllers;
 var Controllers;
 (function (Controllers) {
     var ViewerController = /** @class */ (function () {
-        function ViewerController($scope, eventService, toolbarService, $modal, tabService, optionsService, dataService, seriesManagerService, safeApply, config, hotkeys, $timeout, $commangular, auditLogService, objectRetrieveService, dicomLoaderService, templateService) {
+        function ViewerController($scope, eventService, toolbarService, $modal, tabService, optionsService, dataService, seriesManagerService, safeApply, config, hotkeys, $timeout, $commangular, auditLogService, objectRetrieveService, dicomLoaderService, templateService, exportManagerService) {
             // this is a timer to keep trying to see if the layout is ready for the overflow manager to be created.
             this._overflowTimerId = -1;
             // this is the list for the items to be added to the overflow manager when the overflow manager is not ready yet.
@@ -37921,9 +37933,126 @@ var Controllers;
             this._objectRetrieveService = objectRetrieveService;
             this._toolbarService = toolbarService;
             this._templateService = templateService;
+            this._exportManagerService = exportManagerService;
             $scope.query = new Models.QueryOptions();
             $scope.retrieveUrl = config.urls.serviceUrl + config.urls.objectRetrieveLocalServiceName;
             $scope.timelineApi = {};
+            var consultationConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/conclusion-realtime").build();
+            consultationConnection.on("ReceiveMessage", function (text) {
+                console.log(text);
+            });
+            consultationConnection.start().then(function () {
+                consultationConnection.invoke("SendMessage", "test").catch(function (err) {
+                    return console.error(err.toString());
+                });
+            });
+            $scope.getCurrentImage = function () {
+                var cell = seriesManagerService.get_activeCell();
+                //if ($scope.consultationComment.consultationCommentImages == null)
+                //    $scope.consultationComment.consultationCommentImages = [];
+                var cellFrame = seriesManagerService.get_activeCellFrame();
+                if (cell instanceof lt.Controls.Medical.Cell3D) {
+                    var cell3D = cell;
+                    //window.location.href = cell3D.image.src + ".jpg";
+                    var image = {
+                        sOPInstanceUID: DicomHelper.getDicomTagValue(cellFrame.metadata, DicomTag.SOPInstanceUID),
+                        imageurl: cell3D.image.src + ".jpg",
+                        note: ''
+                    };
+                    //var url = document.location.protocol + "//" + document.location.host + "/MedicalViewerServiceAsp20/" + result;
+                    //$scope.consultationComment.consultationCommentImages.push(image);
+                    //self.UpdateImageGrid();
+                }
+                var automation;
+                var subCell;
+                var viewer;
+                var annotationsData = "";
+                var codecs = new lt.Annotations.Engine.AnnCodecs();
+                var annFound = false;
+                var container;
+                var newTab = null; //iPad workaround
+                var __this = this;
+                var res;
+                var loader;
+                var ipArray = exportManagerService.buildIpArray(cellFrame);
+                if (cellFrame == null) {
+                    return;
+                }
+                loader = seriesManagerService.get_seriesLoaderById(cell);
+                automation = cell.get_automation();
+                subCell = cell.get_selectedItem();
+                viewer = subCell.get_imageViewer();
+                res = viewer.get_imageResolution();
+                if (lt.LTHelper.OS == lt.LTOS.android && lt.LTHelper.browser == lt.LTBrowser.android) {
+                    //secondaryCapturer.PopupCapturedData(cellframe, viewer, automation, subCell.get_overlayCanvas(), OnPostRenderImage);
+                    return;
+                }
+                container = automation.get_container();
+                if (container.get_children().get_count() > 0) {
+                    annFound = true;
+                    annotationsData = codecs.save(container, 1, null, length + 1);
+                }
+                if (lt.LTHelper.OS == lt.LTOS.iOS && lt.LTHelper.device != lt.LTDevice.mobile) {
+                    newTab = window.open("", "_blank");
+                    window.focus();
+                }
+                if (annFound) {
+                    objectRetrieveService.UploadAnnotations(annotationsData)
+                        .then(function (result) {
+                        var data = result.data.replace(/"/g, "");
+                        var xDpi = 254;
+                        var yDpi = 254;
+                        if (cellFrame.columnSpacing > 0)
+                            xDpi = 25.4 / cellFrame.columnSpacing;
+                        if (cellFrame.rowSpacing > 0)
+                            yDpi = 25.4 / cellFrame.rowSpacing;
+                        var downloadImageUrl = objectRetrieveService.GetConclusionImage(cellFrame, data.replace('\"', ''), 0, 0, xDpi, yDpi, JSON.stringify(ipArray))
+                            .success(function (result) {
+                            //var image = {
+                            //    instanceUID: DicomHelper.getDicomTagValue(cellFrame.metadata, DicomTag.SOPInstanceUID),
+                            //    imageUrl: config.urls.baseServiceUrl + result,
+                            //    note: ''
+                            //}
+                            console.log(result);
+                            consultationConnection.invoke("SendMessage", result).catch(function (err) {
+                                return console.error(err.toString());
+                            });
+                            //var url = document.location.protocol + "//" + document.location.host + "/MedicalViewerServiceAsp20/" + result;
+                            //    $scope.consultationComment.consultationCommentImages.push(image);
+                            //    self.UpdateImageGrid();
+                            //    $scope.consultationComment.comment += '?nh s? ' + cellFrame.Instance.InstanceNumber + ':\r\n';
+                        });
+                        if (lt.LTHelper.OS == lt.LTOS.iOS && lt.LTHelper.device != lt.LTDevice.mobile) {
+                            //newTab.location.href = downloadImageUrl;
+                            //newTab.focus();
+                        }
+                        else {
+                            //window.location.href = downloadImageUrl;
+                        }
+                    }, function (error) {
+                    });
+                }
+                else {
+                    var downloadImageUrl = objectRetrieveService.GetConclusionImage(cellFrame, null, 0, 0, 150, 150, JSON.stringify(ipArray))
+                        .success(function (result) {
+                        //var image = {
+                        //    instanceUID: DicomHelper.getDicomTagValue(cellFrame.metadata, DicomTag.SOPInstanceUID),
+                        //    imageUrl: config.urls.baseServiceUrl + result,
+                        //    note: ''
+                        //}
+                        consultationConnection.invoke("SendMessage", result).catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    });
+                    if (lt.LTHelper.OS == lt.LTOS.iOS && lt.LTHelper.device != lt.LTDevice.mobile) {
+                        //newTab.location.href = downloadImageUrl;
+                        //newTab.focus();
+                    }
+                    else {
+                        //window.location.href = downloadImageUrl;
+                    }
+                }
+            };
             if (overflowSize > 150)
                 overflowSize = 150;
             $scope.layoutConfig = {
@@ -38334,6 +38463,11 @@ var Controllers;
             };
             hotkeys.bindTo($scope)
                 .add({
+                combo: 'space',
+                description: 'Get current image',
+                callback: $scope.getCurrentImage
+            })
+                .add({
                 combo: ['+', 'down'],
                 description: 'Next Image',
                 callback: $scope.nextImage
@@ -38622,7 +38756,7 @@ var Controllers;
         };
         ViewerController.$inject = ['$scope', 'eventService', 'toolbarService', '$modal', 'tabService', 'optionsService', 'dataService',
             'seriesManagerService', 'safeApply', 'app.config', 'hotkeys', '$timeout', '$commangular', 'auditLogService',
-            'objectRetrieveService', 'dicomLoaderService', 'templateService'];
+            'objectRetrieveService', 'dicomLoaderService', 'templateService', 'exportManagerService'];
         return ViewerController;
     }());
     Controllers.ViewerController = ViewerController;
