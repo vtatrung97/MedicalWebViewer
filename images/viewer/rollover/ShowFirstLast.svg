@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="ShowFirstLast">
-	<path style="fill:#E1EFFF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z"/>
-	<path style="fill:#1C1E21;" d="M32.56,33.512H17.44c-0.526,0-0.952-0.426-0.952-0.952V17.44c0-0.526,0.426-0.952,0.952-0.952H32.56
-		c0.526,0,0.952,0.426,0.952,0.952V32.56C33.512,33.085,33.085,33.512,32.56,33.512z M18.393,31.607h13.214V18.393H18.393V31.607z"
-		/>
-	<path style="fill:#1C1E21;" d="M36.905,19.206c-0.526,0-0.952-0.426-0.952-0.952v-4.206h-4.206c-0.526,0-0.952-0.426-0.952-0.952
-		c0-0.526,0.426-0.952,0.952-0.952h5.159c0.526,0,0.952,0.426,0.952,0.952v5.159C37.857,18.78,37.431,19.206,36.905,19.206z"/>
-	<path style="fill:#1C1E21;" d="M18.254,37.857h-5.159c-0.526,0-0.952-0.426-0.952-0.952v-5.159c0-0.526,0.426-0.952,0.952-0.952
-		c0.526,0,0.952,0.426,0.952,0.952v4.206h4.206c0.526,0,0.952,0.426,0.952,0.952S18.78,37.857,18.254,37.857z"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1{stroke:#232323;stroke-miterlimit:10;stroke-width:1.8px;fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="306" y1="32.34" x2="306" y2="579.66" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fafafa"/><stop offset="1" stop-color="#ebebeb"/></linearGradient></defs><path id="ShowFirstLast" class="cls-1" d="M466.81,124.82H145.17a20.27,20.27,0,0,0-20.26,20.27V466.9a20.27,20.27,0,0,0,20.26,20.27H466.81a20.27,20.27,0,0,0,20.26-20.27V145.09A20.26,20.26,0,0,0,466.81,124.82Zm-20.26,321.8H165.43V165.36H446.55ZM559.26,32.34H449.51a20.27,20.27,0,1,0,0,40.54H539v89.54a20.26,20.26,0,1,0,40.52,0V52.61A20.27,20.27,0,0,0,559.26,32.34ZM162.49,539.12H73V449.58a20.26,20.26,0,1,0-40.52,0V559.39a20.27,20.27,0,0,0,20.26,20.27H162.49a20.27,20.27,0,0,0,0-40.54Z"/></svg>

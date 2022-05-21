@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="Point">
-	<path style="fill:#E1EFFF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z"/>
-	<path style="fill:#1C1E21;" d="M25,37.857c-7.089,0-12.857-5.768-12.857-12.857S17.911,12.143,25,12.143S37.857,17.911,37.857,25
-		S32.089,37.857,25,37.857z M25,14.048c-6.039,0-10.952,4.913-10.952,10.952c0,6.039,4.913,10.952,10.952,10.952
-		c6.039,0,10.952-4.913,10.952-10.952C35.952,18.961,31.039,14.048,25,14.048z"/>
-	<circle style="fill:#1C1E21;" cx="25" cy="25" r="2.619"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1{stroke:#232323;stroke-miterlimit:10;stroke-width:1.31px;fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="306" y1="31.55" x2="306" y2="580.45" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fafafa"/><stop offset="1" stop-color="#ebebeb"/></linearGradient></defs><path id="Point" class="cls-1" d="M306,31.55C153.91,31.55,30.18,154.67,30.18,306S153.91,580.45,306,580.45,581.82,457.33,581.82,306,458.09,31.55,306,31.55Zm0,508.24C176.45,539.79,71,434.91,71,306S176.45,72.21,306,72.21,541,177.09,541,306,435.55,539.79,306,539.79Zm0-289.69A55.9,55.9,0,1,0,362.19,306,56,56,0,0,0,306,250.1Z"/></svg>

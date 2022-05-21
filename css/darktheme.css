@@ -370,7 +370,7 @@ span.fancytree-title {
     background-color: #151515 !important;
 }
 .ToolBar {
-    height: 84px !important;
+    height: 60px !important;
     width: 100%;
 }
 
@@ -403,11 +403,11 @@ span.fancytree-title {
     cursor: pointer;
     margin-top: 4px;
     display: inline-block;
-    width: 50px;
+    width: 35px;
     float: left;
     font-family: Montserrat, sans-serif;
     color: #fff;
-    font-size: 11px;
+    font-size: 9px;
     font-style: normal;
     font-weight: normal;
     text-shadow: 0 1px 0 #252525;
@@ -418,6 +418,10 @@ span.fancytree-title {
     overflow: hidden;
     text-overflow: ellipsis;
     /*letter-spacing: 0.15em;*/
+}
+
+.btn-group .toolBarItemText {
+    width: 62px;
 }
 
 .menuItemText2 {
@@ -2238,7 +2242,7 @@ button.toolbar-button {
    background-color: #151515;
    border-radius: 7px !important;
    border: 1px;
-   margin: 7px 5px;
+   margin: 3px 5px;
 }
 
 .btn-group > .btn + .dropdown-toggle {
@@ -3248,7 +3252,11 @@ a.list-group-item {
 
 
 /*=========================================================================================== DELTA - FIX - BUTTON VIEWER */
-
+.box-primary-background {
+    background: #4d4d4d;
+    border: 1px solid #282828;
+    box-shadow: inset 0px 1px 0px #636363;
+}
 
 .logo {
     background-image: url('../images/viewer/logodelta.svg');
@@ -3284,4 +3292,40 @@ a.list-group-item {
     background-image: linear-gradient(to bottom,#333333 0,#333333 100%);
     background-repeat: repeat-x;
     background-color: #333333;
+}
+
+.ui-layout-north .config-toolbar button {
+   font-size: 20px;
+    color: white;
+    text-shadow: 1px 1px 1px #282828;
+    height: 100%;
+    width: 100%;
+    background: #4d4d4d;
+    border: 1px solid #282828;
+    box-shadow: inset 0px 1px 0px #636363;
+}
+
+.scroll-button-left {
+    z-index: 1000;
+    background: #4d4d4d;
+    border: 1px solid #282828;
+    box-shadow: inset -1px 1px 0px 0px #636363;
+    color: white;
+}
+
+.scroll-button-right {
+    z-index: 3000;
+    background: #4d4d4d;
+    border: 1px solid #282828;
+    box-shadow: inset 1px 1px 0px 0px #636363;
+    color: white;
+}
+
+.scroll-body {
+    position: absolute;
+    overflow: visible;
+    background: #333333;
+    border: 1px solid #282828;
+    box-shadow: inset 0px 1px 0px #636363;
+    padding: 1px 0;
 }

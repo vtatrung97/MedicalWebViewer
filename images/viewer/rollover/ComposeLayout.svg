@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="ComposeLayout">
-	<path style="fill:#E1EFFF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z"/>
-	<path style="fill:#1C1E21;" d="M19.337,37.857h-6.242c-0.526,0-0.952-0.426-0.952-0.952v-6.242c0-0.253,0.1-0.495,0.279-0.673
-		L29.99,12.422c0.357-0.357,0.99-0.357,1.347,0l6.242,6.242c0.372,0.372,0.372,0.975,0,1.347L20.01,37.578
-		C19.832,37.757,19.59,37.857,19.337,37.857z M14.048,35.952h4.895l16.616-16.615l-4.895-4.895L14.048,31.057V35.952z"/>
-	<path style="fill:#1C1E21;" d="M32.228,24.966c-0.244,0-0.487-0.093-0.673-0.279l-6.242-6.242c-0.372-0.372-0.372-0.975,0-1.347
-		c0.372-0.372,0.975-0.372,1.347,0l6.242,6.242c0.372,0.372,0.372,0.975,0,1.347C32.715,24.873,32.472,24.966,32.228,24.966z"/>
-	<path style="fill:#1C1E21;" d="M36.905,37.857h-23.81c-0.526,0-0.952-0.426-0.952-0.952s0.426-0.952,0.952-0.952h23.81
-		c0.526,0,0.952,0.426,0.952,0.952S37.431,37.857,36.905,37.857z"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1,.cls-2,.cls-3,.cls-4{stroke:#232323;stroke-miterlimit:10;stroke-width:1.31px;}.cls-1{fill:url(#linear-gradient);}.cls-2{fill:url(#linear-gradient-2);}.cls-3{fill:url(#linear-gradient-3);}.cls-4{fill:url(#linear-gradient-4);}</style><linearGradient id="linear-gradient" x1="288.28" y1="66.36" x2="288.28" y2="581.31" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fafafa"/><stop offset="1" stop-color="#ebebeb"/></linearGradient><linearGradient id="linear-gradient-2" x1="484.6" y1="74.39" x2="484.6" y2="179.51" xlink:href="#linear-gradient"/><linearGradient id="linear-gradient-3" x1="522.63" y1="30.97" x2="522.63" y2="147.82" xlink:href="#linear-gradient"/><linearGradient id="linear-gradient-4" x1="323.77" y1="100.61" x2="323.77" y2="474.76" xlink:href="#linear-gradient"/></defs><path class="cls-1" d="M524.71,391.16a21.23,21.23,0,0,0-21.24,21.21v94.72A31.88,31.88,0,0,1,471.6,538.9H105A31.89,31.89,0,0,1,73.1,507.09V140.6A31.88,31.88,0,0,1,105,108.79h33.86a21.22,21.22,0,1,0,0-42.43H105A74.39,74.39,0,0,0,30.6,140.6V507.09A74.38,74.38,0,0,0,105,581.31H471.6A74.38,74.38,0,0,0,546,507.09V412.37A21.23,21.23,0,0,0,524.71,391.16Z"/><polygon class="cls-2" points="537.52 169.68 537.49 169.71 527.68 179.51 463.32 116.5 463.24 116.43 431.69 85.21 442.21 74.69 442.24 74.68 442.27 74.65 442.5 74.39 537.52 169.68"/><polygon class="cls-3" points="581.11 126.28 574.5 132.85 574.47 132.88 559.51 147.82 497.09 85.69 494.26 82.87 464.15 52.9 479.19 37.86 479.22 37.85 479.25 37.82 486.14 30.97 581.11 126.28"/><path class="cls-4" d="M511.14,195.53,265,441.43a21,21,0,0,1-9,5.34l-92.31,27.12a21.23,21.23,0,0,1-26.37-26.33l27.14-92.12a21.17,21.17,0,0,1,5.35-9l246-245.82,30.11,30,2.83,2.82Z"/></svg>

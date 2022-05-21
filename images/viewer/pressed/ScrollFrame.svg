@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-<g id="ScrollFrame">
-	<path style="fill:#E1EFFF;" d="M25,50C11.215,50,0,38.785,0,25C0,11.215,11.215,0,25,0c13.785,0,25,11.215,25,25
-		C50,38.785,38.785,50,25,50z"/>
-	<path style="fill:#1C1E21;" d="M36.905,29.762h-23.81c-0.526,0-0.952-0.426-0.952-0.952V13.095c0-0.526,0.426-0.952,0.952-0.952
-		h23.81c0.526,0,0.952,0.426,0.952,0.952V28.81C37.857,29.335,37.431,29.762,36.905,29.762z M14.048,27.857h21.905v-13.81H14.048
-		V27.857z"/>
-	<circle style="fill:#1C1E21;" cx="25" cy="34.494" r="2.411"/>
-	<circle style="fill:#1C1E21;" cx="17.649" cy="34.494" r="1.507"/>
-	<circle style="fill:#1C1E21;" cx="32.351" cy="34.494" r="1.507"/>
-</g>
-<g id="Layer_1">
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612 612"><defs><style>.cls-1{stroke:#232323;stroke-miterlimit:10;stroke-width:1.81px;fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="306" y1="40.23" x2="306" y2="571.77" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fafafa"/><stop offset="1" stop-color="#ebebeb"/></linearGradient></defs><path id="ScrollFrame" class="cls-1" d="M561.43,40.23H50.58A20.45,20.45,0,0,0,30.14,60.67V398a20.45,20.45,0,0,0,20.44,20.45H561.42A20.45,20.45,0,0,0,581.86,398V60.67A20.44,20.44,0,0,0,561.43,40.23ZM541,377.57H71V81.12H541V377.57ZM306,468.28A51.75,51.75,0,1,0,357.72,520,51.72,51.72,0,0,0,306,468.28ZM148.27,487.7a32.35,32.35,0,1,0,32.33,32.35A32.33,32.33,0,0,0,148.27,487.7Zm315.46,0a32.35,32.35,0,1,0,32.32,32.35A32.33,32.33,0,0,0,463.73,487.7Z"/></svg>
