@@ -1,13 +1,29 @@
 ﻿<div class="modal-header">
-    <button type="button" class="close" ng-click="no()">&times;</button>
-    <h4 class="modal-title">
-        <span ng-class="icon"></span> {{ header }}
-    </h4>
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50"><span ng-class="icon"></span> {{ header }}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
 </div>
-<div class="modal-body" ng-bind-html="msg">
+
+<div class="modal-body">
+    <div class="form-column">
+        <div ng-bind-html="msg"></div>
+    </div>
 </div>
+
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="yes()">{{"DIALOGS_YES" | translate}}</button>
-    <button type="button" class="btn btn-primary" ng-click="no()">{{"DIALOGS_NO" | translate}}</button>
-    <button type="button" class="btn btn-primary" ng-click="cancel()">{{"DIALOGS_CANCEL" | translate}}</button>
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="yes()">{{"DIALOGS_YES" | translate}}</a>
+        <a class="form-btn" ng-click="no()">{{"DIALOGS_NO" | translate}}</a>
+        <a class="form-btn" ng-click="cancel()">{{"DIALOGS_CANCEL" | translate}}</a>
+    </div>
 </div>

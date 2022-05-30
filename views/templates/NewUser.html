@@ -1,21 +1,33 @@
-﻿<form name="newUserForm" ng-controller="Controllers.NewUserController" novalidate>
-    <div class="form-group">
-        <label for="username">User Name:</label>
-        <input type="text" class="text-field" id="username" placeholder="" ng-model="username" required>
+﻿<form class="flex-column scroll-auto" name="newUserForm" ng-controller="Controllers.NewUserController" novalidate>
+    <div class="form-horizontal form-rise">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="username">User Name:</label>
+            <div class="col-md-9">
+                <input type="text" class="text-field" id="username" placeholder="" ng-model="username" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="newUserPassword" ng-hide="validateOnAd||validateOnIdP">Password:</label>
+            <div class="col-md-9">
+                <input type="password" class="text-field" id="newUserPassword" placeholder="" ng-model="password" ng-hide="validateOnAd||validateOnIdP" ng-disabled="validateOnAd||validateOnIdP" ng-required="enablePassword()">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="confirmPassword" ng-hide="validateOnAd||validateOnIdP">Confirm Password:</label>
+            <div class="col-md-9">
+                <input type="password" class="text-field" id="confirmPassword" ng-model="confirmPassword" placeholder="" ng-hide="validateOnAd||validateOnIdP" ng-disabled="validateOnAd||validateOnIdP" ng-required="" pwd-confirm="newUserPassword">
+            </div>
+        </div>
     </div>
+    <div class="form-group"></div>
     <div class="form-group">
-        <label for="newUserPassword" ng-hide="validateOnAd||validateOnIdP">Password:</label>
-        <input type="password" class="text-field" id="newUserPassword" placeholder="" ng-model="password" ng-hide="validateOnAd||validateOnIdP" ng-disabled="validateOnAd||validateOnIdP" ng-required="enablePassword()">
+        <div class="flex-row">
+            <div class="flex-horizontal"></div>
+            <a class="form-btn" ng-disabled="newUserForm.$invalid" ng-click="createUser(username,password,validateOnAd,validateOnIdP)">Create</a>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="confirmPassword" ng-hide="validateOnAd||validateOnIdP">Confirm Password:</label>
-        <input type="password" class="text-field" id="confirmPassword" ng-model="confirmPassword" placeholder="" ng-hide="validateOnAd||validateOnIdP" ng-disabled="validateOnAd||validateOnIdP" ng-required="" pwd-confirm="newUserPassword">
-    </div>
-    <div class="form-group">
-        <a class="form-btn" ng-disabled="newUserForm.$invalid" ng-click="createUser(username,password,validateOnAd,validateOnIdP)">Create</a>
-    </div>
-    <div class="form-group">
-       <label style="margin-top: 15px;"><input id='checkboxAD' type='checkbox' value='AD' ng-model="validateOnAd"> Active Directory Authentication </input> </label>
-       <label style="margin-top: 15px;"><input id='checkboxIdP' type='checkbox' value='IdP' ng-model="validateOnIdP"> Federated IdP Authentication </input> </label>
+    <div class="form-group flex-column">
+        <label class=""><input id='checkboxAD' type='checkbox' value='AD' ng-model="validateOnAd"> Active Directory Authentication </input> </label>
+        <label class="" style="margin-top: 10px;"><input id='checkboxIdP' type='checkbox' value='IdP' ng-model="validateOnIdP"> Federated IdP Authentication </input> </label>
     </div>
 </form>

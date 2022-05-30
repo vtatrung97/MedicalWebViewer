@@ -1,19 +1,43 @@
-﻿<div class="modal-content">
-   <div class="modal-header">
-      <h3 class="modal-title" translate="DIALOGS_GLOBAL_OPTIONS_TITLE"></h3>
-   </div>
-   <div class="divider"></div>
-   <div class="modal-body" ng-keydown="keyDown($event)">
-      <div class="propGrid" propertygrid id="pg1" items="items" style="height: 250px; overflow:auto" on-property-changed="onPropertyChanged(name,value)" />
-
-      <div class="cine-buttons" role="toolbar">
-         <div>
-            <button type="button" id="optionsSaveButton" style="outline: none;" class="cine-controls save-button" ng-click="save($event)" data-toggle="tooltip" title="Save options" ng-disabled="!hasChanges()"></button>
-         </div>
-      </div>
-   </div>
-   <div class="divider"></div>
-   <div class="modal-footer">
-       <a class="form-btn" ng-click="close()" translate="DIALOGS_CLOSE"></a>
-   </div>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50" translate="DIALOGS_GLOBAL_OPTIONS_TITLE"></h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
 </div>
+
+<div class="modal-body">
+    <div class="form-column" style="height: auto">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <div class="propGrid" propertygrid id="pg1" items="items" style="overflow:auto" on-property-changed="onPropertyChanged(name,value)" />
+    </div>
+</div>
+
+<div class="flex-row box-primary-background bordert-no">
+    <div class="flex-row pd3-12 flex-grow flex-center h30">
+        <span class="font-weight-bold">Thanh chức năng: &nbsp</span>
+        <div class="" role="toolbar">
+
+            <button type="button" id="optionsSaveButton" class="button-light" ng-click="save($event)" data-toggle="tooltip" title="Save options" ng-disabled="!hasChanges()">
+                <i class="fa fa-save"></i>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="close()" translate="DIALOGS_CLOSE"></a>
+    </div>
+</div>
+

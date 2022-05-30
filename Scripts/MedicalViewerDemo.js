@@ -32595,7 +32595,8 @@ var Controllers;
                 var modalInstance = $modal.open({
                     templateUrl: 'views/dialogs/PermissionsManagement.html',
                     controller: Controllers.PermissionsManagementController,
-                    backdrop: 'static'
+                    backdrop: 'static',
+                    size: 'ep'
                 });
                 modalInstance.result.then(function (result) {
                     var tabId = __this.get_activeTabId();
@@ -35369,6 +35370,30 @@ var Controllers;
             _this._patientSelected = false;
             $scope.hpContextMenu = _this.hpContextMenu.bind(_this);
             $scope.handleCellClicked = _this.handleCellClicked.bind(_this);
+            $scope.queryModel = {
+                toDate: new Date(),
+            };
+            //$scope.queryModel.toDate = new Date();
+            $scope.queryModel.fromDate = _this.addDays($scope.queryModel.toDate, -1);
+            $scope.DateTypeChanged = function (dateType) {
+                switch (dateType) {
+                    case 'D':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -1);
+                        break;
+                    case '3D':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -3);
+                        break;
+                    case 'W':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -7);
+                        break;
+                    case '2W':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -14);
+                        break;
+                    case 'M':
+                        $scope.queryModel.fromDate = __this.addMonths($scope.queryModel.toDate, -1);
+                        break;
+                }
+            };
             $scope.gridOptions = {
                 rowSelection: 'single',
                 suppressNoRowsOverlay: true,
@@ -36277,6 +36302,21 @@ var Controllers;
                     remote: this._$scope.querySource.name == 'pacs'
                 });
             }
+        };
+        SearchViewController.prototype.addDays = function (date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        };
+        SearchViewController.prototype.addMonths = function (date, months) {
+            var result = new Date(date);
+            result.setMonth(result.getMonth() + months);
+            return result;
+        };
+        SearchViewController.prototype.addYears = function (date, years) {
+            var result = new Date(date);
+            result.setFullYear(result.getFullYear() + years);
+            return result;
         };
         SearchViewController.prototype.seriesSelected = function (data) {
             var selectedNodes = this._$scope.gridOptionsSeries.api.getSelectedNodes();
@@ -38067,7 +38107,7 @@ var Controllers;
                 north__showOverflowOnHover: true,
                 south__resizable: false,
                 south__initHidden: false,
-                south__size: 160,
+                south__size: 100,
                 south__resizerToggle: false,
                 south__spacing_closed: 0,
                 south__spacing_open: 0,

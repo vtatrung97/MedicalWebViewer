@@ -1,9 +1,23 @@
-﻿<div class="modal-content">
-    <div class="modal-header">
-        <h3 class="modal-title">{{title}}</h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal" name="form">
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{title}}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <form class="form-horizontal form-rise" name="form">
             <fieldset>
 
                 <div class="form-group" ng-show="isMprPlane()">
@@ -26,18 +40,18 @@
                 </div>
 
                 <div class="form-group" ng-show="!isMprPlane()">
-                        <label class="col-md-2 control-label" for="selectorAttribute">{{'SELECTOR' | translate}}&nbsp;{{'ATTRIBUTE' | translate}}:</label>
+                    <label class="col-md-2 control-label" for="selectorAttribute">{{'SELECTOR' | translate}}&nbsp;{{'ATTRIBUTE' | translate}}:</label>
 
-                        <div class="col-md-10" ng-class="{'has-error': !isSelectorAttributeValid()}">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon1">{{operation.SelectorName}}</span>
-                                <input id="selectorAttribute" type="text" readonly placeholder="" class="form-control input-md" ng-model="operation.WCFSelectorAttribute" />
-                                <span class="input-group-btn">
-                                    <a class="btn btn-default" type="button" ng-click="chooseTag()" title="Choose DICOM Tag"><i class="fa fa-tag"></i></a>
-                                </span>
-                            </div>
+                    <div class="col-md-10" ng-class="{'has-error': !isSelectorAttributeValid()}">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon1">{{operation.SelectorName}}</span>
+                            <input id="selectorAttribute" type="text" readonly placeholder="" class="form-control input-md" ng-model="operation.WCFSelectorAttribute" />
+                            <span class="input-group-btn">
+                                <a class="btn btn-default" type="button" ng-click="chooseTag()" title="Choose DICOM Tag"><i class="fa fa-tag"></i></a>
+                            </span>
                         </div>
                     </div>
+                </div>
 
                 <!--Error Message (SelectorAttribute)-->
                 <div class="form-group" ng-show="!isSelectorAttributeValid()">
@@ -48,43 +62,43 @@
                     </div>
                 </div>
 
-                    <div class="form-group" ng-show="!isMprPlane()">
-                        <label class="col-md-2 control-label"  for="selectorValue">{{'SELECTOR' | translate}}&nbsp;{{'VALUE' | translate}}:</label>
-                        <div class="col-md-10" ng-class="{'has-error': !isSelectorValueValid()}">
-                            <div class="input-group">
-                                <input id="selectorValue" type="text" placeholder="" class="form-control input-md" ng-model="operation.SelectorValue" ng-disabled="isSequence()" />
-                                <span class="input-group-btn">
-                                    <a class="btn btn-default" type="button" ng-click="editCodeSequence()" title="Edit Code Sequence" ng-disabled="!isSequence()"><i class="fa fa-pencil"></i></a>
-                                </span>
-                            </div>
+                <div class="form-group" ng-show="!isMprPlane()">
+                    <label class="col-md-2 control-label" for="selectorValue">{{'SELECTOR' | translate}}&nbsp;{{'VALUE' | translate}}:</label>
+                    <div class="col-md-10" ng-class="{'has-error': !isSelectorValueValid()}">
+                        <div class="input-group">
+                            <input id="selectorValue" type="text" placeholder="" class="form-control input-md" ng-model="operation.SelectorValue" ng-disabled="isSequence()" />
+                            <span class="input-group-btn">
+                                <a class="btn btn-default" type="button" ng-click="editCodeSequence()" title="Edit Code Sequence" ng-disabled="!isSequence()"><i class="fa fa-pencil"></i></a>
+                            </span>
                         </div>
                     </div>
+                </div>
 
-                    <!--Error Message (SelectorValue)-->
-                    <div class="form-group" ng-show="!isSelectorValueValid()">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
-                            <!--<label class="text-danger" style="color:red">{{getSelectorValueError()}}</label>-->
-                            <div class="text-danger">{{getSelectorValueError()}}</div>
-                        </div>
+                <!--Error Message (SelectorValue)-->
+                <div class="form-group" ng-show="!isSelectorValueValid()">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <!--<label class="text-danger" style="color:red">{{getSelectorValueError()}}</label>-->
+                        <div class="text-danger">{{getSelectorValueError()}}</div>
                     </div>
+                </div>
 
-                    <div class="form-group" ng-show="!isMprPlane()">
-                        <label class="col-md-2 control-label" for="selectorValue">{{'SELECTOR' | translate}}&nbsp;{{'INDEX' | translate}}:</label>
-                        <div class="col-md-10" ng-class="{'has-error': !isSelectorIndexValid()}">
-                            <input id="selectorValueNumber" type="text" placeholder="#" maxlength="1" class="form-control input-md" ng-model="operation.SelectorValueNumber" />
-                        </div>
+                <div class="form-group" ng-show="!isMprPlane()">
+                    <label class="col-md-2 control-label" for="selectorValue">{{'SELECTOR' | translate}}&nbsp;{{'INDEX' | translate}}:</label>
+                    <div class="col-md-10" ng-class="{'has-error': !isSelectorIndexValid()}">
+                        <input id="selectorValueNumber" type="text" placeholder="#" maxlength="1" class="form-control input-md" ng-model="operation.SelectorValueNumber" />
                     </div>
+                </div>
 
-                    <!--Error Message (SelectorIndex)-->
-                    <div class="form-group" ng-show="!isSelectorIndexValid()">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
-                            <div class="text-danger">{{getSelectorIndexError()}}</div>
-                        </div>
+                <!--Error Message (SelectorIndex)-->
+                <div class="form-group" ng-show="!isSelectorIndexValid()">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="text-danger">{{getSelectorIndexError()}}</div>
                     </div>
+                </div>
 
-                <div class="form-group"  ng-show="!isMprPlane()">
+                <div class="form-group" ng-show="!isMprPlane()">
                     <label class="col-md-2 control-label" for="imageSetSelectorUsageFlag">Selector Usage:</label>
                     <div class="col-md-10">
                         <select id="imageSetSelectorUsageFlag" name="imageSetSelectorUsageFlag" placeholder="Transverse" class="form-control" ng-model="operation.ImageSetSelectorUsageFlag">
@@ -101,11 +115,14 @@
                     </div>
                 </div>
 
-</fieldset>
+            </fieldset>
         </form>
     </div>
-    <div class="modal-footer">
-        <a class="btn btn-default" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isFormValid()"></a>
-        <a class="btn btn-default" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isFormValid()"></a>
+        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
     </div>
 </div>

@@ -1,32 +1,43 @@
-﻿<style>
-    .em {
-        font-style: italic;
-    }
-</style>
-<div class="modal-content">
-   <div class="modal-header">
-      <h3 class="modal-title">{{ "USER" | translate}}&nbsp;{{ "PATIENT" | translate}}&nbsp;{{ "RIGHTS" | translate}}</h3>
-   </div>
-   <div class="divider"></div>
-   <div class="modal-body">
-      <form class="form-inline" style="margin-bottom:5px">
-         <label for="user" class="control-label">{{ "USER" | translate}}:</label>
-         <div class="form-group">
-            <div>
-               <div class="input-group">
-                  <select id="user" class="study-dropdown w-dropdown" ng-model="user.name" ng-options="u for u in users" ng-change="userChanged(user.name)" force-blur>
-                     <option value=''>{{ "SELECT" | translate}}&nbsp;{{ "USER" | translate}}</option>
-                  </select>
-               </div>
-            </div>
-         </div>
-      </form>
-      <div id="patients" ui-grid="gridOptions" class="grid disabled" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
-      <div class="alert alert-warning" role="alert" style="margin-top: 5px; margin-bottom: 0px">{{"USER_PATIENT_RIGHTS_NOTE" | translate}}</div>
-   </div>
-   <div class="divider"></div>
-   <div class="modal-footer">
-      <button class="form-btn" ng-click="applyPermissions()"><i style="font-style: normal;">{{ "APPLY_PERMISSIONS" | translate}}</i></button>
-      <a class="form-btn" ng-click="close()">{{ "DIALOGS_CLOSE" | translate}}</a>
-   </div>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{ "USER" | translate}}&nbsp;{{ "PATIENT" | translate}}&nbsp;{{ "RIGHTS" | translate}}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
 </div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <form class="form-horizontal form-rise">
+            <div class="form-group">
+                <label for="user" class="col-md-3 control-label">{{ "USER" | translate}}:</label>
+                <div class="col-md-9">
+                    <select id="user" class="text-select" ng-model="user.name" ng-options="u for u in users" ng-change="userChanged(user.name)" force-blur>
+                        <option value=''>{{ "SELECT" | translate}}&nbsp;{{ "USER" | translate}}</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <div class="divider_secon"></div>
+        <div id="patients" ui-grid="gridOptions" class="grid disabled" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
+        <div class="pd-2 mart-7 color-secondary" role="alert" style="margin-top: 5px; margin-bottom: 0px">{{"USER_PATIENT_RIGHTS_NOTE" | translate}}</div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="applyPermissions()">{{ "APPLY_PERMISSIONS" | translate}}</a>
+        <a class="form-btn" ng-click="close()" translate="DIALOGS_CLOSE"></a>
+    </div>
+</div>
+
+

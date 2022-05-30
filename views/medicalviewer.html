@@ -1,16 +1,102 @@
-﻿<tabset id="ltTabWrapper" class="vbox boxItem" style="height:100%; width:100%">
-    <tab class="vbox boxItem" ng-repeat="tab in tabs" active="tab.active" disabled="tab.disabled" select="tabSelected(tab)" ng-show="tab.visible">
-        <tab-heading>
-            {{tab.title}} <button ng-show="tab.canDelete" ng-click="deleteTab(tab.id, $event)" class="tab-button"><span class="fa fa-times"></span></button>
-        </tab-heading>
-        <div class="vbox boxItem" ng-include="tab.templateUrl" ng-controller="tab.controller" ng-init="tabId=tab.id" ng-show="tab.visible" style="width:100%"></div>
-    </tab>
-    <li class="dropdown pull-right" ng-show="isNotTempOrExter()">
-        <a class="dropdown-toggle" href="javascript:void(0)">{{ user }}<b class="caret"></b></a>
+﻿<tabset id="ltTabWrapper" class="vbox boxItem" style="height:100%; width:100%;">
+    <div class="nav-logo">
+        <img src="./images/viewer/logodelta.svg" />
+    </div>
+    <div class="nav-item">
+        <tab class="" ng-repeat="tab in tabs" active="tab.active" disabled="tab.disabled" select="tabSelected(tab)" ng-show="tab.visible">
+            <tab-heading>
+                <span class="space-normal">{{tab.title}}</span>
+                <button ng-show="tab.canDelete" ng-click="deleteTab(tab.id, $event)" class="tab-button"><span class="fa fa-times"></span></button>
+            </tab-heading>
+            <div class="vbox boxItem" ng-include="tab.templateUrl" ng-controller="tab.controller" ng-init="tabId=tab.id" ng-show="tab.visible" style="width:100%"></div>
+        </tab>
+    </div>
+    <div class="marl-auto"></div>
+    <div class="nav-items">
+        <a href="javascript:void(0)" ng-click="getCurrentTasks()">
+            <div class="nav_item box-primary-background bordertb-no">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+                <span class="nav-box-number" ng-if="(tasks|filter:PerformedProcedureStepStatus=='IN PROGRESS').length>0">
+                    <span class="nav-number">
+                        {{tasks.length}}
+                    </span>
+                </span>
+            </div>
+        </a>
+    </div>
+    <div class="nav-items">
+        <a class="bell-func dropdown-toggle" href="javascript:void(0)" name="notify" id="menu1" type="button" data-toggle="dropdown">
+            <div class="nav_item box-primary-background bordertb-no">
+                <i class="fa fa-bell"></i>
+                <span class="nav-box-number" ng-if="(notifications|filter:IsRead==false).length>0">
+                    <span class="nav-number">
+                        {{(notifications|filter:IsRead==false).length}}
+                    </span>
+                </span>
+            </div>
+        </a>
+        <div class="dropdown-menu dropdown-bell arrowr_box" role="menu" aria-labelledby="menu1">
+            <h6>Thông báo</h6>
+            <div class="scroll-tertiary" style="background: #f4f7ff;">
+                <ul class="">
+                    <li role="presentation" ng-repeat="notification in notifications| limitTo:8">
+                        <a role="menuitem" tabindex="-1" ng-click="doProcessNotification(notification.Id, notification.StudyInstanceUID)" class="bell-drop-box">
+                            <div class="bell-drop-img">
+                                <img src="./images/viewer/logo-50.png" />
+                            </div>
+                            <div class="bell-drop-content">
+                                <span>{{notification.SentFrom}}&nbsp;{{notification.ActionName | translate}}</span>
+                                <e style="font-weight: 600;color: #5a616b;"><i class="fa fa-clock-o"></i>&nbsp;{{notification.SendTime  | date:"dd/MM/yyyy h:mma"}}</e>
+                            </div>
+                            <div class="bell-drop-check">
+                                <i class="fa fa-exclamation-circle" ng-if="!notification.IsRead" title="Chưa xem" style="color: red"></i>
+                                <i class="fa fa-check-circle" ng-if="notification.IsRead" title="Đã xem" style="color: #0087ff"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <h6 class="text-center">
+                <a href="javascript:void(0)" ng-click="doShowListNotification()" class="card-link">{{'SeeAll'|translate}}</a>
+            </h6>
+        </div>
+    </div>
+    <div class="nav-items" title="{{'CreateImagingServiceRequest' | translate}}">
+        <a href="javascript:void(0)" ng-click="doCreateImagingServiceRequest()" ng-show="canCreateWorklist()">
+            <div class="nav_item box-primary-background bordertb-no">
+                <span class="dis-m-none">{{ 'CreateImagingServiceRequest' | translate}}&nbsp;</span>
+                <i class="fa fa-plus"></i>
+            </div>
+        </a>
+    </div>
+    <div class="nav-items" title="{{'UPLOAD' | translate}}">
+        <a href="javascript:void(0)" ng-click="doUpload(this.files)" ng-show="canStore()">
+            <div class="nav_item box-primary-background bordertb-no">
+                <span class="dis-m-none">{{ 'UPLOAD' | translate}}&nbsp;</span>
+                <i class="fa fa-upload"></i>
+            </div>
+        </a>
+    </div>
+
+    <div class="nav-items" title="{{'ADMIN' | translate}}">
+        <a class="dropdown-toggle" href="javascript:void(0)" name="notify" id="menu2" type="button" data-toggle="dropdown">
+            <div class="nav_item box-primary-background bordertb-no">
+                <span>{{ user }}</span>
+                <b class="caret"></b>
+            </div>
+        </a>
         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openChangePassword()" ng-show="isAdmin()">{{ 'PASSWORD' | translate}}</a></li>
-            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openPermissionsManagement()" ng-show="canManagePermissions()">{{ 'PERMISSIONS' | translate}}&nbsp;{{ 'MANAGEMENT' | translate}}</a></li>
+            <div class="arrowr_box"></div>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openGeneralInformation()" ng-show="isAdmin()">{{ 'GeneralInformation' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openCategoriesManagement()" ng-show="isAdmin()"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;{{ 'CategoriesManagement' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openStatisticInformation()" ng-show="isAdmin()"><i class="fa fa-pie-chart"></i>&nbsp;{{ 'StatisticInformation' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openChangeUserInformation()"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{ 'CHANGEUSERINFORMATION' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openChangePassword()" ng-show="isAdmin()"><i class="fa fa-eye-slash" aria-hidden="true"></i>&nbsp;{{ 'CHANGEPASSWORD' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openPermissionsManagement()" ng-show="canManagePermissions()"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;{{ 'PermissionsManagement' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openActivityLog()" ng-show="isAdmin()"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ 'ACTIVITYLOG' | translate}}</a></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openConclusionTemplate()" ng-show="isAdmin()"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ 'ConclusionTemplateManagement' | translate}}</a></li>
             <li class="divider" ng-show="canManageAccessRights()"></li>
+            <li><a href="javascript:void(0)" tabindex="-1" ng-click="openPatientManagement()" ng-show="isAdmin()"><i class="fa fa-bed" aria-hidden="true"></i>&nbsp;{{ 'PatientManagement' | translate}}</a></li>
             <li><a href="javascript:void(0)" tabindex="-1" ng-click="openRolePatientsAccessManagement()" ng-show="canManageAccessRights()">{{ "ROLE" | translate}}&nbsp;{{ "PATIENT" | translate}}&nbsp;{{ "RIGHTS" | translate}}</a></li>
             <li><a href="javascript:void(0)" tabindex="-1" ng-click="openUserPatientsAccessManagement()" ng-show="canManageAccessRights()">{{ "USER" | translate}}&nbsp;{{ "PATIENT" | translate}}&nbsp;{{ "RIGHTS" | translate}}</a></li>
             <li class="divider" ng-show="canManagePermissions() && !canManageRemotePacs()"></li>
@@ -19,6 +105,7 @@
             <li><a tabindex="-1" href="javascript:void(0)" ng-click="openAdminToolbar()" ng-show="isAdmin()">{{ 'CONFIG' | translate }}&nbsp;{{ 'ADMIN' | translate }}&nbsp;{{'TOOLBAR' | translate}}</a></li>
             <li><a tabindex="-1" href="javascript:void(0)" ng-click="clearCachedObjects()" ng-show="canDeleteCache()">{{ 'CLEAR' | translate }}&nbsp;{{ 'CACHE' | translate }}</a></li>
             <li class="divider" ng-show="canManageRemotePacs()"></li>
+            <li><a tabindex="-1" href="javascript:void(0)" ng-click="openHL7ConnectionNodeManagement()" ng-show="canManageRemotePacs()">{{ 'CONFIG' | translate }}&nbsp;{{ 'H7CONNECTIONNODE' | translate }}</a></li>
             <li><a tabindex="-1" href="javascript:void(0)" ng-click="openRemotePacs()" ng-show="canManageRemotePacs()">{{ 'CONFIG' | translate }}&nbsp;{{ 'REMOTE' | translate }}&nbsp;{{'PACS' | translate}}</a></li>
             <li><a tabindex="-1" href="javascript:void(0)" ng-click="openRemoteWado()" ng-show="canManageRemotePacs()">{{ 'CONFIG' | translate }}&nbsp;{{ 'REMOTE' | translate }}&nbsp;{{'WADO' | translate}}</a></li>
             <li class="divider" ng-show="canShowTemplates()"></li>
@@ -27,16 +114,13 @@
             <li class="divider" ng-show="canCalibrateMonitor()"></li>
             <li><a href="javascript:void(0)" ng-click="openAdminCalibration()" translate="CALIBRATE_MONITOR" ng-show="canCalibrateMonitor()"></a></li>
             <li class="divider" ng-show="canManagePermissions() || isAdmin()"></li>
+            <li><a href="javascript:void(0)" ng-click="openFeedBack()" translate="FeedBack"></a></li>
             <li><a href="javascript:void(0)" ng-click="logout()" translate="LOG_OUT"></a></li>
             <li class="divider" ng-show="true"></li>
             <li><a href="javascript:void(0)" ng-click="aboutDialog()" translate="ABOUTDIALOG"></a></li>
-
         </ul>
-    </li>
-    <li class="pull-right">
-        <a href="javascript:void(0)" ng-click="doUpload(this.files)" ng-show="canStore() && isNotTempOrExter()" style="border-top: 2px solid #5ba2f3">{{ 'UPLOAD' | translate}}&nbsp;<i class="fa fa-upload"></i></a>
-    </li>
-    <li class="pull-right">
-        <a href="javascript:void(0)" ng-click="doSend(this.files)" ng-show="canSharePatients() && canSend()" id="" style="border-top: 2px solid #5ba2f3">{{ 'EMAIL' | translate}}&nbsp;<i class="fa fa-envelope"></i></a>
-    </li>
+    </div>
+    <!--<li class="pull-right">
+        <a href="javascript:void(0)" ng-click="doGet()" ng-show="canSharePatients() && canGet()" id="" style="border-top: 2px solid #5ba2f3">{{ 'GET' | translate}}&nbsp;<i class="fa fa-envelope"></i></a>
+    </li>-->
 </tabset>

@@ -15,6 +15,9 @@ module Controllers {
         gridOptions: any;
         gridOptionsSeries: any;
 
+        DateTypeChanged(dateType: string);
+        selectedDateType: any;
+
         OnStudySearchError: Function;
         OnStudySearchSuccess: Function;
         patientids(value: string);
@@ -24,6 +27,8 @@ module Controllers {
         resize();
         hpContextMenu(data: any): void;
         handleCellClicked(data: any): void;
+
+        queryModel: any;
     }
 
     export class SearchViewController extends SearchController {
@@ -109,6 +114,37 @@ module Controllers {
 
             $scope.hpContextMenu = this.hpContextMenu.bind(this);
             $scope.handleCellClicked = this.handleCellClicked.bind(this);
+
+
+
+            $scope.queryModel = {
+                toDate: new Date(),
+            }
+
+            //$scope.queryModel.toDate = new Date();
+            $scope.queryModel.fromDate = this.addDays($scope.queryModel.toDate, -1);
+
+            $scope.DateTypeChanged = function (dateType: string) {
+                switch (dateType) {
+                    case 'D':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -1);
+                        break;
+                    case '3D':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -3);
+                        break;
+                    case 'W':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -7);
+                        break;
+                    case '2W':
+                        $scope.queryModel.fromDate = __this.addDays($scope.queryModel.toDate, -14);
+                        break;
+                    case 'M':
+                        $scope.queryModel.fromDate = __this.addMonths($scope.queryModel.toDate, -1);
+                        break;
+                }
+            }
+
+
 
             $scope.gridOptions = {
                 rowSelection: 'single',
@@ -1228,6 +1264,24 @@ module Controllers {
                     remote: this._$scope.querySource.name == 'pacs'
                 });
             }
+        }
+
+        private addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        private addMonths(date, months) {
+            var result = new Date(date);
+            result.setMonth(result.getMonth() + months);
+            return result;
+        }
+
+        private addYears(date, years) {
+            var result = new Date(date);
+            result.setFullYear(result.getFullYear() + years);
+            return result;
         }
 
         private seriesSelected(data) {

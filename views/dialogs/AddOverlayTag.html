@@ -1,46 +1,54 @@
-﻿<div class="modal-content">
-    <div class="modal-header">        
-        <h3 class="modal-title">{{'DIALOGS_ADD_OVERLAY_TAG_TITLE' | translate}}</h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal">
-            <fieldset>                
-                <!-- Select Basic -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="overlayType">Overlay Type:</label>
-                    <div class="col-md-4">
-                        <select id="overlayType" name="overlayType" class="study-dropdown w-dropdown" ng-model="overlay.item" ng-options="type.name for type in types track by type.id"></select>
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Title:</label>
-                    <div class="col-md-4">
-                        <input id="title" name="title" type="text" placeholder="" class="text-field" ng-model="tag.title" ng-disabled="!isUserData(overlay.item.id)">
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="tag">Tag:</label>
-                    <div class="col-md-4">
-                        <input id="tag" name="tag" type="text" placeholder="" class="text-field" ng-model="tag.tag" ng-disabled="!isUserData(overlay.item.id)">
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="color">Color:</label>
-                    <div class="col-md-4">
-                        <input colorpicker="hex" id="color" name="color" type="text" placeholder="" class="text-field" ng-model="tag.color">
-                    </div>
-                </div>
-            </fieldset>
-        </form> 
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{'DIALOGS_ADD_OVERLAY_TAG_TITLE' | translate}}</h4>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <div class="form-horizontal form-rise">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="overlayType">Overlay Type:</label>
+                <div class="col-md-4">
+                    <select id="overlayType" name="overlayType" class="study-dropdown w-dropdown" ng-model="overlay.item" ng-options="type.name for type in types track by type.id"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="title">Title:</label>
+                <div class="col-md-4">
+                    <input id="title" name="title" type="text" placeholder="" class="text-field" ng-model="tag.title" ng-disabled="!isUserData(overlay.item.id)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="tag">Tag:</label>
+                <div class="col-md-4">
+                    <input id="tag" name="tag" type="text" placeholder="" class="text-field" ng-model="tag.tag" ng-disabled="!isUserData(overlay.item.id)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="color">Color:</label>
+                <div class="col-md-4">
+                    <input colorpicker="hex" id="color" name="color" type="text" placeholder="" class="text-field" ng-model="tag.color">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
         <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK"></a>
+        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CLOSE"></a>
     </div>
 </div>

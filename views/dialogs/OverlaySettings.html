@@ -1,35 +1,63 @@
-﻿<div class="modal-content">
-   <div class="modal-header">
-      <h3 class="modal-title">Overlay Settings</h3>
-   </div>
-   <div class="divider"></div>
-   <div class="modal-body">
-      <label for="position" class="control-label">Position:</label>
-      <select class="study-dropdown w-dropdown" id="position" ng-model="position.value" style="margin-bottom: 5px !important">
-         <option value="topLeft">Top Left</option>
-         <option value="centerTop">Top Center</option>
-         <option value="topRight">Top Right</option>
-         <option value="centerLeft">Left Center</option>
-         <option value="centerRight">Right Center</option>
-         <option value="bottomLeft">Bottom Left</option>
-         <option value="bottomCenter">Bottom Center</option>
-         <option value="bottomRight">Bottom Right</option>
-      </select>
-      <div id="overlayItems" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-auto-resize></div>
-      <div class="cine-buttons" role="toolbar">
-         <div>
-            <button type="button" class="cine-controls plus-button"  ng-click="addTag()" data-toggle="tooltip" title="Add overlay tag"><i></i></button>
-            <button type="button" class="cine-controls pen-button" ng-click="editTag()" data-toggle="tooltip" title="Edit overlay tag" ng-disabled="!hasSelection()"><i></i></button>
-            <button type="button" class="cine-controls delete-button" ng-click="deleteTag()" data-toggle="tooltip" title="Delete selected tag" ng-disabled="!hasSelection()"><i></i></button>
-         </div>
-         <div>
-            <button type="button" class="cine-controls reset-button" ng-click="restore()" data-toggle="tooltip" title="Undo tag changes" ng-disabled="!hasChanged"><i></i></button>
-            <button type="button" class="cine-controls save-button" ng-click="save()" data-toggle="tooltip" title="Save overlay tags" ng-disabled="!hasChanged"><i></i></button>
-         </div>
-      </div>
-   </div>
-   <div class="divider"></div>
-   <div class="modal-footer">
-      <a class="form-btn" ng-click="close()">Close</a>
-   </div>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50" translate="Overlay Settings"></h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <div class="form-horizontal form-rise">
+            <div class="form-group">
+                <label for="position" class="col-md-3 control-label">Position:</label>
+                <div class="col-md-9">
+                    <select class="text-select" id="position" ng-model="position.value">
+                        <option value="topLeft">Top Left</option>
+                        <option value="centerTop">Top Center</option>
+                        <option value="topRight">Top Right</option>
+                        <option value="centerLeft">Left Center</option>
+                        <option value="centerRight">Right Center</option>
+                        <option value="bottomLeft">Bottom Left</option>
+                        <option value="bottomCenter">Bottom Center</option>
+                        <option value="bottomRight">Bottom Right</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="divider_secon"></div>
+        <div class="">
+            <div id="overlayItems" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-auto-resize></div>
+        </div>
+    </div>
+</div>
+
+<div class="flex-row box-primary-background bordert-no">
+    <div class="flex-row pd3-12 flex-grow flex-center h30">
+        <span class="font-weight-bold">Thanh chức năng: &nbsp</span>
+        <div class="" role="toolbar">
+
+            <button type="button" class="button-light" ng-click="addTag()" data-toggle="tooltip" title="Add overlay tag"><i class="fa fa-plus"></i></button>
+            <button type="button" class="button-light" ng-click="editTag()" data-toggle="tooltip" title="Edit overlay tag" ng-disabled="!hasSelection()"><i class="fa fa-pencil-square-o"></i></button>
+            <button type="button" class="button-light" ng-click="deleteTag()" data-toggle="tooltip" title="Delete selected tag" ng-disabled="!hasSelection()"><i class="fa fa-ban"></i></button>
+            <button type="button" class="button-light" ng-click="restore()" data-toggle="tooltip" title="Undo tag changes" ng-disabled="!hasChanged"><i class="fa fa-refresh"></i></button>
+            <button type="button" class="button-light" ng-click="save()" data-toggle="tooltip" title="Save overlay tags" ng-disabled="!hasChanged"><i class="fa fa-save"></i></button>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="close()" translate="DIALOGS_CLOSE"></a>
+    </div>
 </div>

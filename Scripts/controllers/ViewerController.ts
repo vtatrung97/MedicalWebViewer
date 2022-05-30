@@ -247,7 +247,7 @@ module Controllers {
                 north__showOverflowOnHover: true,
                 south__resizable: false,
                 south__initHidden: false,
-                south__size: 160,
+                south__size: 100,
                 south__resizerToggle: false,
                 south__spacing_closed: 0,
                 south__spacing_open: 0,

@@ -1,38 +1,50 @@
-﻿<div class="modal-content">
-    <div class="modal-header">
-        <h3 class="modal-title">{{'DIALOGS_SAVE_AS_DERIVED_TITLE' | translate}}</h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal" name="form">
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{'DIALOGS_SAVE_AS_DERIVED_TITLE' | translate}}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <form class="form-horizontal form-rise" name="form">
             <fieldset>
-                <!-- Select Basic -->
                 <div class="form-group" ng-show="editSeriesNumber">
                     <label class="col-md-4 control-label" for="seriesNumber">{{'SERIES' | translate}}&nbsp;{{'NUMBER' | translate}}:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="seriesNumber" type="text" placeholder="" class="text-field" ng-model="derivedInfo.number" autofocus only-digits />
                     </div>
                 </div>
-
-                <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="seriesDescription">{{'DESCRIPTION' | translate}}:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="seriesDescription" type="text" placeholder="" class="text-field" ng-model="derivedInfo.description" />
                     </div>
                 </div>
-
-                <!-- Text input-->
                 <div class="form-group" ng-show="editProtocolName">
                     <label class="col-md-4 control-label" for="protocolName">{{'PROTOCOL' | translate}}&nbsp;{{'NAME' | translate}}:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="protocolName" type="text" placeholder="" class="text-field" ng-model="derivedInfo.protocolName" />
                     </div>
-                </div>                
+                </div>
             </fieldset>
         </form>
     </div>
-    <div class="modal-footer">
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
         <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK"></a>
-        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>        
+        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
     </div>
 </div>

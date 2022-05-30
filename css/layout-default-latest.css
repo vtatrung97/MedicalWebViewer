@@ -29,6 +29,14 @@ body {
  *	PANES & CONTENT-DIVs
  */
 
+div#mainView {
+	font-size: 1.2em;
+}
+
+.modal {
+	font-size: 1.2em;
+}
+
 .ui-layout-pane {
 	/* all 'panes' */
 	padding: 10px;

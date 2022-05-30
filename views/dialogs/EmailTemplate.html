@@ -1,16 +1,27 @@
 ﻿<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">Thông tin</h5>
+        <div class="form-rise">
+            <div class="form-group">
+                <table style="table-layout:fixed; width:100%">
+                    <tr>
+                        <td><input type="text" placeholder="E-mail Title" class="email-field" id="title" style="height:auto"></td>
+                    </tr>
+                    <tr>
+                        <td><textarea type="text" placeholder="E-mail Body" class="email-field" id="area"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-    <table style="table-layout:fixed; width:100%">
-        <tr>
-            <td><input type="text" placeholder="E-mail Title" class="email-field" id="title" style="height:auto"></td>
-        </tr>
-        <tr>
-            <td><textarea type="text" placeholder="E-mail Body" class="email-field" id="area"></textarea></td>
-        </tr>
-    </table>
+        <div class="form-group"></div>
 
-    <div style="text-align: right;">
-        <button type="button" class="cine-controls save-button" id="saveEmailChanges" ng-click="save()" data-toggle="tooltip" title="Save"><i></i></button>
-        <button type="button" class="cine-controls delete-button" id="discardEmailChanges" ng-click="cancel()" data-toggle="tooltip" title="Cancel"><i></i></button>
+        <div class="flex-row" style="text-align: right;">
+            <div class="flex-horizontal"></div>
+            <div class="flex-row">
+                <a class="form-btn" id="saveEmailChanges" ng-click="save()" data-toggle="tooltip" title="Save">Save</a>
+                <a class="form-btn" id="discardEmailChanges" ng-click="cancel()" data-toggle="tooltip" title="Cancel">Cancel</a>
+            </div>
+        </div>
     </div>
 </div>

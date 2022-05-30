@@ -884,19 +884,6 @@ table {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*Custom Check Box*/
 
 .radioLabelContainer {
@@ -1015,10 +1002,6 @@ table {
     }
 }
 
-
-
-
-
 /**
  * ==============================================
  * Dot Flashing
@@ -1083,6 +1066,499 @@ table {
 .stage {
 }
 
+/*****************************************************************FIX BY DELTA*/
+.modal-content {
+    border-radius: 0px;
+    border: 0px;
+}
+
+.modal-body {
+    overflow: auto;
+    position: relative;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    max-height: 78vh;
+    z-index: 0;
+    padding: 0px 15px;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    border: 0;
+    padding: 0px 15px;
+    padding-bottom: 0px;
+    z-index: 1;
+    position: relative;
+}
+
+.modal-footer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+    padding: 8px 15px;
+    text-align: right;
+    position: relative;
+    border-top: 0;
+}
 
 
+.modal-body_tool {
+    max-height: calc(78vh - 30px);
+}
+
+/**********************=========================================== ANIMATE*/
+
+@keyframes animate1 {
+
+	0% {
+		opacity: 1;
+		transform: translateX(-100%);
+	}
+
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes animate2 {
+
+	0% {
+		opacity: 1;
+		transform: translateY(-100%);
+	}
+
+	100% {
+		transform: translateY(100%);
+	}
+}
+
+@keyframes animate3 {
+
+	0% {
+		opacity: 1;
+		transform: translateX(100%);
+	}
+
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes animate4 {
+
+	0% {
+		opacity: 1;
+		transform: translateY(100%);
+	}
+
+	100% {
+		transform: translateY(-100%);
+	}
+}
+
+/* The animation code */
+@keyframes loadLogIn {
+	0% {
+		opacity: 0.0;
+		margin: -150px 0;
+	}
+
+	100% {
+		opacity: 1.0;
+		margin: 0px 0;
+	}
+}
+
+@keyframes jump {
+	0% {
+		top: 0;
+		animation-timing-function: ease-in;
+	}
+
+	50% {
+		top: 140px;
+		height: 140px;
+		animation-timing-function: ease-out;
+	}
+
+	55% {
+		top: 160px;
+		height: 120px;
+		border-radius: 70px / 60px;
+		animation-timing-function: ease-in;
+	}
+
+	65% {
+		top: 120px;
+		height: 140px;
+		border-radius: 70px;
+		animation-timing-function: ease-out;
+	}
+
+	95% {
+		top: 0;
+		animation-timing-function: ease-in;
+	}
+
+	100% {
+		top: 0;
+		animation-timing-function: ease-in;
+	}
+}
+
+@keyframes shrink {
+	0% {
+		bottom: 0;
+		margin-left: -30px;
+		width: 60px;
+		height: 75px;
+		background: rgba(20, 20, 20, 0.1);
+		box-shadow: 0px 0 20px 35px rgba(20, 20, 20, 0.1);
+		border-radius: 30px / 40px;
+		animation-timing-function: ease-in;
+	}
+
+	50% {
+		bottom: 30px;
+		margin-left: -10px;
+		width: 20px;
+		height: 5px;
+		background: rgba(20, 20, 20, 0.3);
+		box-shadow: 0px 0 20px 35px rgba(20, 20, 20, 0.3);
+		border-radius: 20px / 20px;
+		animation-timing-function: ease-out;
+	}
+
+	100% {
+		bottom: 0;
+		margin-left: -30px;
+		width: 60px;
+		height: 75px;
+		background: rgba(20, 20, 20, 0.1);
+		box-shadow: 0px 0 20px 35px rgba(20, 20, 20, 0.1);
+		border-radius: 30px / 40px;
+		animation-timing-function: ease-in;
+	}
+}
+/*=============================================================================================================*/
+.footer {
+	display: none !important;
+}
+
+a {
+	cursor: pointer;
+}
+
+ui-grid {
+	width: 100% !important;
+}
+
+.nav-item {
+	flex: 1;
+	display: flex;
+	flex-wrap: unset;
+	flex-direction: row;
+	overflow: hidden;
+}
+
+.nav-tabs > .nav-item > li > a tab-heading {
+	display: flex;
+	flex-direction: row;
+}
+
+	.nav-tabs > .nav-item > li > a tab-heading span {
+		height: 25px;
+		word-break: break-all;
+	}
+
+.tab-button {
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	margin-left: 1px;
+	margin-right: -8px;
+	padding: 0px;
+	border: 0px;
+}
+
+.control-label {
+	padding-right: 0;
+}
+
+.radio, .checkbox:first-child {
+	margin-top: 0;
+}
+
+.radio, .checkbox:last-child {
+	margin-bottom: 0;
+}
+
+/*==============================================================================================================MEDIA*/
+.d-flex {
+	display: flex;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.form-search {
+	padding: 2px;
+}
+
+.col-12 {
+	width: 100%;
+}
+
+.col-12 {
+	position: relative;
+	min-height: 1px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+/*==============================================================================================================MEDIA-ALIGN*/
+@media (min-width: 576px) {
+	/*.flex-sm-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .flex-sm-row {
+        display: flex;
+        flex-direction: row;
+    }*/
+}
+
+@media (max-width: 575.98px) {
+	.flex-sm-column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex-sm-row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.pacsQueryRow {
+		display: none;
+	}
+
+	.login-paper p span {
+		display: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.flex-md-column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex-md-row {
+		display: flex;
+		flex-direction: row;
+	}
+}
+
+@media (max-width: 767.98px) {
+	.modal-content .h-100 {
+		height: auto;
+	}
+
+	.modal-content .scroll-secondary {
+		overflow-y: auto;
+	}
+
+	
+}
+
+@media (min-width: 992px) {
+	.flex-lg-column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex-lg-row {
+		display: flex;
+		flex-direction: row;
+	}
+}
+
+@media (min-width: 1200px) {
+	.flex-xl-column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex-sm-row {
+		display: flex;
+		flex-direction: row;
+	}
+}
+
+@media (max-width: 1199.98px) {
+	.flex-row.flex-wrap.form-search_left {
+		padding: 2px 8px;
+	}
+
+	.form-search .button_time {
+		display: none;
+	}
+
+	.form-search .pd210 {
+		padding: 0;
+	}
+
+	.form-search .flex-divider {
+		display: none;
+	}
+
+	.login-anime .login-anime_box {
+		display: none;
+	}
+
+}
+
+
+@media (max-width: 575.98px) {
+	.social-icons {
+		display: none;
+	}
+
+	.header-wrapper {
+		display: none;
+	}
+
+	.login-paper {
+		display: none;
+	}
+
+	.login-anime {
+		display: none;
+	}
+
+	.login-shadow {
+		display: none;
+	}
+
+	.section-wrapper {
+		padding: 0;
+	}
+
+	.login-box {
+		width: 100%;
+	}
+
+	.login-log {
+		width: auto;
+		padding: 77px 15px 33px;
+	}
+
+	.login-log {
+		width: 390px;
+		padding: 77px 55px 33px;
+	}
+
+	.form-login {
+		margin-bottom: 37px;
+	}
+
+	.login-tit h2 {
+		margin-bottom: 20px;
+	}
+
+	.login-tit div {
+		width: 60px;
+		padding-bottom: 37px;
+	}
+
+	.text-login {
+		height: 45px;
+	}
+}
+
+@media (max-width: 1366px) {
+	.login-anime {
+		zoom: 0.65;
+	}
+}
+
+@media (min-width: 1366.5px) {
+	.login-anime {
+		zoom: 0.8;
+	}
+
+	.login-tit h3 {
+		font-size: 30px;
+	}
+
+	/*==*/
+
+	.login-log {
+		width: 390px;
+		padding: 77px 55px 33px;
+	}
+
+	.form-login {
+		margin-bottom: 37px;
+	}
+
+	.login-tit h2 {
+		margin-bottom: 20px;
+	}
+
+	.login-tit div {
+		width: 60px;
+		padding-bottom: 37px;
+	}
+
+	.text-login {
+		height: 45px;
+	}
+
+}
+
+@media (max-width:992px) {
+	
+}
+
+@media (max-height:657px) {
+	.login-head {
+		display: none;
+	}
+
+}
+
+.ag-viewer .toolBarItem {
+	width: 30px !important;
+	height: 30px !important;
+}
+
+.toolbar_group .toolBarItemOption {
+	width: 30px !important;
+	height: 30px !important;
+}
+
+@media (min-width: 1919px) {
+	.ag-viewer .toolBarItem {
+		width: 38px !important;
+		height: 38px !important;
+	}
+
+	.toolbar_group .toolBarItemOption {
+		width: 38px !important;
+		height: 38px !important;
+	}
+}
 

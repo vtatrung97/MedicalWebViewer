@@ -1,18 +1,20 @@
-﻿<form class="form-horizontal" novalidate>
-    <!--<fieldset>-->
-        <h5 class="text-center">Hanging Protocol Definitions</h5>
-        <div class="form-group">
-            <div class="col-md-12">
-                <div id="HPProtocolDefinitionSequence" ag-grid="HPPDOptions" class="ag-fresh" style="height:125px"></div>
-                <!--<button type="button" class="btn-sm btn-default" ng-click="addHPDefinition()" title="Add Image Set"><i class="fa fa-plus"></i></button>-->
-               <div class="cine-buttons">
+﻿<div class="modal-body">
+    <form class="form-column" novalidate>
+        <h5 class="text-left">Hanging Protocol Definitions</h5>
+        <div class="">
+            <div id="HPProtocolDefinitionSequence" ag-grid="HPPDOptions" class="ag-fresh" style="height:125px"></div>
+        </div>
+    </form>
+</div>
 
-                <div>
-                  <button type="button" class="cine-controls pen-button" ng-click="editHPDefinition()" title="Edit HP Definition" ng-disabled="!isHPDefinitionSelected()"><i></i></button>
-                  <button type="button" class="cine-controls minus-button" ng-click="deleteHPDefinition()" title="Delete HP Definition" ng-disabled="!isHPDefinitionSelected()"><i></i></button>
-                </div>
-               </div>
-            </div>
-        </div>               
-    <!--</fieldset>-->
-</form>
+<div class="flex-row box-primary-background bordert-no">
+    <div class="flex-row pd3-12 flex-grow flex-center h30">
+        <span class="font-weight-bold">Thanh chức năng: &nbsp</span>
+        <div class="" role="toolbar">
+
+            <button type="button" class="button-light" ng-click="editHPDefinition()" title="Edit HP Definition" ng-disabled="!isHPDefinitionSelected()"><i class="fas fa-edit"></i></button>
+            <button type="button" class="button-light" ng-click="deleteHPDefinition()" title="Delete HP Definition" ng-disabled="!isHPDefinitionSelected()"><i class="fas fa-remove"></i></button>
+
+        </div>
+    </div>
+</div>

@@ -1,10 +1,24 @@
-﻿<div class="modal-content">
-    <div class="modal-header">        
-        <h3 class="modal-title" translate="DIALOGS_ADD_TOOLBAR_ITEM_TITLE"></h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal" name="form">
-            <fieldset>                
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50" translate="DIALOGS_ADD_TOOLBAR_ITEM_TITLE"></h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <form class="form-horizontal form-rise" name="form">
+            <fieldset>
                 <!-- Select Basic -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="itemName">{{'Id' | translate}}:</label>
@@ -15,14 +29,14 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                 <label class="col-md-4 control-label" for="itemCaption">{{'CAPTION' | translate}}:</label>
-                 <div class="col-md-6">
-                    <input id="itemTooltip" type="text" placeholder="" class="text-field" ng-model="item.caption" />
-                 </div>
-              </div>
+                    <label class="col-md-4 control-label" for="itemCaption">{{'CAPTION' | translate}}:</label>
+                    <div class="col-md-6">
+                        <input id="itemTooltip" type="text" placeholder="" class="text-field" ng-model="item.caption" />
+                    </div>
+                </div>
 
-              <!-- Text input-->
-              <div class="form-group">
+                <!-- Text input-->
+                <div class="form-group">
                     <label class="col-md-4 control-label" for="itemTooltip">{{'TOOLTIP' | translate}}:</label>
                     <div class="col-md-6">
                         <input id="itemTooltip" type="text" placeholder="" class="text-field" ng-model="item.tooltip" />
@@ -35,14 +49,14 @@
                     <div class="col-md-6">
                         <input id="itemAction" type="text" placeholder="" class="text-field" ng-model="item.action" required />
                     </div>
-                </div> 
-                
+                </div>
+
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="itemAction">{{'SHORTCUT' | translate}}:</label>
                     <div class="col-md-6">
                         <input id="itemShortcut" type="text" placeholder="" class="text-field" ng-model="item.shortcut" />
                     </div>
-                </div>                      
+                </div>
 
                 <!-- Text input-->
                 <div class="form-group">
@@ -59,10 +73,13 @@
                     </div>
                 </div>
             </fieldset>
-        </form> 
+        </form>
     </div>
-    <div class="modal-footer">
-        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
         <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isFormValid()"></a>
+        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
     </div>
 </div>

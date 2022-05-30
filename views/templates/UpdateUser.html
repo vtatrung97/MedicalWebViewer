@@ -1,54 +1,75 @@
-﻿<form name="updateUserForm" ng-controller="Controllers.UpdateUserController" novalidate>
-    <div class="form-group">
-        <label for="username">User Name:</label>
-        <div class="input-group">
-
-
-            <div style="position:relative">
-                <input class="text-field" ng-keydown="keyPressed($event)" ng-change="textChanged($event)" ng-click="textChanged($event)" ng-model="userName">
-                <div style="max-height:230px; overflow:auto; visibility:hidden; position:absolute; width:100%; z-index:99; box-shadow: black 5px 3px 9px 0px;" id="userNameList">
+﻿<form name="updateUserForm" ng-controller="Controllers.UpdateUserController" class="flex-column scroll-auto" novalidate>
+    <div class="form-horizontal form-rise">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="username">User Name:</label>
+            <div class="col-md-9">
+                <div class="flex-row">
+                    <div class="w-100" style="position:relative">
+                        <input class="text-field" ng-keydown="keyPressed($event)" ng-change="textChanged($event)" ng-click="textChanged($event)" ng-model="userName">
+                        <div id="userNameList" class="updateUserForm-select" style="max-height: 230px; overflow: auto; visibility: hidden; position: absolute; width: 100%; z-index: 999; box-shadow: black 5px 3px 9px 0px; background: #4d4d4d; z-index: 999; padding: 5px">
+                        </div>
+                    </div>
+                    <span class="">
+                        <button class="button-light" ng-disabled="isCurrentUserSelected(user)" ng-click="deleteUser(user)">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
-            <span class="input-group-btn">
-                <!--<a class="btn btn-default"  type="button"><i class="fa fa-minus"></i></a>-->
-                <button style="margin-left:20px;" class="cine-controls minus-button" ng-disabled="!userSelected() || isCurrentUserSelected(user)" ng-click="deleteUser(user)"></button>
-            </span>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="newUserPassword">Password:</label>
-        <input type="password" class="text-field" id="newUserPassword"  placeholder="" ng-model="password" ng-disabled="!userSelected() || usersInfo[user].UserType==='activedirectory'">
-    </div>
-    <div class="form-group">
-        <label for="confirmPassword">Confirm Password:</label>
-        <div class="input-group">
-            <input type="password" class="text-field" id="confirmPassword" ng-model="confirmPassword" placeholder="" pwd-confirm="newUserPassword" ng-disabled="!userSelected() || usersInfo[user].UserType==='activedirectory'">
-            <span class="input-group-btn">
-                  <!--<a class="btn btn-default" ng-disabled="updateUserForm.$invalid || password.length==0 || usersInfo[user].UserType==='activedirectory'" ng-click="resetPassword(user,password)">Reset</a>-->
-                  <button value="Reset" style="margin-left:20px;" class="generic-button" ng-disabled="!userSelected() || updateUserForm.$invalid || password.length==0 || usersInfo[user].UserType==='activedirectory'" ng-click="resetPassword(user,password)">Reset</button>
-              </span>
-        </div>
-    </div> 
-    
-    <div class="form-group">
-        <label for="availableRoles" >{{'ROLE' | translate}}s:</label>
-        <div class="checkbox" id="availableRoles" ng-repeat="role in roles">
-            <label>
-                <input type='checkbox' value="{{role.Name}}" check-list='selectedRoles' ng-disabled="!userSelected()">
-            {{role.Name}}
-            </label>
-        </div>
-    </div>   
-    <div class="form-group">
-        <label for="availablePermissions" >{{'PERMISSIONS' | translate}}:</label>
-        <div style="height:150px; overflow:auto">
-        <div class="checkbox" id="availablePermissions" ng-repeat="permission in permissions" ng-show="!disableFeaturesForFDA(permission.Name)" ng-disabled="!userSelected() ||!canSetPermission(permission.Name)">
-            <label >
-                <input type='checkbox' value="{{permission.Name}}" check-list='selectedPermissions'  ng-show="!disableFeaturesForFDA(permission.Name)" ng-disabled="!userSelected() ||disableFeaturesForFDA(permission.Name)" ng-checked="userHasPermission(user,permission.Name)">
-            {{permission.FriendlyName}}
-            </label>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="newUserPassword">Password:</label>
+            <div class="col-md-9">
+                <input type="password" class="text-field" id="newUserPassword" placeholder="" ng-model="password" ng-disabled="usersInfo[user].UserType==='activedirectory'">
             </div>
         </div>
-    </div>   
-    <a class="form-btn" ng-click="updateUser(user, selectedRoles, selectedPermissions)" ng-disabled="!userSelected()">Update</a>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="confirmPassword">Confirm Password:</label>
+            <div class="col-md-9">
+                <div class="flex-row">
+                    <input type="password" class="text-field" id="confirmPassword" ng-model="confirmPassword" placeholder="" pwd-confirm="newUserPassword" ng-disabled="usersInfo[user].UserType==='activedirectory'">
+                    <span class="">
+                        <button value="Reset"
+                                class="button-light"
+                                ng-disabled="updateUserForm.$invalid || password.length==0 || usersInfo[user].UserType==='activedirectory'"
+                                ng-click="resetPassword(user,password)">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider_secon"></div>
+
+    <h5 for="availableRoles">{{'ROLE' | translate}}:</h5>
+
+    <div class="checkbox" id="availableRoles" ng-repeat="role in roles">
+        <label>
+            <input type='checkbox' value="{{role.Name}}" check-list='selectedRoles'>
+            {{role.Name}}
+        </label>
+    </div>
+
+    <div class="divider_secon mt-0"></div>
+
+    <h5 for="availablePermissions">{{'PERMISSIONS' | translate}}:</h5>
+
+    <div class="form-group flex-column scroll-hidden">
+        <div class="scroll-secondary hp100">
+            <div class="checkbox" id="availablePermissions" ng-repeat="permission in permissions" ng-disabled="!canSetPermission(permission.Name)">
+                <label>
+                    <input type='checkbox' value="{{permission.Name}}" check-list='selectedPermissions' ng-checked="userHasPermission(user,permission.Name)">
+                    {{permission.FriendlyName}}
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-row">
+        <div class="flex-horizontal"></div>
+        <a class="form-btn" ng-click="updateUser(user, selectedRoles, selectedPermissions)">Update</a>
+    </div>
 </form>

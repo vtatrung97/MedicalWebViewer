@@ -1,9 +1,23 @@
-﻿<div class="modal-content">
-    <div class="modal-header">
-        <h3 class="modal-title">{{title}}</h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal" name="form">
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{title}}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <form class="form-horizontal form-rise" name="form">
             <fieldset>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="selectorAttribute">{{'SELECTOR' | translate}}&nbsp;{{'ATTRIBUTE' | translate}}:</label>
@@ -32,7 +46,7 @@
                         <div class="input-group">
                             <input id="selectorValue" type="text" placeholder="" class="form-control input-md" ng-model="selector.SelectorValue" ng-disabled="isSequence()" />
                             <span class="input-group-btn">
-                                <a class="btn btn-default" type="button" ng-click="editCodeSequence()" title="Edit Code Sequence" ng-disabled="!isSequence()"><i class="fa fa-pencil" ></i></a>
+                                <a class="btn btn-default" type="button" ng-click="editCodeSequence()" title="Edit Code Sequence" ng-disabled="!isSequence()"><i class="fa fa-pencil"></i></a>
                             </span>
                         </div>
                     </div>
@@ -61,16 +75,6 @@
                     </div>
                 </div>
 
-                <!--<div class="form-group">
-                    <label class="col-md-2 control-label" for="protocolsARS"></label>
-                    <div class="col-md-10">
-                        <div id="codeSequence" ag-grid="gridOptions" class="ag-fresh" style="height:125px"></div>
-                        <button type="button" class="btn-sm btn-default" ng-click="addCodeSequenceItem()" title="Add Code Sequence"><i class="fa fa-plus"></i></button>
-                        <button type="button" class="btn-sm btn-default" ng-click="editCodeSequenceItem()" title="Edit Code Sequence" ng-disabled="!isItemSelected()"><i class="fa fa-pencil"></i></button>
-                        <button type="button" class="btn-sm btn-default" ng-click="deleteCodeSequenceItem()" title="Delete Code Sequence" ng-disabled="!isItemSelected()"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>-->
-
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="selectorUsage">{{'SELECTOR' | translate}}&nbsp;{{'USAGE' | translate}}:</label>
                     <div class="col-md-10">
@@ -84,8 +88,11 @@
             </fieldset>
         </form>
     </div>
-    <div class="modal-footer">
-        <a class="btn btn-default" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isFormValid()"></a>
-        <a class="btn btn-default" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isFormValid()"></a>
+        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
     </div>
 </div>

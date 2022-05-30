@@ -1,8 +1,23 @@
-﻿<div class="modal-content">
-    <div class="modal-header">
-        <h3 class="modal-title">{{'CALIBRATE' | translate}}&nbsp;{{'RULER' | translate}}</h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{'CALIBRATE' | translate}}&nbsp;{{'RULER' | translate}}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
         <div class="control-group">
             <label class="control-label" for="rulerLength">{{'LENGTH' | translate}}:</label>
             <div class="controls">
@@ -30,8 +45,12 @@
             </label>
         </div>
     </div>
-    <div class="modal-footer">
-        <a class="btn btn-default" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isValid()"></a>
-        <a class="btn btn-default" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
+
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK" ng-disabled="!isValid()"></a>
+        <a class="form-btn" ng-click="cancel()" translate="DIALOGS_CANCEL"></a>
     </div>
 </div>

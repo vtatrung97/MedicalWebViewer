@@ -1,55 +1,78 @@
-﻿<div class="modal-content">
-    <div class="modal-header">
-        <h3 class="modal-title" translate="DIALOGS_ADMIN_TOOLBAR_TITLE"></h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="divider"></div>
-    <div class="modal-body">
-
-
-        <div class="form-group" collapse="false">
-            <label for="role">{{ 'ROLE' | translate }}:</label>
-            <select id="role" class="form-control form-control-lg" ng-model="role.name" ng-options="p as p for p in roles" ng-change="roleChanged()"></select>
-        </div>
-
-        <div style=" width: 100%; overflow-x: hidden !important; border-bottom:1px solid #8C95A4;">
-            <table lt-fancy-tree config="config" id="toolbarTree" class="table" data="buttons" deactivate="itemDeactivated(event,data)" activate="itemActivated(event,data)" api="treeApi" disabled-items="disabledItems">
-                <colgroup>
-                    <col width="30px"></col>
-                    <col width="*"></col>
-                    <col width="100px"></col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th style="border-left:none !important"></th>
-                        <th>Name</th>
-                        <th>Icon</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="cine-buttons" role="toolbar">
-            <div>
-                <button type="button" class="cine-controls save-button" ng-click="save()" data-toggle="tooltip" title="Save toolbar settings"><i></i></button>
-            </div>
-            <div>
-                <button type="button" class="cine-controls plus-button" ng-click="addRootToolbarItem()" data-toggle="tooltip" title="Add root toolbar item"><i></i></button>
-                <button type="button" class="cine-controls plus-button" ng-click="addToolbarItem()" data-toggle="tooltip" title="Add toolbar item"><i></i></button>
-                <button type="button" class="cine-controls pen-button" ng-click="editToolbarItem()" data-toggle="tooltip" title="Edit toolbar item" ng-disabled="activeNode==null"><i></i></button>
-            </div>
-            <div>
-                <button type="button" class="cine-controls minus-button" ng-click="deleteToolbarItem()" data-toggle="tooltip" title="Delete toolbar item" ng-disabled="activeNode==null"><i></i></button>
-            </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50" translate="DIALOGS_ADMIN_TOOLBAR_TITLE"></h4>
         </div>
     </div>
-    <div class="divider"></div>
-    <div class="modal-footer">
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column" style="height: auto">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <div class="form-horizontal form-rise">
+            <div class="form-group" collapse="false">
+                <label for="role" class="col-md-3 control-label">{{ 'ROLE' | translate }}:</label>
+                <div class="col-md-9">
+                    <select id="role" class="text-select" ng-model="role.name" ng-options="p as p for p in roles" ng-change="roleChanged()"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider_secon"></div>
+
+        <div class="scroll-hidden y-scroll-auto" style="height: 100vh">
+            <div>
+                <table lt-fancy-tree config="config" id="toolbarTree" class="table mar0" data="buttons" deactivate="itemDeactivated(event,data)" activate="itemActivated(event,data)" api="treeApi" disabled-items="disabledItems">
+                    <colgroup>
+                        <col width="30px"></col>
+                        <col width="*"></col>
+                        <col width="100px"></col>
+                    </colgroup>
+                    <thead class="box-primary-background borderr-no">
+                        <tr>
+                            <th style="border-left:none !important"></th>
+                            <th>Name</th>
+                            <th>Icon</th>
+                        </tr>
+                    </thead>
+                    <tbody class="box-secondary-background">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex-row box-primary-background bordert-no">
+    <div class="flex-row pd3-12 flex-grow flex-center h30">
+        <span class="font-weight-bold">Thanh chức năng: &nbsp</span>
+        <div class="" role="toolbar">
+
+            <button type="button" class="button-light" ng-click="save()" data-toggle="tooltip" title="Save toolbar settings"><i class="fa fa-save"></i></button>
+            <button type="button" class="button-light" ng-click="addRootToolbarItem()" data-toggle="tooltip" title="Add root toolbar item"><i class="fa fa-plus"></i></button>
+            <button type="button" class="button-light" ng-click="addToolbarItem()" data-toggle="tooltip" title="Add toolbar item"><i class="fa fa-plus"></i></button>
+            <button type="button" class="button-light" ng-click="editToolbarItem()" data-toggle="tooltip" title="Edit toolbar item" ng-disabled="activeNode==null"><i class="fa fa-edit"></i></button>
+            <button type="button" class="button-light" ng-click="deleteToolbarItem()" data-toggle="tooltip" title="Delete toolbar item" ng-disabled="activeNode==null"><i class="fa fa-minus"></i></button>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
         <a class="form-btn" ng-click="close()" translate="DIALOGS_CLOSE"></a>
     </div>
 </div>

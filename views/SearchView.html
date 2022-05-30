@@ -1,28 +1,135 @@
-﻿<form class="form">
-    <fieldset>
-        <div class="row search-row" style="margin-left: 0px !important; margin-right: 0px !important">
-                <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'ID' | translate}}:" class="search-text-field first-search-text-field" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.PatientsOptions.PatientID"
-                    typeahead="patient for patient in patientids($viewValue)" ng-enter="doSearch()" />
-                <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'NAME' | translate}}:" class="search-text-field" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.PatientsOptions.PatientName"
-                    typeahead="patient for patient in patientNames($viewValue)" ng-enter="doSearch()" />
-                <input type="text" placeholder="Accession #:" class="search-text-field mobile-accession" id="accessionNum" name="accessionNum" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.AccessionNumber"
-                    ng-enter="doSearch()" />
-                <input type="text" placeholder="Referring Dr. Name:" class="search-text-field" id="referringDr" name="referringDr" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.ReferDoctorName"
-                    ng-enter="doSearch()" />
-                <input type="text" placeholder=" Modality:" class="search-text-field mobile-modality" id="modality" name="modality" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.ModalitiesInStudy"
-                    ng-enter="doSearch()" />
-            
-            <div class="button-container">
-                <button style="color:#9099A0 !important" id="searchButton" class="btn" ng-click="doSearch()" translate="SEARCH"></button>
-                <button style="color:#9099A0 !important" id="clearButton" class="btn" ng-click="clear()" translate="CLEAR"></button>
+﻿<form class="form-search position-relative box-primary-background borderlr-no bordert-no">
+    <fieldset ng-show="modalityWorklistInfor==null">
+        <div class="flex-row">
+            <div class="flex-row flex-wrap form-search_left">
+                <div class="flex-row pd210 flex-center">
+                    <div class="text-search">
+                        <input type="text" class="hol1"
+                               id="patientID"
+                               name="patientID"
+                               ng-class="{'input-sm': isTabletOrMobile}"
+                               ng-enter="doSearch()"
+                               ng-model="queryOptions.PatientsOptions.PatientID"
+                               typeahead="patient for patient in patientids($viewValue)"
+                               placeholder="{{ 'PATIENTID' | translate }}:" />
+                    </div>
+                    <div class="text-search">
+                        <input type="text" class="hol1"
+                               id="patientName"
+                               name="patientName"
+                               ng-class="{'input-sm': isTabletOrMobile}"
+                               ng-enter="doSearch()"
+                               ng-model="queryOptions.PatientsOptions.PatientName"
+                               typeahead="patient for patient in patientNames($viewValue)"
+                               placeholder="{{ 'PATIENTNAME' | translate }}:" />
+                    </div>
+                </div>
+                <div class="flex-divider"></div>
+                <div class="flex-row pd210 flex-center">
+                    <div class="text-search">
+                        <input type="text" class="hol1"
+                               id="modality"
+                               name="modality"
+                               ng-class="{'input-sm': isTabletOrMobile}"
+                               ng-enter="doSearch()"
+                               ng-model="queryOptions.StudiesOptions.ModalitiesInStudy"
+                               typeahead="modality for modality in modalities($viewValue)"
+                               placeholder="{{ 'Modality' | translate }}:" />
+                    </div>
+                    <div class="text-search">
+                        <select id="status" class="hol1" ng-class="{'input-sm': isTabletOrMobile}"
+                                force-blur ng-model="queryModel.status">
+                            <option value=''>{{ "SeeAll" | translate}}</option>
+                            <option value='Scheduled'>{{ "Scheduled" | translate}}</option>
+                            <option value='InProgress'>{{ "InProgress" | translate}}</option>
+                            <option value='Performed'>{{ "Performed" | translate}}</option>
+                            <option value='Completed'>{{ "Completed" | translate}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex-divider"></div>
+                <div class="flex-row pd210 flex-center">
+                    <div class="text-search">
+                        <input type="date" class="hol1"
+                               id="fromDate"
+                               name="fromDate"
+                               ng-class="{'input-sm': isTabletOrMobile}"
+                               ng-enter="doSearch()"
+                               ng-model="queryModel.fromDate"
+                               placeholder="{{ 'FromDate' | translate }}:"
+                               onfocus="(this.type='date')"
+                               onblur="if(this.value==''){this.type='text'}" />
+                    </div>
+                    <div class="text-search">
+                        <input type="date" class="hol1"
+                               id="toDate"
+                               name="toDate"
+                               ng-class="{'input-sm': isTabletOrMobile}"
+                               ng-enter="doSearch()"
+                               ng-model="queryModel.toDate"
+                               placeholder="{{ 'ToDate' | translate }}:"
+                               onfocus="(this.type='date')"
+                               onblur="if(this.value==''){this.type='text'}" />
+                    </div>
+                </div>
+                <div class="flex-divider"></div>
+                <div class="flex-row pd210 button_time">
+                    <div class="text-search">
+                        <button id="yesterdayButton" class="button-light" ng-click="DateTypeChanged('D')" title="{{'Yesterday' | translate}}">1D</button>
+                        <button id="thirddayButton" class="button-light" ng-click="DateTypeChanged('3D')" title="{{'3DayAgo' | translate}}">3D</button>
+                        <button id="lastWeekButton" class="button-light" ng-click="DateTypeChanged('W')" title="{{'1WeekAgo' | translate}}">1W</button>
+                        <button id="lastTwoWeekButton" class="button-light" ng-click="DateTypeChanged('2W')" title="{{'2WeeksAgo' | translate}}">2W</button>
+                        <button id="lastMonthButton" class="button-light" ng-click="DateTypeChanged('M')" title="{{'LastMonth' | translate}}">1M</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-row flex-wrap form-search_right borl-divider">
+                <div class="flex-row flex-wrap pd012 flex-grow flex-center mar-auto">
+                    <button id="searchButton" class="button-light" ng-click="doSearch()" title="Tìm kiếm"><i class="fa fa-search"></i></button>
+                    <button id="clearButton" class="button-light" ng-click="clear()" title="Xóa"><i class="fa fa-remove"></i></button>
+                    <!--<button id="clearButton" class="button-light" ng-click="statisticInfor()" title="{{'StatisticInformation'|translate}}"><i class="fa fa-chart-line-down"></i></button>-->
+                </div>
+            </div>
+            <div class="flex-row marl-auto" style="display:none">
+                <div class="pacsQueryRow flex-row flex-center" ng-include src="showPacsQuery ? 'views/PacsQuery.html' : null"></div>
             </div>
         </div>
-    <div  class="pacsQueryRow"  ng-include src="showPacsQuery ? 'views/PacsQuery.html' : null"></div>
+
     </fieldset>
-    
 </form>
 
+
+
+
+<hr style="margin-top: 0px; margin-bottom: 5px" />
 <div elheightresize="" class="vbox boxItem">
     <div id="searchResults" ag-grid="gridOptions" class="ag-fresh" style="height:50%"></div>
     <div id="searchResultsSeries" ag-grid="gridOptionsSeries" class="ag-fresh" style="height:50%"></div>
 </div>
+
+
+
+<!--<fieldset>
+    <div class="row search-row" style="margin-left: 0px !important; margin-right: 0px !important">
+        <input type="text" 
+            placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'ID' | translate}}:" 
+            class="search-text-field first-search-text-field" 
+            ng-class="{'input-sm': isTabletOrMobile}" 
+            ng-model="queryOptions.PatientsOptions.PatientID"
+            typeahead="patient for patient in patientids($viewValue)" ng-enter="doSearch()" />
+        <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'NAME' | translate}}:" class="search-text-field" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.PatientsOptions.PatientName"
+               typeahead="patient for patient in patientNames($viewValue)" ng-enter="doSearch()" />
+        <input type="text" placeholder="Accession #:" class="search-text-field mobile-accession" id="accessionNum" name="accessionNum" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.AccessionNumber"
+               ng-enter="doSearch()" />
+        <input type="text" placeholder="Referring Dr. Name:" class="search-text-field" id="referringDr" name="referringDr" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.ReferDoctorName"
+               ng-enter="doSearch()" />
+        <input type="text" placeholder=" Modality:" class="search-text-field mobile-modality" id="modality" name="modality" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.StudiesOptions.ModalitiesInStudy"
+               ng-enter="doSearch()" />
+
+        <div class="button-container">
+            <button style="color:#9099A0 !important" id="searchButton" class="btn" ng-click="doSearch()" translate="SEARCH"></button>
+            <button style="color:#9099A0 !important" id="clearButton" class="btn" ng-click="clear()" translate="CLEAR"></button>
+        </div>
+    </div>
+    <div class="pacsQueryRow" ng-include src="showPacsQuery ? 'views/PacsQuery.html' : null"></div>
+</fieldset>-->

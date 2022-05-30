@@ -1,14 +1,28 @@
-﻿<div class="modal-content">
-    <div class="modal-header">        
-        <h3 class="modal-title">Add Overlay Tag</h3>
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal">
-            <fieldset>                
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">Add Overlay Tag</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+        <form class="form-horizontal form-rise">
+            <fieldset>
                 <!-- Select Basic -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="overlayType">Overlay Type:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <select id="overlayType" name="overlayType" class="form-control" ng-model="overlay.item" ng-options="type.name for type in types track by type.id"></select>
                     </div>
                 </div>
@@ -16,7 +30,7 @@
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="title">Title:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="title" name="title" type="text" placeholder="" class="form-control input-md" ng-model="tag.title" ng-disabled="!isUserData(overlay.item.id)">
                     </div>
                 </div>
@@ -24,7 +38,7 @@
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="tag">Tag:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input id="tag" name="tag" type="text" placeholder="" class="form-control input-md" ng-model="tag.tag" ng-disabled="!isUserData(overlay.item.id)">
                     </div>
                 </div>
@@ -32,15 +46,18 @@
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="color">Color:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <input colorpicker="hex" id="color" name="color" type="text" placeholder="" class="form-control input-md" ng-model="tag.color">
                     </div>
                 </div>
             </fieldset>
-        </form> 
+        </form>
     </div>
-    <div class="modal-footer">
-        <a class="btn btn-default" ng-click="ok()">OK</a>
-        <a class="btn btn-default" ng-click="cancel()">Cancel</a>        
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="ok()">OK</a>
+        <a class="form-btn" ng-click="cancel()">Cancel</a>
     </div>
 </div>

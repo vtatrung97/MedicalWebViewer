@@ -470,7 +470,8 @@ module Controllers {
                 var modalInstance = $modal.open({
                     templateUrl: 'views/dialogs/PermissionsManagement.html',
                     controller: PermissionsManagementController,
-                    backdrop: 'static'                 
+                    backdrop: 'static',
+                    size: 'ep'
                 });
 
                 modalInstance.result.then(
