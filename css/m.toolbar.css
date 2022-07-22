@@ -1,71 +1,494 @@
-.ToolBar
-{
-   height:65px !important;
-   width:100%
+.ToolBar {
+}
+/********************fix drop-down */
+
+/*================*/
+/*.ag-viewer .ui-layout-west {
+	width: 72px !important;
+}
+.ag-viewer .ui-layout-north {
+	height: 0px !important;
+}*/
+
+/*******************fix mobie - tollbar*/
+.ag-viewer .ui-layout-west {
+    /*width: 100% !important;
+	height: 34px !important;*/
 }
 
-.ToolBarButton
-{
-  display:block;
-  width:25px;   
-  height:25px;
-  margin-right:5px;
-  margin-bottom:5px;
+.ag-viewer-toolbar {
+    width: 100%;
+    /*height: 30px;*/
 }
 
-.toolbargroup
-{   
-   
-   float:left;
+.card-func {
+    display: none;
 }
 
-.toolBarItem
-{
-   margin-right:0px;
-   margin-top:0px;
-   cursor:pointer;
-   display:block;
-   height:25px;
-   width:25px;   
-   float:left;
+.list-view-img {
+    display: none;
+}
 
+.toolbar-conclu {
+    display: none;
+}
+/******=============*/
+/***********************************fix mobie - layout-ui*/
+
+.ui-layout-resizer.ui-layout-resizer-west.ui-layout-resizer-open.ui-layout-resizer-west-open {
+    width: 0px !important;
+    height: 0px !important;
+}
+
+.ui-layout-resizer.ui-layout-resizer-east.ui-layout-resizer-closed.ui-layout-resizer-east-closed.ui-draggable-disabled {
+    width: 0px !important;
+    height: 0px !important;
+}
+
+.ag-viewer .middle-west {
+    width: 100% !important;
+    height: 34px !important;
+    display: block !important;
+}
+
+.middle-center.ui-layout-pane.ui-layout-pane-center.ui-layout-container {
+    top: 50px !important;
+    width: 100% !important;
+    height: calc(100% - 50px) !important;
+    left: 0 !important;
+}
+/*======================*/
+.ag-viewer .ui-layout-north {
+    margin: 0 !important;
+    height: auto !important;
+}
+
+.ag-viewer .ui-layout-south {
+    padding: 0 !important;
+}
+
+.ag-viewer-toolbar-top button.toolbar-button {
+    width: auto !important;
+    height: auto !important;
+    padding: 0px;
+    opacity: 0.75;
+    background-color: unset;
+    margin: 2px 4px;
+    background-image: none;
+}
+
+.ag-viewer-toolbar-top .scroll-parent {
+    height: 34px !important;
+    border-bottom: 1px solid #676767;
+}
+
+    .ag-viewer-toolbar-top .scroll-parent .btn-group > .dropdown-menu {
+        min-width: 50px;
+    }
+
+        .ag-viewer-toolbar-top .scroll-parent .btn-group > .dropdown-menu > li > a {
+            padding: 3px 3px;
+            width: 36px;
+            height: 36px;
+        }
+
+.ag-viewer-toolbar-top button.toolbar-button .caret {
+    color: #cccdd0;
+}
+/***************viewer-create*/
+.scroll-parent {
+    border-right: unset;
+}
+
+/************fix ag-view-toolbar-dropdown*/
+.ag-viewer-toolbar .btn-group {
+    position: relative;
+    background-color: unset;
+}
+
+    .ag-viewer-toolbar .btn-group > .btn + .dropdown-toggle {
+        float: right;
+    }
+
+.ag-viewer-toolbar .btn .caret {
+    margin-left: 0;
+    color: white;
+}
+/*back-toolbar-item*/
+.ag-viewer-toolbar .btn-default:active, .btn-default.active {
+    background-color: unset;
+}
+
+.ag-viewer-toolbar .btn-default.disabled, .ag-viewer-toolbar .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active {
+    background-color: unset !important;
+    opacity: 0.2;
+}
+
+.ag-viewer-toolbar .btn:focus, .ag-viewer-toolbar .btn:active:focus, .ag-viewer-toolbar .btn.active:focus {
+    outline: 0;
+    background: unset;
+    border-radius: 3px !important;
+    opacity: 1;
+    color: white;
+    border: 1px solid #282828;
+    background: linear-gradient(to top, #626262, #757575);
+    box-shadow: inset 0px 1px 1px #919191, 0px 1px 0 #6a6a6a;
+}
+
+.ag-viewer-toolbar .btn.active {
+    border-radius: 3px !important;
+    box-shadow: inset 0px 1px 0px #333333, 0 1px 0 #636363;
+    border: 1px solid #212329;
+    background-image: linear-gradient(to top, #363636, #3c3c3c) !important;
+}
+/*===============*/
+
+.ToolBarButton {
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.toolbargroup {
+    float: left;
+}
+
+/*fixed ul image*/
+.ag-viewer-toolbar .btn-group > .dropdown-menu > li > a {
+    /*width: 35px !important;*/
+    height: 35px !important;
+    color: #e1e0e0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ag-viewer-toolbar .btn-group > .dropdown-menu {
+    /*min-width: 40px !important;*/
+    border: 1px solid var(--color-23);
+    box-shadow: unset;
+    background-color: #626262;
+    border-radius: 0;
+}
+
+.ag-viewer-toolbar .dropdown-menu {
+}
+
+    .ag-viewer-toolbar .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-image: linear-gradient(#255178,#255178);
+        background-image: -webkit-linear-gradient(#255178,#255178);
+    }
+/*====*/
+
+.ag-viewer .toolBarItemOption {
+    filter: drop-shadow(0px -1px 1px rgba(0, 0, 0, 1));
+}
+
+.ag-viewer .toolBarItem {
+    filter: drop-shadow(0px -1px 1px rgba(0, 0, 0, 1));
+}
+
+.ag-viewer .toolBarItemOption {
+    margin-right: 5px;
+    margin-top: 0px;
+    cursor: pointer;
+    display: block;
+    height: 50px;
+    width: 50px;
+    float: left;
+    background-size: 100% !important;
+    width: 27px !important;
+    height: 27px !important;
+}
+
+.btn-group > .btn + .dropdown-toggle {
+    background-image: linear-gradient(to top, var(--color-21), var(--color-24));
+    box-shadow: inset 0px 1px 0px var(--color-29);
+    margin-left: 0px !important;
+}
+
+.toolBarItem {
+    margin-right: 0px;
+    margin-top: 0px;
+    cursor: pointer;
+    display: block;
+    height: 30px !important;
+    width: 30px !important;
+    float: none;
+    background-size: 100% !important;
 }
 
 .btn-file {
     position: relative;
     overflow: hidden;
 }
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    cursor: inherit;
-    display: block;
-}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        cursor: inherit;
+        display: block;
+    }
+
 input[readonly] {
-  cursor: text !important;
+    cursor: text !important;
 }
 
 
 
-.toolBarDropDownItem
-{
-   margin-right:2px;
-   margin-top:2px;
-   cursor:pointer;
-   display:block;
-   height:25px;
-   width:25px;   
-   float:left;
+.toolBarDropDownItem {
+    margin-right: 2px;
+    margin-top: 2px;
+    cursor: pointer;
+    display: block;
+    height: 25px;
+    width: 25px;
+    float: left;
 }
 
+
+div.dropdown {
+    margin: 3px 22px 0 0;
+    width: 143px;
+    position: relative;
+    height: 17px;
+    text-align: left;
+}
+
+div.submenu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    width: 135px;
+    display: none;
+    margin-left: 0px;
+    padding: 0px 0 5px;
+    border-radius: 1px;
+}
+
+.dropDownMenuTitle {
+    display: block;
+    font-family: arial;
+    font-weight: bold;
+    padding: 6px 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.dropdown li a {
+    display: block;
+    font-family: arial;
+    font-weight: bold;
+    padding: 6px 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+    .dropdown li a:hover {
+        text-decoration: none;
+    }
+
+.menuRoot {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    font-size: 11px;
+    padding: 11px 0 0 0px;
+}
+
+.btn-toolbar {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+button.toolbar-button {
+    /* width:25px !important;
+   height:25px !important; */
+    border-radius: 4px !important;
+    padding: 0px;
+}
+
+.btn-group > .btn + .dropdown-toggle {
+    /* width: 25px !important; */
+    padding: 0 5px;
+    margin: 6px;
+    margin-left: 0px !important;
+    margin-right: 4px !important;
+    filter: none;
+    border: none;
+}
+
+.open > .dropdown-menu {
+    overflow: visible;
+}
+
+.btn-group > .dropdown-menu {
+    max-height: 1000px;
+    min-width: 74px;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    list-style: none;
+}
+
+    .btn-group > .dropdown-menu > li > a {
+        padding: 3px 3px;
+        /*width: 50px;*/
+        height: 50px;
+    }
+
+.btn.btn-disabled {
+    pointer-events: auto;
+}
+/*btn-group*/
+.ag-viewer-toolbar .btn-group {
+    background-color: unset;
+}
+
+.scroll-parent {
+    font-size: 0px;
+    height: 100%;
+}
+
+.scroll-parent-vertical {
+    font-size: 0px;
+    width: 100%;
+}
+
+.scroll-body, .scroll-button, .scroll-button * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .scroll-button .fa {
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        position: relative;
+        top: calc(50% - 10px);
+        left: calc(50% - 10px);
+    }
+
+.scroll-body, .scroll-button {
+    display: inline-block;
+    height: 100%;
+    font-size: 14px;
+    vertical-align: top;
+    position: relative;
+    user-select: none;
+}
+
+.scroll-body {
+    position: relative;
+    width: calc(100% - 50px);
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px 2px;
+}
+
+.scroll-body-vertical {
+    position: relative;
+    height: calc(100% - 50px);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.scroll-body::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-button {
+    width: 25px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.scroll-button-vertical {
+    height: 25px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.scroll-body-inner {
+    height: 100%;
+    width: auto;
+    position: absolute;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+.scroll-body-inner-vertical {
+    height: 100%;
+    width: auto;
+    position: absolute;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+.scroll-button.scroll-button-disabled {
+    cursor: default;
+}
+
+    .scroll-button.scroll-button-disabled:hover {
+        cursor: default;
+    }
+
+    .scroll-button.scroll-button-disabled:active {
+        cursor: default;
+    }
+
+.scroll-body-inner > * {
+    display: inline-block;
+    margin: 0px;
+    vertical-align: top;
+}
+
+.ag-viewer-toolbar button.toolbar-button {
+    /* width: auto !important;
+    height: auto !important;
+    margin: 0px 2px;
+    margin-bottom: 5px;
+    padding: 0px;
+    opacity: 0.75;
+    border: 1px solid #21232900;
+    background-color: unset;
+    background-image: none;
+    box-shadow: unset;*/
+    background-image: unset;
+    background-color: #333333;
+    box-shadow: unset;
+}
+
+.btn-group > .btn:first-child:first-child {
+   /* margin-right: 0 !important;
+    margin-left: 4px;*/
+}
+
+.middle-west1 {
+    display: block !important;
+    height: 48px !important;
+    width: 100% !important;
+}
+
+.btn-group .toolBarItemText {
+    width: auto;
+}
+
+/*================================================================================================================*/
 .Tools
 {
    display:block;
@@ -1916,28 +2339,6 @@ input[readonly] {
 }
 
 
-.CTRTool {
-    display: block;
-    width: 25px;
-    height: 25px;
-    background: url(../images/viewer/small-sprite-sheet.png) -650px -103px;
-}
-
-.CTRTool:hover {
-    display: block;
-    width: 25px;
-    height: 25px;
-    background: url(../images/viewer/small-sprite-sheet.png) -650px -129px;
-}
-
-.CTRToolPressed {
-    display: block;
-    width: 25px;
-    height: 25px;
-    background: url(../images/viewer/small-sprite-sheet.png) -650px -103px;
-}
-
-
 .ProbeTool
 {
    display:block;
@@ -2376,211 +2777,7 @@ input[readonly] {
    height:25px;
    background:url(../images/viewer/small-sprite-sheet.png)  -425px -312px;
 }
-
- div.dropdown {
-margin: 3px 22px 0 0;
-width: 143px;
-position: relative;
-height: 17px;
-text-align:left;
-}
-div.submenu
-{
-
-position: absolute;
-top: 0px;
-left: 0px;
-z-index: 100;
-width: 135px;
-display: none;
-margin-left: 0px;
-padding: 0px 0 5px;
-border-radius: 1px;
-
-}
-
-.dropDownMenuTitle {
-    display: block;
-    font-family: arial;
-    font-weight: bold;
-    padding: 6px 15px;
-    cursor: pointer;
-    text-decoration:none;
-}
-
-.dropdown  li a {
-    display: block;
-    font-family: arial;
-    font-weight: bold;
-    padding: 6px 15px;
-    cursor: pointer;
-    text-decoration:none;
-}
-
-.dropdown li a:hover
-{
-    text-decoration: none;
-}
-
-.menuRoot
-{
-list-style:none;
-margin:0px;
-padding:0px;
-font-size: 11px;
-padding: 11px 0 0 0px;
-}
-
-.btn-toolbar
-{
-   margin-top: 0px !important;
-   margin-bottom: 0px !important;
-}
-
-button.toolbar-button
-{
-   /* width:25px !important;
-   height:25px !important; */
-   border-radius: 6px !important;
-   padding: 0px;   
-}
-
-.btn-group>.btn+.dropdown-toggle {
-width: 25px !important;
-}
-
-.open>.dropdown-menu {
-overflow: visible;
-}
-
-.btn-group > .dropdown-menu {
-    max-height: 1000px;
-    overflow-y: auto !important;
-    overflow-x: hidden;
-    list-style: none;
-}
-
-.btn-group>.dropdown-menu>li>a {   
-   padding: 3px 3px;
-   width: 300px;
-   height: 50px;
-}
-
-.btn.btn-disabled {
-    pointer-events: auto;
-}
-
-.scroll-parent {
-    font-size: 0px;
-    height: 100%;
-}
-
-.scroll-parent-vertical {
-    font-size: 0px;
-    width: 100%;
-}
-
-.scroll-body, .scroll-button, .scroll-button * {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-    .scroll-button .fa {
-        height: 20px;
-        width: 20px;
-        text-align: center;
-        position: relative;
-        top: calc(50% - 10px);
-        left: calc(50% - 10px);
-    }
-
-.scroll-body, .scroll-button {
-    display: inline-block;
-    height: 100%;
-    font-size: 14px;
-    vertical-align: top;
-    position: relative;
-    user-select: none;
-}
-
-.scroll-body {
-    position: relative;
-    width: calc(100% - 50px);
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.scroll-body-vertical {
-    position: relative;
-    height: calc(100% - 50px);
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-    .scroll-body::-webkit-scrollbar {
-        display: none;
-    }
-
-.scroll-button {
-    width: 25px;
-    cursor: pointer;
-    cursor: hand;
-}
-
-.scroll-button-vertical {
-    height: 25px;
-    cursor: pointer;
-    cursor: hand;
-}
-
-.toolbarbodyArea {
-    height: 100%;
-    width: auto;
-    position: absolute;
-    left: 225px;
-    overflow: hidden;
-    height: 100%
-}
-
-.scroll-body-inner {
-    height: 100%;
-    width: auto;
-    position: absolute;
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-}
-
-.scroll-body-inner-vertical {
-    height: 100%;
-    width: auto;
-    position: absolute;
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-}
-
-.scroll-button.scroll-button-disabled {
-    cursor: default;
-}
-
-.scroll-button.scroll-button-disabled:hover {
-    cursor: default;
-}
-
-.scroll-button.scroll-button-disabled:active {
-    cursor: default;
-}
-
-
-.scroll-body-inner > * {
-    display: inline-block;
-    margin: 0px;
-    vertical-align: top;
-}
-
+/*============================================================================*/
 .ToggleGrid
 {
    display:block;
