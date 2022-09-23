@@ -33,3 +33,10 @@ F:\medicalviewer22\f1\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.A
 F:\medicalviewer22\f1\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.CoreCompileInputs.cache
 F:\medicalviewer22\f1\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.dll
 F:\medicalviewer22\f1\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.pdb
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\bin\MedicalWebViewerDemo.dll.config
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\bin\MedicalWebViewerDemo.dll
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\bin\MedicalWebViewerDemo.pdb
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.AssemblyReference.cache
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.csproj.CoreCompileInputs.cache
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.dll
+D:\Projects\Delta\MedicalViewer\MedicalWebViewer22\obj\Debug\MedicalWebViewerDemo.pdb

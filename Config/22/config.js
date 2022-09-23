@@ -7,9 +7,9 @@ app.constant("app.config", {
         //threeDserviceUrl: document.location.protocol + "//" + document.location.host + "/MedicalViewerServiceAsp22/api/",
         //idpServiceUrl: document.location.protocol + "//" + document.location.host + "/MedicalViewerIdp22/",
         medicalViewerUrl: document.location.protocol + "//" + document.location.host + "/MedicalViewer22",
-        serviceUrl: document.location.protocol + "//192.168.1.10/MedicalViewerServiceAsp22/api/",
-        threeDserviceUrl: document.location.protocol + "//192.168.1.10/MedicalViewerServiceAsp22/api/",
-        idpServiceUrl: document.location.protocol + "//192.168.1.10/MedicalViewerIdp22/",
+        serviceUrl: document.location.protocol + "//192.168.1.104/MedicalViewerServiceAsp22/api/",
+        threeDserviceUrl: document.location.protocol + "//192.168.1.104/MedicalViewerServiceAsp22/api/",
+        idpServiceUrl: document.location.protocol + "//192.168.1.104/MedicalViewerIdp22/",
         // Use empty string to disable help button.
         oktaHelpUrl: "https://www.leadtools.com/help/leadtools/v22/dh/medical/to/sign-in-to-the-medical-web-viewer-demo-using-okta.html",
         loginShibbolethHelpUrl: "https://www.leadtools.com/help/leadtools/v22/dh/medical/to/sign-in-to-the-medical-web-viewer-demo-using-shibboleth.html",
