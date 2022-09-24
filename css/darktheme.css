@@ -7348,3 +7348,23 @@ button.toolbar-button {
 .updateUserForm-select .dropBoxItem label {
 	margin: 0;
 }
+
+.searchview_layout .ui-layout-center {
+	border: 0px !important
+}
+
+.searchview_layout .ui-layout-east {
+	border: 0px !important
+}
+
+.searchview_layout .searchview_layout-content {
+	color: white;
+}
+
+.searchview_layout .searchview_layout-content p {
+	margin-bottom: 5px;
+}
+
+.searchview_layout .searchview_layout-content label {
+	margin-bottom: 0;
+}

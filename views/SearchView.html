@@ -87,6 +87,8 @@
                 <div class="flex-row flex-wrap pd012 flex-grow flex-center mar-auto">
                     <button id="searchButton" class="button-light" ng-click="doSearch()" title="Tìm kiếm"><i class="fa fa-search"></i></button>
                     <button id="clearButton" class="button-light" ng-click="clear()" title="Xóa"><i class="fa fa-remove"></i></button>
+                    <button id="testaaa" class="button-light south-toggler ui-layout-button-toggle ui-layout-button-toggle-south" ng-click="showStudies()" title="Xóa"><i class="fa fa-remove"></i></button>
+
                     <!--<button id="clearButton" class="button-light" ng-click="statisticInfor()" title="{{'StatisticInformation'|translate}}"><i class="fa fa-chart-line-down"></i></button>-->
                 </div>
             </div>
@@ -102,19 +104,48 @@
 
 
 <hr style="margin-top: 0px; margin-bottom: 5px" />
+
+
 <div elheightresize="" class="vbox boxItem">
-    <div id="searchResults" ag-grid="gridOptions" class="ag-fresh" style="height:50%"></div>
-    <div id="searchResultsSeries" ag-grid="gridOptionsSeries" class="ag-fresh" style="height:50%"></div>
+    <div layout layout-config="layoutConfig" class="searchview_layout" id='mainLayoutWindow' api="layoutApi" hide-south="hideTimeline" position="center" style="height:100px">
+        <div class="ui-layout-center">
+
+            <div id="searchResults" ag-grid="gridOptions" class="ag-fresh" style="height:50%"></div>
+            <div id="searchResultsSeries" ag-grid="gridOptionsSeries" class="ag-fresh" style="height:50%"></div>
+
+        </div>
+        <div class="ui-layout-east">
+            <div class="east-wrapper box-primary-background">
+                <h4 class="mar0 color-white pd1216 border-primary bordertlr-no pad-12_2_6_12 text-uppercase ng-binding">
+                    Thông tin
+                </h4>
+                <div class="flex-column hp100 scroll-secondary letter-spacing color-primary pad-6_2_6_12">
+                    <div class="flex-column flex-grow-1 text-color searchview_layout-content">
+                        <p class="">
+                            <label class="">Label: </label>
+                            <span class="">Content </span>
+                        </p>
+                        <p class="">
+                            <label class="">Label: </label>
+                            <span class="">Content </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-
+<!--<div elheightresize="" class="vbox boxItem">
+    <div id="searchResults" ag-grid="gridOptions" class="ag-fresh" style="height:50%"></div>
+    <div id="searchResultsSeries" ag-grid="gridOptionsSeries" class="ag-fresh" style="height:50%"></div>
+</div>-->
 <!--<fieldset>
     <div class="row search-row" style="margin-left: 0px !important; margin-right: 0px !important">
-        <input type="text" 
-            placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'ID' | translate}}:" 
-            class="search-text-field first-search-text-field" 
-            ng-class="{'input-sm': isTabletOrMobile}" 
+        <input type="text"
+            placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'ID' | translate}}:"
+            class="search-text-field first-search-text-field"
+            ng-class="{'input-sm': isTabletOrMobile}"
             ng-model="queryOptions.PatientsOptions.PatientID"
             typeahead="patient for patient in patientids($viewValue)" ng-enter="doSearch()" />
         <input type="text" placeholder="{{ 'PATIENT' | translate }}&nbsp;{{ 'NAME' | translate}}:" class="search-text-field" ng-class="{'input-sm': isTabletOrMobile}" ng-model="queryOptions.PatientsOptions.PatientName"
@@ -133,3 +164,6 @@
     </div>
     <div class="pacsQueryRow" ng-include src="showPacsQuery ? 'views/PacsQuery.html' : null"></div>
 </fieldset>-->
+
+<script>
+</script>
