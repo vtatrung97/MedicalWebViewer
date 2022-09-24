@@ -6858,6 +6858,7 @@ table.table_template {
 	flex: 1;
 }
 /*============================================================================ PHIEU CHUP*/
+
 .phieuchup {
 	position: relative;
 	margin: 10px auto;
@@ -7332,7 +7333,7 @@ button.toolbar-button {
 }
 
 .ui-layout-center {
-	width: 100% !important;
+	/*width: 100% !important;*/
 	border: 1px solid #ff0000 !important;
 }
 
@@ -7367,4 +7368,28 @@ button.toolbar-button {
 
 .searchview_layout .searchview_layout-content label {
 	margin-bottom: 0;
+}
+
+.list_img_searchview .form-70 {
+	display: flex;
+	align-items: center;
+	border: 1px solid red;
+	padding: 5px;
+}
+
+.list_img_searchview .form-70 {
+	margin-left: 2px;
+}
+
+.list_img_searchview .form-70:first-child {
+	margin-left: 0;
+}
+
+.list_img_searchview {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.list_img_searchview-box {
+	width:max-content;
 }

@@ -177,7 +177,7 @@ module Controllers {
                 east__spacing_open: 6,
                 east__spacing_closed: 8,
                 //initClosed: true,
-                east__size: 300,
+                east__size: 770,
                 east__resizable: true,
                 east__initHidden: true,
 
@@ -187,7 +187,7 @@ module Controllers {
 
             $scope.layoutApi = {};
 
-            $(document).on("click", ".ag-body-viewport-wrapper", function (e) {
+            $(document).on("click", "#searchResults .ag-body-viewport-wrapper", function (e) {
                 if ($(e.target).is(".target_class") === false) {
                     $scope.layoutApi.closePane('east');
                 }
