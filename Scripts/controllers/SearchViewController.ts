@@ -200,6 +200,9 @@ module Controllers {
                 enableSorting: true,
                 rowClass: 'studyContext',
                 angularCompileRows: true,
+
+                enableColResize: true,
+
                 columnDefs: [
                     {
                         headerName: studiesGroup,
@@ -220,19 +223,18 @@ module Controllers {
                                 cellRenderer: Utils.hyperlinkPatientIdRenderer,
                                 onCellContextMenu: this.hpContextMenu.bind(this),
                                 onCellClicked: this.handleCellClicked.bind(this),
-
-                                //cellStyle: { color: 'red', 'background-color': 'green' },
-                                cellClass: 'target_class',
-                                onCellDoubleClicked: function () {
-                                    $scope.layoutApi.openPane('east');
-                                }
                             },
                             {
                                 headerName: "Name", valueGetter: function (params) {
                                     return Utils.nameFormatter(params.data.Patient.Name);
                                 },
                                 onCellContextMenu: this.hpContextMenu.bind(this),
-                                onCellClicked: this.handleCellClicked.bind(this)
+                                onCellClicked: this.handleCellClicked.bind(this),
+                                //cellStyle: { color: 'red', 'background-color': 'green' },
+                                cellClass: 'target_class',
+                                onCellDoubleClicked: function () {
+                                    $scope.layoutApi.openPane('east');
+                                }
                             },
                             {
                                 headerName: "Accession #",

@@ -7393,3 +7393,7 @@ button.toolbar-button {
 .list_img_searchview-box {
 	width:max-content;
 }
+
+.east-wrapper .scroll-secondary {
+	overflow: auto;
+}
