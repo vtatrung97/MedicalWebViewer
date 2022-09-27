@@ -60,6 +60,7 @@ module Controllers {
         canShare(): boolean;
         isNotTempOrExter(): boolean;
         isNotExt(): boolean;
+        getCurrentTasks();
     }
 
     export class MedicalWebViewerController {
@@ -211,6 +212,14 @@ module Controllers {
             eventService.subscribe(EventNames.DeleteTab, function (event, data) {
                 $scope.deleteTab(data.args.id);
             });
+
+            $scope.getCurrentTasks = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/ServiceRequests.html',
+                    controller: ServiceRequestsController,
+                    backdrop: 'static'
+                });
+            }
 
             $scope.deleteTab = function (id, event) {
                 
