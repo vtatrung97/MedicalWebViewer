@@ -12,6 +12,11 @@ module Controllers {
         config: any;
         studies: Array<any>;
         resultButtons: Array<any>;
+
+        layoutConfig: any;
+        layoutApi: any;
+        outPanel();
+
         gridOptions: any;
         gridOptionsSeries: any;
 
@@ -29,6 +34,7 @@ module Controllers {
         handleCellClicked(data: any): void;
 
         queryModel: any;
+        showStudies();
     }
 
     export class SearchViewController extends SearchController {
@@ -94,6 +100,10 @@ module Controllers {
             super($rootScope, $scope, queryArchiveService, optionsService, authenticationService, queryPacsService, tabService, eventService, templateService, templateEditorService, $translate);
 
             __this = this;
+
+            var spacingSize = Utils.get_spacingSize();
+            var overflowSize = optionsService.get(OptionNames.SeriesThumbnailWidth) * 3;
+
             this._$scope = $scope;
             this._queryArchiveService = queryArchiveService;
             this._queryPacsService = queryPacsService;
@@ -102,7 +112,7 @@ module Controllers {
             this._eventService = eventService;
             this._tabService = tabService;
             this._seriesManagerService = seriesManagerService;
-            this._objectStoreService = objectStoreService;            
+            this._objectStoreService = objectStoreService;
             this._objectRetrieveService = objectRetrieveService;
             this._viewStudy = false;
             this._dataCache = dataCache;
@@ -144,15 +154,55 @@ module Controllers {
                 }
             }
 
+            $scope.layoutConfig = {
+                applyDemoStyles: true,
+                scrollToBookmarkOnLoad: false,
+                spacing_closed: spacingSize,
+                spacing_open: spacingSize,
+                livePaneResizing: false,
 
+                //center: {
+                //    pacing_open: 6,
+                //    spacing_closed: 8,
+                //},
+
+                //east: {
+                //    spacing_open: 6,
+                //    spacing_closed: 8,
+                //    //initClosed: true,
+                //    east__size: 300,
+                //    east__resizable: true,
+                //},
+
+                east__spacing_open: 6,
+                east__spacing_closed: 8,
+                //initClosed: true,
+                east__size: 770,
+                east__resizable: true,
+                east__initHidden: true,
+
+                onopen: this.onOpenPane.bind(this)
+
+            }
+
+            $scope.layoutApi = {};
+
+            $(document).on("click", "#searchResults .ag-body-viewport-wrapper", function (e) {
+                if ($(e.target).is(".target_class") === false) {
+                    $scope.layoutApi.closePane('east');
+                }
+            });
 
             $scope.gridOptions = {
                 rowSelection: 'single',
                 suppressNoRowsOverlay: true,
-                groupHeaders: true,               
+                groupHeaders: true,
                 enableSorting: true,
                 rowClass: 'studyContext',
                 angularCompileRows: true,
+
+                enableColResize: true,
+
                 columnDefs: [
                     {
                         headerName: studiesGroup,
@@ -168,17 +218,23 @@ module Controllers {
                             {
                                 headerName: "Patient ID",
                                 valueGetter: function (params) {
-                                    return Utils.nameFormatter(params.data.Patient.ID);},
+                                    return Utils.nameFormatter(params.data.Patient.ID);
+                                },
                                 cellRenderer: Utils.hyperlinkPatientIdRenderer,
                                 onCellContextMenu: this.hpContextMenu.bind(this),
-                                onCellClicked: this.handleCellClicked.bind(this)
+                                onCellClicked: this.handleCellClicked.bind(this),
                             },
                             {
                                 headerName: "Name", valueGetter: function (params) {
                                     return Utils.nameFormatter(params.data.Patient.Name);
-                            },
+                                },
                                 onCellContextMenu: this.hpContextMenu.bind(this),
-                                onCellClicked: this.handleCellClicked.bind(this)
+                                onCellClicked: this.handleCellClicked.bind(this),
+                                //cellStyle: { color: 'red', 'background-color': 'green' },
+                                cellClass: 'target_class',
+                                onCellDoubleClicked: function () {
+                                    $scope.layoutApi.openPane('east');
+                                }
                             },
                             {
                                 headerName: "Accession #",
@@ -207,17 +263,17 @@ module Controllers {
                                 field: "Description",
                                 onCellContextMenu: this.hpContextMenu.bind(this),
                                 onCellClicked: this.handleCellClicked.bind(this)
-                                }
+                            }
                         ]
                     }
-                ],                
+                ],
                 onRowSelected: this.studySelected.bind(this),
                 rowData: null,
                 onGridReady: function () {
                     $scope.gridOptions.api.hideOverlay();
                     setTimeout(function () {
                         $scope.gridOptions.api.sizeColumnsToFit();
-                    }, 500);  
+                    }, 500);
 
                     $.contextMenu({
                         selector: '.studyContext',
@@ -230,9 +286,9 @@ module Controllers {
                                     if (key == "NoHangingProtocolFound_407B6C09-83C2-4A7F-9643-AA4301F6A67A") {
                                         return;
                                     }
-                                    
+
                                     __this.viewHangingProtocol(selectedNodes[0], key);
-                                    },
+                                },
                                 // items: __this.get_hangingProtocols_test()
                                 items: __this.get_hangingProtocols()
                             }
@@ -240,7 +296,7 @@ module Controllers {
                             return options;
                         }
                     });
-                }                
+                }
             }
 
             $scope.gridOptionsSeries = {
@@ -269,7 +325,7 @@ module Controllers {
                                 width: parseInt(optionsService.get(OptionNames.SeriesThumbnailWidth)),
                                 onCellContextMenu: this.contextMenu.bind(this),
                                 suppressSorting: true
-                            },                                                   
+                            },
                             {
                                 headerName: 'Number', field: 'Number',
                                 onCellContextMenu: this.contextMenu.bind(this)
@@ -297,8 +353,8 @@ module Controllers {
                 ],
                 onRowSelected: this.seriesSelected.bind(this),
                 rowData: null,
-                onGridReady: function () {   
-                    $scope.gridOptionsSeries.api.hideOverlay();                                                       
+                onGridReady: function () {
+                    $scope.gridOptionsSeries.api.hideOverlay();
 
                     $.contextMenu({
                         selector: '.seriesContext',
@@ -316,11 +372,11 @@ module Controllers {
                             }
                         }
                     });
-                    
+
                     setTimeout(function () {
                         $scope.gridOptionsSeries.api.sizeColumnsToFit();
-                    }, 500);                      
-                },                             
+                    }, 500);
+                },
             }
 
             $scope.queryOptions = new Models.QueryOptions();
@@ -333,7 +389,7 @@ module Controllers {
 
             if (selection.length > 0) {
                 $scope.querySource.pacs = selection[0];
-            }           
+            }
 
             $scope.doSearch = function () {
                 __this.set_patientSelected(false);
@@ -373,7 +429,7 @@ module Controllers {
                 }
                 __this._selectedStudy = null;
                 __this._selectedSeries = null;
-                $scope.gridOptions.api.setRowData([]);                
+                $scope.gridOptions.api.setRowData([]);
                 $scope.gridOptionsSeries.api.setRowData([]);
                 $scope.gridOptionsSeries.api.hideOverlay();
                 switch ($scope.querySource.name) {
@@ -412,8 +468,8 @@ module Controllers {
             }
 
             $scope.patientids = $.proxy(this.patientids, this);
-            $scope.patientNames = $.proxy(this.patientNames, this);    
-            
+            $scope.patientNames = $.proxy(this.patientNames, this);
+
             $scope.onLayoutChanged = function (newValue, oldValue) {
                 setTimeout(function () {
                     if ($scope.gridOptions.api)
@@ -431,8 +487,8 @@ module Controllers {
                     $scope.gridOptions.api.refreshView();
                     $scope.gridOptionsSeries.api.refreshView();
                     $scope.gridOptions.api.sizeColumnsToFit();
-                    $scope.gridOptionsSeries.api.sizeColumnsToFit();     
-                                                       
+                    $scope.gridOptionsSeries.api.sizeColumnsToFit();
+
                     if (studyNodes.length > 0) {
                         $scope.gridOptions.api.ensureNodeVisible(studyNodes[0]);
                     }
@@ -440,18 +496,18 @@ module Controllers {
                     if (seriesNodes.length > 0) {
                         $scope.gridOptionsSeries.api.ensureNodeVisible(seriesNodes[0]);
                     }
-                    
+
                 }, 225);
             }
-            
+
             $scope.$watch('windowDimensions', function (newValue, oldValue) {
                 if ($scope.gridOptions.api) {
-                    setTimeout(function () {                        
+                    setTimeout(function () {
                         $scope.gridOptions.api.sizeColumnsToFit();
                         $scope.gridOptionsSeries.api.sizeColumnsToFit();
                     }, 500);
                 }
-            }); 
+            });
 
 
             eventService.subscribe(EventNames.LoadFromOverflow, function (event, data) {
@@ -511,7 +567,7 @@ module Controllers {
         }
 
         private viewHangingProtocol(data, sopInstanceUID: string) {
-            var self = this;            
+            var self = this;
 
             this._objectRetrieveService.GetHangingProtocol(sopInstanceUID).then(function (result) {
                 var hp: Models.HangingProtocol = result.data;
@@ -521,7 +577,7 @@ module Controllers {
                 self._objectRetrieveService.GetHangingProtocolInstances(sopInstanceUID, self._selectedStudy.Patient.ID, self._selectedStudy.InstanceUID, self._selectedStudy.Date).then(function (result) {
                     self.loadHangingProtocol(result.data, hp);
                 }, function (error) {
-                });                
+                });
             });
         }
 
@@ -598,8 +654,7 @@ module Controllers {
 
                     var box = structuredDisplay.Boxes[index];
 
-                    if (Utils.isInstanceOfSOP(box, json, sopInstanceUID, DicomHelper.getDicomTagValue(json, DicomTag.InstanceNumber, 0)))
-                    {
+                    if (Utils.isInstanceOfSOP(box, json, sopInstanceUID, DicomHelper.getDicomTagValue(json, DicomTag.InstanceNumber, 0))) {
 
                         var frameOFRefrences = [];
                         if (box && !box.IsMapped) {
@@ -718,14 +773,14 @@ module Controllers {
                         query.StudiesOptions.ModalitiesInStudy.push(modality);
                     }
                 }
-                             
+
                 switch (this._$scope.querySource.name) {
                     case 'database':
                         this._queryArchiveService.FindSeries(query, maxSeriesResults).then(function (result) {
                             if (result.data["FaultType"]) {
                                 if (result.data["Message"]) {
                                     __this._$scope.gridOptionsSeries.api.hideOverlay();
-                                    alert(result.data["Message"]);                                    
+                                    alert(result.data["Message"]);
                                 }
                             }
                             else {
@@ -733,11 +788,11 @@ module Controllers {
                                 __this._queryArchiveService._currentPatientSeries = result.data;
                                 __this._queryArchiveService.set_CurrentPatientSeries(result.data[0].Patient.ID, result.data);
                                 if (__this._selectedStudy.InstanceUID == result.data[0].StudyInstanceUID) {
-                                __this._$scope.gridOptionsSeries.api.setRowData(result.data);
+                                    __this._$scope.gridOptionsSeries.api.setRowData(result.data);
                                     if (viewStudy) {
                                         __this.loadStudy();
                                     }
-                                    
+
                                 }
                             }
                             __this._loadingStudySeries = false;
@@ -756,8 +811,8 @@ module Controllers {
                                 __this._queryArchiveService._currentPatientSeries = result.data;
                                 __this._queryArchiveService.set_CurrentPatientSeries(result.data[0].Patient.ID, result.data);
 
-                                if (__this._selectedStudy.InstanceUID == result.data[0].StudyInstanceUID) {                                    
-                                __this._$scope.gridOptionsSeries.api.setRowData(result.data);
+                                if (__this._selectedStudy.InstanceUID == result.data[0].StudyInstanceUID) {
+                                    __this._$scope.gridOptionsSeries.api.setRowData(result.data);
                                     if (viewStudy) {
                                         __this.loadStudy();
                                     }
@@ -1121,7 +1176,7 @@ module Controllers {
             this._dataCache['StudyInstanceUID'] = this._selectedStudy.InstanceUID;
             var studyLayout: Models.StudyLayout = null;
             this._objectRetrieveService.GetStudyLayout(<any>(this._selectedStudy.InstanceUID)).then(function (result) {
-                studyLayout= result.data;
+                studyLayout = result.data;
 
                 self._templateService.currentHangingProtocol = null;
 
@@ -1141,28 +1196,28 @@ module Controllers {
 
                 if (!angular.isDefined(studyLayout["Series"])) {
                     self.loadSeries(self._selectedStudy, self._$scope.gridOptionsSeries.rowData[0], false);
-                    
+
                 }
                 else {
-                        studyLayout['studyInstanceUID'] = self._selectedStudy.InstanceUID;
-                        $.each(studyLayout.Series, function (index: number, item: Models.SeriesInfo) {
+                    studyLayout['studyInstanceUID'] = self._selectedStudy.InstanceUID;
+                    $.each(studyLayout.Series, function (index: number, item: Models.SeriesInfo) {
+                        var series = self._seriesManagerService.get_seriesInfo(item.SeriesInstanceUID);
+
+                        if (!series) {
+                            self.queryForSeries(self, item.SeriesInstanceUID, item.ImageBoxNumber, studyLayout.Boxes[self.getImageBox(item.ImageBoxNumber, studyLayout.Boxes)].referencedSOPInstanceUID, false, "");
+                        }
+                    });
+
+                    $.each(studyLayout.OtherStudies, function (index: number, study: Models.OtherStudies) {
+                        $.each(study.Series, function (index: number, item: Models.SeriesInfo) {
                             var series = self._seriesManagerService.get_seriesInfo(item.SeriesInstanceUID);
 
                             if (!series) {
                                 self.queryForSeries(self, item.SeriesInstanceUID, item.ImageBoxNumber, studyLayout.Boxes[self.getImageBox(item.ImageBoxNumber, studyLayout.Boxes)].referencedSOPInstanceUID, false, "");
                             }
                         });
-
-                        $.each(studyLayout.OtherStudies, function (index: number, study: Models.OtherStudies) {
-                            $.each(study.Series, function (index: number, item: Models.SeriesInfo) {
-                                var series = self._seriesManagerService.get_seriesInfo(item.SeriesInstanceUID);
-
-                                if (!series) {
-                                    self.queryForSeries(self, item.SeriesInstanceUID, item.ImageBoxNumber, studyLayout.Boxes[self.getImageBox(item.ImageBoxNumber, studyLayout.Boxes)].referencedSOPInstanceUID, false, "");
-                                }
-                            });
-                        });
-                    }
+                    });
+                }
             });
 
             this._viewStudy = false;
@@ -1180,7 +1235,7 @@ module Controllers {
                 study: study,
                 series: series,
                 remote: this._$scope.querySource.name == 'pacs',
-                structureDisplay: loadstructureDisplay, 
+                structureDisplay: loadstructureDisplay,
                 templateItem: study.templateItem,
                 studyLoad: true,
                 dentalSearchController: this
@@ -1191,68 +1246,66 @@ module Controllers {
             this._eventService.publish(EventNames.SeriesSelected, {
                 study: study,
                 series: series,
-                view : view,
-                remote: this._$scope.querySource.name == 'pacs',                
-                displaySetNumber: view.DisplaySetNumber               
+                view: view,
+                remote: this._$scope.querySource.name == 'pacs',
+                displaySetNumber: view.DisplaySetNumber
             });
         }
-        
+
         private matchTemplateForSeries(data) {
             var StudyInstanceUID = data.node.data.StudyInstanceUID;
             var SeriesInstanceUID = data.node.data.InstanceUID;
 
-            if (StudyInstanceUID && SeriesInstanceUID) {                
-                
-                    //read first instance's json
-                    var promise = this._objectRetrieveService.GetDicomJSON(StudyInstanceUID, SeriesInstanceUID, '');
+            if (StudyInstanceUID && SeriesInstanceUID) {
 
-                    //on success
-                    promise.success(function (json) {
+                //read first instance's json
+                var promise = this._objectRetrieveService.GetDicomJSON(StudyInstanceUID, SeriesInstanceUID, '');
 
-                        var _template = null;
+                //on success
+                promise.success(function (json) {
 
-                        this.getAutoMatchTemplates().some((template: Models.Template) => {                            
+                    var _template = null;
 
-                            //parse the json and see if we have a match
-                            try
-                            {
-                                if (!_template) {
-                                    if (Utils.executeScript(template.AutoMatching, json)) {
-                                        console.log('template auto-match found');
-                                        _template = template;
-                                        return true;//break;
-                                    }
+                    this.getAutoMatchTemplates().some((template: Models.Template) => {
+
+                        //parse the json and see if we have a match
+                        try {
+                            if (!_template) {
+                                if (Utils.executeScript(template.AutoMatching, json)) {
+                                    console.log('template auto-match found');
+                                    _template = template;
+                                    return true;//break;
                                 }
                             }
-                            catch (e)
-                            {
-                                console.log(e);
-                            }
-                            return false;//continue
-                        });
-
-
-                        //use template (if any) to view
-                        this._eventService.publish(EventNames.SeriesSelected, {
-                            study: this._selectedStudy,
-                            series: data.node.data,
-                            remote: this._$scope.querySource.name == 'pacs',
-                            template: _template
-                        });
-
-                    }.bind(this));
-
-                    //on error - default to no template - continue loading
-                    promise.error(function (e) {
-                        console.log(e);
-
-                        this._eventService.publish(EventNames.SeriesSelected, {
-                            study: this._selectedStudy,
-                            series: data.node.data,
-                            remote: this._$scope.querySource.name == 'pacs'
-                        });
+                        }
+                        catch (e) {
+                            console.log(e);
+                        }
+                        return false;//continue
                     });
-                
+
+
+                    //use template (if any) to view
+                    this._eventService.publish(EventNames.SeriesSelected, {
+                        study: this._selectedStudy,
+                        series: data.node.data,
+                        remote: this._$scope.querySource.name == 'pacs',
+                        template: _template
+                    });
+
+                }.bind(this));
+
+                //on error - default to no template - continue loading
+                promise.error(function (e) {
+                    console.log(e);
+
+                    this._eventService.publish(EventNames.SeriesSelected, {
+                        study: this._selectedStudy,
+                        series: data.node.data,
+                        remote: this._$scope.querySource.name == 'pacs'
+                    });
+                });
+
             }
             else {
                 console.log('failed to read study/series id');
@@ -1293,14 +1346,14 @@ module Controllers {
                 if (selectedNodes[0].data != this._selectedSeries) {
                     this._selectedSeries = data.node.data;
                     if (this.isAnyTemplateAutoMatch()) {
-                        this.matchTemplateForSeries(data);                        
+                        this.matchTemplateForSeries(data);
                     }
-                    else {                        
-                    this._eventService.publish(EventNames.SeriesSelected, {
-                        study: this._selectedStudy,
-                        series: data.node.data,
+                    else {
+                        this._eventService.publish(EventNames.SeriesSelected, {
+                            study: this._selectedStudy,
+                            series: data.node.data,
                             remote: this._$scope.querySource.name == 'pacs'
-                    });
+                        });
                     }
                 }
                 else if (selectedNodes[0].data == this._selectedSeries) {
@@ -1314,11 +1367,11 @@ module Controllers {
                             this.matchTemplateForSeries(data);
                         }
                         else {
-                        this._eventService.publish(EventNames.SeriesSelected, {
-                            study: this._selectedStudy,
-                            series: data.node.data,
+                            this._eventService.publish(EventNames.SeriesSelected, {
+                                study: this._selectedStudy,
+                                series: data.node.data,
                                 remote: this._$scope.querySource.name == 'pacs'
-                        });
+                            });
                         }
                     }
                 }
@@ -1334,7 +1387,7 @@ module Controllers {
             }
         }
 
-        private hpContextMenu(data) : void {                
+        private hpContextMenu(data): void {
             this._$scope.gridOptions.api.selectNode(data.node, false, true);
             this.studySelected(data);
             this.waitForSeries(data);
@@ -1356,7 +1409,7 @@ module Controllers {
 
             if (this._loadingStudySeries == true) {
                 setTimeout(function () {
-                    self.waitForSeries(data);        
+                    self.waitForSeries(data);
                 }, 100);
             }
             else {
@@ -1372,7 +1425,7 @@ module Controllers {
                 this._queryArchiveService.FindHangingProtocols(data.data.InstanceUID).then(function (result) {
                     self._hangingProtocols = result.data;
                     self._loadingHangingProtocols = false;
-                });                             
+                });
             }
         }
 
@@ -1396,7 +1449,7 @@ module Controllers {
         // Waits for all the hanging protocols to be loaded.  If load best is true then the
         // best matched hanging protocol will be loaded. 
         //
-        private waitForHangingProtocols(data, loadBest?:boolean) {
+        private waitForHangingProtocols(data, loadBest?: boolean) {
             var self = this;
 
             if (this._loadingHangingProtocols == true) {
@@ -1430,21 +1483,21 @@ module Controllers {
                 //else {
                 //    self.loadStudy(false);
                 //}
-            }            
+            }
         }
 
         private get_ModalitesInActiveStudy(): Array<string> {
             var modalities: Array<string> = new Array<string>();
             var count: number = this._$scope.gridOptionsSeries.rowData.length;
 
-        for (var i = 0; i < count; i++) {
-            var series = this._$scope.gridOptionsSeries.rowData[i];
+            for (var i = 0; i < count; i++) {
+                var series = this._$scope.gridOptionsSeries.rowData[i];
 
-            if (modalities.indexOf(series.Modality) == -1)
-                modalities.push(series.Modality);
-        }
+                if (modalities.indexOf(series.Modality) == -1)
+                    modalities.push(series.Modality);
+            }
 
-        return modalities;
+            return modalities;
         }
 
 
@@ -1540,13 +1593,13 @@ module Controllers {
                     },
                 };
             }
-           
+
             return menuItems;
         }
 
         private get_hangingProtocols_test() {
             var items = {
-                "Manufacturer": { name: "Manufacturer", disabled : true},
+                "Manufacturer": { name: "Manufacturer", disabled: true },
                 "edit": { name: "Edit", icon: "edit" },
                 "cut": { name: "Cut", icon: "fa-gear" },
 
@@ -1555,13 +1608,25 @@ module Controllers {
 
                 "copy": { name: "Copy", icon: "copy" },
                 "paste": { name: "Paste", icon: "paste" },
-                "stayOpen": { name: "StayOpen", icon: "paste", callback: function () { return false;} },
+                "stayOpen": { name: "StayOpen", icon: "paste", callback: function () { return false; } },
 
                 "sepUserGroup": "---------",
                 "UserGroup": { name: "User Group", disabled: true },
             }
 
             return items;
+        }
+
+        private onOpenPane(pane: string, item, state) {
+            //if (pane == 'east' && this._overflowManager != null) {
+            //var seriesInstanceUID = this._seriesManagerService.activeSeriesInstanceUID;
+            //var overflowInstances: Array<any> = this._seriesManagerService.get_seriesOverflow(seriesInstanceUID);
+
+            //if (overflowInstances.length > 0) {
+            //    this._overflowManager.clear();
+            //    this._overflowManager.addInstances(overflowInstances);
+            //}                
+            //}
         }
 
 

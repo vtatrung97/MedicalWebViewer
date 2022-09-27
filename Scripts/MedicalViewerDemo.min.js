@@ -35351,6 +35351,8 @@ var Controllers;
             var seriesGroup = "Series";
             _this = _super.call(this, $rootScope, $scope, queryArchiveService, optionsService, authenticationService, queryPacsService, tabService, eventService, templateService, templateEditorService, $translate) || this;
             __this = _this;
+            var spacingSize = Utils.get_spacingSize();
+            var overflowSize = optionsService.get(OptionNames.SeriesThumbnailWidth) * 3;
             _this._$scope = $scope;
             _this._queryArchiveService = queryArchiveService;
             _this._queryPacsService = queryPacsService;
@@ -35394,6 +35396,37 @@ var Controllers;
                         break;
                 }
             };
+            $scope.layoutConfig = {
+                applyDemoStyles: true,
+                scrollToBookmarkOnLoad: false,
+                spacing_closed: spacingSize,
+                spacing_open: spacingSize,
+                livePaneResizing: false,
+                //center: {
+                //    pacing_open: 6,
+                //    spacing_closed: 8,
+                //},
+                //east: {
+                //    spacing_open: 6,
+                //    spacing_closed: 8,
+                //    //initClosed: true,
+                //    east__size: 300,
+                //    east__resizable: true,
+                //},
+                east__spacing_open: 6,
+                east__spacing_closed: 8,
+                //initClosed: true,
+                east__size: 770,
+                east__resizable: true,
+                east__initHidden: true,
+                onopen: _this.onOpenPane.bind(_this)
+            };
+            $scope.layoutApi = {};
+            $(document).on("click", "#searchResults .ag-body-viewport-wrapper", function (e) {
+                if ($(e.target).is(".target_class") === false) {
+                    $scope.layoutApi.closePane('east');
+                }
+            });
             $scope.gridOptions = {
                 rowSelection: 'single',
                 suppressNoRowsOverlay: true,
@@ -35401,6 +35434,7 @@ var Controllers;
                 enableSorting: true,
                 rowClass: 'studyContext',
                 angularCompileRows: true,
+                enableColResize: true,
                 columnDefs: [
                     {
                         headerName: studiesGroup,
@@ -35420,14 +35454,19 @@ var Controllers;
                                 },
                                 cellRenderer: Utils.hyperlinkPatientIdRenderer,
                                 onCellContextMenu: _this.hpContextMenu.bind(_this),
-                                onCellClicked: _this.handleCellClicked.bind(_this)
+                                onCellClicked: _this.handleCellClicked.bind(_this),
                             },
                             {
                                 headerName: "Name", valueGetter: function (params) {
                                     return Utils.nameFormatter(params.data.Patient.Name);
                                 },
                                 onCellContextMenu: _this.hpContextMenu.bind(_this),
-                                onCellClicked: _this.handleCellClicked.bind(_this)
+                                onCellClicked: _this.handleCellClicked.bind(_this),
+                                //cellStyle: { color: 'red', 'background-color': 'green' },
+                                cellClass: 'target_class',
+                                onCellDoubleClicked: function () {
+                                    $scope.layoutApi.openPane('east');
+                                }
                             },
                             {
                                 headerName: "Accession #",
@@ -36554,6 +36593,16 @@ var Controllers;
                 "UserGroup": { name: "User Group", disabled: true },
             };
             return items;
+        };
+        SearchViewController.prototype.onOpenPane = function (pane, item, state) {
+            //if (pane == 'east' && this._overflowManager != null) {
+            //var seriesInstanceUID = this._seriesManagerService.activeSeriesInstanceUID;
+            //var overflowInstances: Array<any> = this._seriesManagerService.get_seriesOverflow(seriesInstanceUID);
+            //if (overflowInstances.length > 0) {
+            //    this._overflowManager.clear();
+            //    this._overflowManager.addInstances(overflowInstances);
+            //}                
+            //}
         };
         SearchViewController.$inject = ['$rootScope', '$scope', '$modal', 'eventService', 'queryArchiveService', 'optionsService', 'dataService', 'queryPacsService', 'authenticationService', 'tabService', 'seriesManagerService', 'objectStoreService', 'templateService', 'templateEditorService', '$translate', 'objectRetrieveService', 'dataCache'];
         return SearchViewController;
