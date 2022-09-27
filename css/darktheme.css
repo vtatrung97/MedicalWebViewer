@@ -7397,3 +7397,55 @@ button.toolbar-button {
 .east-wrapper .scroll-secondary {
 	overflow: auto;
 }
+
+.east-wrapper {
+	border: 1px solid red;
+	background: #363636;
+}
+
+.searchview_layout .searchview_layout-content {
+	padding: 15px;
+}
+
+.searchview_layout .searchview_layout-content .phieuchup {
+	width: auto;
+	font-size: 1.25em;
+}
+
+.searchview_layout .searchview_layout-content .phieuchup h3 {
+	color: #255178;
+    color: #00417a;
+}
+
+.searchview_layout .searchview_layout-content .phieuchup label {
+	color: #255178;
+    color: #00417a;
+}
+
+.searchview_layout .phieuchup .text-color p span {
+	color: black;
+}
+
+.searchview_layout .searchview_layout-content .phieuchup .table thead {
+	background: #00417a;
+    color: white;
+}
+
+.medical-logo {
+	position: absolute;
+	opacity: .2;
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.medical-logo img {
+	width: 80%;
+    margin-top: 150px;
+}
+
+

@@ -35442,7 +35442,7 @@ var Controllers;
                 east__spacing_open: 6,
                 east__spacing_closed: 8,
                 //initClosed: true,
-                east__size: 770,
+                east__size: "50%",
                 east__resizable: true,
                 east__initHidden: true,
                 onopen: _this.onOpenPane.bind(_this)
