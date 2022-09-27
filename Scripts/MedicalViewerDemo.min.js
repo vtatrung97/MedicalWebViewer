@@ -2782,6 +2782,25 @@ var Controllers;
 /*! ************************************************************* */
 var Controllers;
 (function (Controllers) {
+    var ServiceRequestsController = /** @class */ (function () {
+        function ServiceRequestsController($scope, optionsService, $modalInstance) {
+            $scope.ok = function () {
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+        ServiceRequestsController.$inject = ['$scope', 'optionsService', '$modalInstance'];
+        return ServiceRequestsController;
+    }());
+    Controllers.ServiceRequestsController = ServiceRequestsController;
+})(Controllers || (Controllers = {}));
+/*! ************************************************************* */
+/*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
+/*! All Rights Reserved.                                          */
+/*! ************************************************************* */
+var Controllers;
+(function (Controllers) {
     var UISettingsController = /** @class */ (function () {
         function UISettingsController($scope, $modalInstance) {
             $scope.edit = {};
@@ -32387,6 +32406,13 @@ var Controllers;
             eventService.subscribe(EventNames.DeleteTab, function (event, data) {
                 $scope.deleteTab(data.args.id);
             });
+            $scope.getCurrentTasks = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/ServiceRequests.html',
+                    controller: Controllers.ServiceRequestsController,
+                    backdrop: 'static'
+                });
+            };
             $scope.deleteTab = function (id, event) {
                 var tab = tabService.find_tab(id);
                 var anycell = seriesManagerService.get_anyCell();
