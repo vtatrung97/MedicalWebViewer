@@ -409,7 +409,7 @@ module Controllers {
 
             $scope.queryModeChanged = function () {
                 $scope.studies.length = 0;
-            }            
+            }
 
             $scope.patientids = $.proxy(this.patientids, this);
             $scope.patientNames = $.proxy(this.patientNames, this);    
@@ -442,7 +442,7 @@ module Controllers {
                     }
                     
                 }, 225);
-            }               
+            }
             
             $scope.$watch('windowDimensions', function (newValue, oldValue) {
                 if ($scope.gridOptions.api) {
