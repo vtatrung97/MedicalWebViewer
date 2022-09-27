@@ -7448,4 +7448,7 @@ button.toolbar-button {
     margin-top: 150px;
 }
 
-
+.list_img_searchview {
+	margin: -15px;
+	margin-top: 0;
+}
