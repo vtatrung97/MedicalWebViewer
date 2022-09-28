@@ -35,6 +35,7 @@ module Controllers {
 
         queryModel: any;
         showStudies();
+        textarea();
     }
 
     export class SearchViewController extends SearchController {
