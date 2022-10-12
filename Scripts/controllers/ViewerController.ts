@@ -581,7 +581,6 @@ module Controllers {
 
             eventService.subscribe(EventNames.LoadingSeriesFrames, function (event, data) {
                 var tab = seriesManagerService.get_seriesTab(data.args.seriesInstanceUID);
-
                 if (tab != null && tab.id == $scope.tabId) {
                     self.initializeSlider($scope, seriesManagerService, data.args.seriesInstanceUID, data.args.id);
                     self.refreshTimeline(data.args.seriesInstanceUID);
@@ -612,7 +611,6 @@ module Controllers {
             eventService.subscribe(EventNames.OpenStudyTimeLine, function (event, data) {
 
                 var showStudyTimeLine = optionsService.get(OptionNames.ShowStudyTimeLine);
-
                 if (data.args.show || showStudyTimeLine) {
                     self.showTimeLine();
 
@@ -854,6 +852,7 @@ module Controllers {
                 }
 
                 if (state.isVisible) {
+
                     this._scope.timelineApi.refresh(series.Patient.ID, series.StudyInstanceUID, seriesInstanceUID);
                 }
             }

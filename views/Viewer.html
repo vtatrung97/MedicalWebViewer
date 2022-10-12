@@ -14,9 +14,15 @@
         </div>
     </div>
     <div class="ui-layout-south">
+
         <div study-timeline api="timelineApi" style="overflow: auto; position: relative; height: 10px; width: 100%; background-color: black" retrieve-url="retrieveUrl"
              replace-cell="replaceCell(seriesInstanceUID)" append-cell="appendCell(seriesInstanceUID)">
         </div>
+    </div>
+    <div style="position: absolute; margin: 0px; inset: auto 0px 0px; width: auto; z-index: 0; border: 1px solid rgb(187, 187, 187); overflow: auto; height: 25px; display: block; visibility: visible;" >
+        <button  class="btn btn-primary">Conclusion</button>
+        <button  class="btn btn-primary">Zoom Meeting</button>
+        <button  class="btn btn-primary">Service request infor</button>
     </div>
     <div class="ui-layout-east">
         <div class="panel panel-default" style="width: inherit; overflow: hidden; height: 100%; margin-bottom: 0px">

@@ -19,7 +19,8 @@ module TimeLineTransition {
     export var Aborted: string = "aborted";
 }
 
-directives.directive('studyTimeline', ["eventService", "$timeout", "queryArchiveService", "seriesManagerService", "authenticationService", "dataService", "optionsService", function (eventService: EventService, $timeout, queryArchiveService: QueryArchiveService, seriesManagerService: SeriesManagerService,
+directives.directive('studyTimeline', ["eventService", "$timeout", "queryArchiveService", "seriesManagerService", "authenticationService", "dataService", "optionsService",
+    function (eventService: EventService, $timeout, queryArchiveService: QueryArchiveService, seriesManagerService: SeriesManagerService,
     authenticationService: AuthenticationService, dataService:DataService, optionsService: OptionsService): ng.IDirective {
     return {
         replace: true,
