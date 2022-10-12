@@ -32410,7 +32410,8 @@ var Controllers;
                 var modalInstance = $modal.open({
                     templateUrl: 'views/dialogs/ServiceRequests.html',
                     controller: Controllers.ServiceRequestsController,
-                    backdrop: 'static'
+                    backdrop: 'static',
+                    size: 'lg'
                 });
             };
             $scope.deleteTab = function (id, event) {
