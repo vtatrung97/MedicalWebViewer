@@ -1703,6 +1703,9 @@ colorpicker-alpha i {
 #loading-bar-spinner .spinner-icon {
 	border-top-color: #29d;
 	border-left-color: #29d;
+	/*border-top-color: red;
+	border-top: 1px solid red;
+	background: red !important;*/
 }
 
 .toolbargroup {
@@ -7409,12 +7412,17 @@ button.toolbar-button {
 
 .searchview_layout .searchview_layout-content .phieuchup {
 	width: auto;
-	font-size: 1.25em;
+	height: auto;
+    font-size: 1.25em;
+    margin-top: 0;
+    padding: 5px 40px 40px;
 }
 
 .searchview_layout .searchview_layout-content .phieuchup h3 {
 	color: #255178;
     color: #00417a;
+	margin-top: 0;
+    margin-bottom: 0;
 }
 
 .searchview_layout .searchview_layout-content .phieuchup label {
@@ -7431,6 +7439,28 @@ button.toolbar-button {
     color: white;
 }
 
+.searchview_layout .checkbox-inline input[type=checkbox] {
+	margin-top: 3px;
+}
+
+.searchview_layout .flex-layer {
+	width: 100%;
+	background: #00417a;
+	margin-bottom: 10px;
+	height: 2px;
+}
+
+.searchview_layout textarea {
+}
+
+.ck.ck-editor__editable_inline {
+	border: 1px solid #ccc !important;
+}
+
+.searchview_layout-content .phieuchup .form-group {
+	z-index: 1;
+}
+
 .medical-logo {
 	position: absolute;
 	opacity: .2;
@@ -7441,6 +7471,7 @@ button.toolbar-button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 0;
 }
 
 .medical-logo img {
@@ -7448,4 +7479,7 @@ button.toolbar-button {
     margin-top: 150px;
 }
 
-
+.list_img_searchview {
+	margin: -15px;
+	margin-top: 0;
+}
