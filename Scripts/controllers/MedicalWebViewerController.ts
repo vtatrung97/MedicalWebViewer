@@ -217,7 +217,8 @@ module Controllers {
                 var modalInstance = $modal.open({
                     templateUrl: 'views/dialogs/ServiceRequests.html',
                     controller: ServiceRequestsController,
-                    backdrop: 'static'
+                    backdrop: 'static',
+                    size: 'lg'
                 });
             }
 
