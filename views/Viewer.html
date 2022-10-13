@@ -1,4 +1,4 @@
-﻿<div layout layout-config="layoutConfig" id='mainLayoutWindow' api="layoutApi" hide-south="hideTimeline" position="center" style="height:100px">
+﻿<div layout layout-config="layoutConfig" id='mainLayoutWindow' api="layoutApi" hide-south="hideTimeline" position="center" class="viewer" style="height:100px">
     >
     <div class="ui-layout-center">
         <div medicalviewer class="selectDisable" viewer-id="{{viewerId}}" viewer-config="viewerConfig" series="seriesList" viewerapi="viewerapi" stack-changed="stackChanged(sender,e)"
@@ -19,11 +19,7 @@
              replace-cell="replaceCell(seriesInstanceUID)" append-cell="appendCell(seriesInstanceUID)">
         </div>
     </div>
-    <div style="position: absolute; margin: 0px; inset: auto 0px 0px; width: auto; z-index: 0; border: 1px solid rgb(187, 187, 187); overflow: auto; height: 25px; display: block; visibility: visible;" >
-        <button  class="btn btn-primary">Conclusion</button>
-        <button  class="btn btn-primary">Zoom Meeting</button>
-        <button  class="btn btn-primary">Service request infor</button>
-    </div>
+
     <div class="ui-layout-east">
         <div class="panel panel-default" style="width: inherit; overflow: hidden; height: 100%; margin-bottom: 0px">
             <div class="panel-heading">{{ 'OVERFLOW' | translate}}</div>
@@ -35,5 +31,21 @@
     <div id="processingScreen" style="position:absolute; display:block;width:100%; height:100%; z-index:10000; background-color:rgba(5, 5, 5, 0.8);visibility:hidden;">
 
     </div>
+
+    <div class="view-medical-accessory">
+        <button class="btn btn-primary" title="Conclusion">
+            <i class="fa fa-file-export"></i>
+            Conclusion
+        </button>
+        <button class="btn btn-primary" title="Zoom Meeting">
+            <i class="fa fa-video-camera" aria-hidden="true"></i>
+            Zoom Meeting
+        </button>
+        <button class="btn btn-primary" title="Service request infor">
+            <i class="fa fa-info-circle"></i>
+            Service request infor
+        </button>
+    </div>
+
 </div>
 

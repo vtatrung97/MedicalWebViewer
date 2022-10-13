@@ -5814,20 +5814,6 @@ var lt;
         })(JavaScript = Annotations.JavaScript || (Annotations.JavaScript = {}));
     })(Annotations = lt.Annotations || (lt.Annotations = {}));
 })(lt || (lt = {}));
-directives.directive('bottomToolbar', ["eventService", "$timeout", "queryArchiveService", "seriesManagerService",
-    "authenticationService", "dataService", "optionsService",
-    function (eventService, $timeout, queryArchiveService, seriesManagerService, authenticationService, dataService, optionsService) {
-        return {
-            replace: true,
-            template: '<div></div>',
-            scope: {
-                retrieveUrl: '=',
-                api: '=',
-            },
-            templateUrl: 'views/templates/AudioPlayer.html',
-        };
-    }
-]);
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
 /*! All Rights Reserved.                                          */
