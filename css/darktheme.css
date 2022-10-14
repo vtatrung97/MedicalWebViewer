@@ -7484,19 +7484,38 @@ button.toolbar-button {
 	margin-top: 0;
 }
 
+.viewer {
+}
+
 .viewer .ui-layout-south {
 	border: 1px solid #333333 !important;
 	border-bottom: 0 !important;
+	display: flex !important;
+	flex-direction: column;
+	background: #282828 !important;
+}
+
+.ui-layout-south-box {
+	flex: 1
 }
 
 .view-medical-accessory {
-	position: fixed;
-	margin: 0px;
+	height: 34px;
+}
+
+.view-medical-accessory {
+	display: flex;
+	padding: 3px;
 	box-sizing: border-box;
-	z-index: 0;
+	position: relative;
+	top: 1px;
 	overflow: auto;
 	bottom: 0;
 	right: 0px;
+	background: #535353;
+	border: 1px solid #282828;
+	border-top: 1px solid #141414;
+	box-shadow: inset 0px 1px 0px #636363;
 }
 
 .view-medical-accessory button {

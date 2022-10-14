@@ -15,8 +15,20 @@
     </div>
     <div class="ui-layout-south">
 
-        <div study-timeline api="timelineApi" style="overflow: auto; position: relative; height: 10px; width: 100%; background-color: black" retrieve-url="retrieveUrl"
+        <div study-timeline api="timelineApi" class="ui-layout-south-box" style="overflow: auto; position: relative; height: 10px; width: 100%; background-color: black" retrieve-url="retrieveUrl"
              replace-cell="replaceCell(seriesInstanceUID)" append-cell="appendCell(seriesInstanceUID)">
+        </div>
+
+        <div class="view-medical-accessory">
+            <button class="form-btn" title="Conclusion">
+                <i class="fa fa-file"></i>
+            </button>
+            <button class="form-btn" title="Zoom Meeting">
+                <i class="fa fa-video-camera" aria-hidden="true"></i>
+            </button>
+            <button class="form-btn" title="Service request infor">
+                <i class="fa fa-info-circle"></i>
+            </button>
         </div>
     </div>
 
@@ -32,20 +44,4 @@
 
     </div>
 
-    <div class="view-medical-accessory">
-        <button class="btn btn-primary" title="Conclusion">
-            <i class="fa fa-file"></i>
-            Conclusion
-        </button>
-        <button class="btn btn-primary" title="Zoom Meeting">
-            <i class="fa fa-video-camera" aria-hidden="true"></i>
-            Zoom Meeting
-        </button>
-        <button class="btn btn-primary" title="Service request infor">
-            <i class="fa fa-info-circle"></i>
-            Service request infor
-        </button>
-    </div>
-
 </div>
-
