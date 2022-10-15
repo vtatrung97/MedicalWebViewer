@@ -28,6 +28,7 @@
     <TypeScriptCompile Include="lib\estree.d.ts" />
     <TypeScriptCompile Include="Scripts\controllers\AddWadoServerController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\CodeSequenceEditorController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\ConclusionController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\EmailURLController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPDefinitionSequenceDialogController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPDialogController.ts" />
@@ -542,6 +543,7 @@
     <TypeScriptCompile Include="Scripts\controllers\UpdatePasswordController.ts" />
     <Content Include="Scripts\controls\bootstrap-colorpicker.min.js" />
     <TypeScriptCompile Include="Scripts\controls\ImageViewerAutomationControl.ts" />
+    <TypeScriptCompile Include="Scripts\directives\Leadtools.BottomToolbar.Directive.ts" />
     <TypeScriptCompile Include="Scripts\directives\Leadtools.TemplateEditor.Directive.ts" />
     <Content Include="Scripts\controls\codemirror.js" />
     <Content Include="Scripts\controls\mode\javascript.js" />
@@ -670,6 +672,7 @@
     <Content Include="Scripts\uuid.js" />
     <Content Include="views\dialogs\AddWadoServer.html" />
     <Content Include="views\dialogs\CodeSequenceEditor.html" />
+    <Content Include="views\dialogs\Conclusion.html" />
     <Content Include="views\dialogs\ServiceRequests.html" />
     <Content Include="views\dialogs\TokenSelection.html" />
     <Content Include="views\dialogs\EmailTemplate.html" />
@@ -710,6 +713,7 @@
     <Content Include="views\dialogs\PermissionsManagement.html" />
     <Content Include="views\PacsQuery.html" />
     <Content Include="views\TemplateEditorView.html" />
+    <Content Include="views\templates\BottomToolbar.html" />
     <Content Include="views\templates\ExpandableRowTemplate.html" />
     <Content Include="views\templates\UpdateRole.html" />
     <Content Include="views\templates\NewRole.html" />
@@ -837,6 +841,7 @@
     <Content Include="css\fonts\webfonts\fa-regular-400.woff2" />
     <Content Include="css\fonts\webfonts\fa-solid-900.ttf" />
     <Content Include="css\fonts\webfonts\fa-solid-900.woff2" />
+    <Content Include="languages\vi-VN.json" />
     <None Include="packages.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>

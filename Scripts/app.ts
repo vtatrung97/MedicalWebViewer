@@ -547,7 +547,7 @@ app.config(
             suffix: '.json'
          });
 
-         $translateProvider.preferredLanguage('en-US');
+          $translateProvider.preferredLanguage('vi-VN');
       }]);
 
 app.factory('safeApply', [function ($rootScope) {

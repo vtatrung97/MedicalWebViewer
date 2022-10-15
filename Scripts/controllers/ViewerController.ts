@@ -24,6 +24,7 @@ module Controllers {
         replaceCell: any;
         appendCell: any;
         seriesDropped: any;
+        bottomToolBarApi: any;
 
         positionChanged(position: number);
         previousImage();
@@ -32,6 +33,7 @@ module Controllers {
         stackChanged(sender, e);
         InitializeOverflowManager: Function;
         getCurrentImage: Function;
+        studyInstanceUID: string;
     }
 
 
@@ -96,6 +98,7 @@ module Controllers {
             $scope.query = new Models.QueryOptions();
             $scope.retrieveUrl = config.urls.serviceUrl + config.urls.objectRetrieveLocalServiceName;
             $scope.timelineApi = {}
+            $scope.bottomToolBarApi = {}
             var consultationConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/conclusion-realtime").build();
             consultationConnection.on("ReceiveMessage", function (text) {
                 console.log(text);
@@ -108,6 +111,7 @@ module Controllers {
                     return console.error(err.toString());
                 });
             })
+
 
             $scope.getCurrentImage = function () {
                
@@ -362,7 +366,8 @@ module Controllers {
                         if (self._overflowManager != null) {
                             self._overflowManager.clear();
                         }
-
+                        console.log(data.args.study);
+                        $scope.studyInstanceUID = data.args.study.InstanceUID;
                         if (singleSeries) {
                             $scope.seriesList.length = 0;
                         }

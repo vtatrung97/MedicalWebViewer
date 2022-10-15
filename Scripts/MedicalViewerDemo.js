@@ -117,6 +117,22 @@ var Controllers;
     }());
     Controllers.CodeSequenceEditorController = CodeSequenceEditorController;
 })(Controllers || (Controllers = {}));
+var Controllers;
+(function (Controllers) {
+    var ConclusionController = /** @class */ (function () {
+        function ConclusionController($scope, $modalInstance) {
+            $scope.ok = function () {
+                $modalInstance.close();
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+        ConclusionController.$inject = ['$scope', '$modalInstance'];
+        return ConclusionController;
+    }());
+    Controllers.ConclusionController = ConclusionController;
+})(Controllers || (Controllers = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
 /*! All Rights Reserved.                                          */
@@ -5818,6 +5834,24 @@ var lt;
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
 /*! All Rights Reserved.                                          */
 /*! ************************************************************* */
+/// <reference path="../../lib/angular/angular.d.ts" />
+//directives.directive('bottomToolbar', ['toolbarService', function (toolbarService: ToolbarService): ng.IDirective {
+//    return {
+//        replace: true,
+//        restrict: "E",
+//        scope: {
+//            api: '=',
+//        },
+//        templateUrl: 'views/templates/BottomToolbar.html',
+//        link: function (scope: any) {
+//            scope.api = scope.api || {};
+//        }
+//    }
+//}]); 
+/*! ************************************************************* */
+/*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
+/*! All Rights Reserved.                                          */
+/*! ************************************************************* */
 /// <reference path="../lib/LEADTOOLS/jquery/jquery.d.ts" />
 /// <reference path="../lib/angular/angular.d.ts" />
 /// <reference path="../lib/angular/angular-route.d.ts" />
@@ -6301,7 +6335,7 @@ app.config(["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarP
             prefix: 'languages/',
             suffix: '.json'
         });
-        $translateProvider.preferredLanguage('en-US');
+        $translateProvider.preferredLanguage('vi-VN');
     }]);
 app.factory('safeApply', [function ($rootScope) {
         return function ($scope, fn) {
@@ -38054,6 +38088,7 @@ var Controllers;
             $scope.query = new Models.QueryOptions();
             $scope.retrieveUrl = config.urls.serviceUrl + config.urls.objectRetrieveLocalServiceName;
             $scope.timelineApi = {};
+            $scope.bottomToolBarApi = {};
             var consultationConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44301/conclusion-realtime").build();
             consultationConnection.on("ReceiveMessage", function (text) {
                 console.log(text);
@@ -38278,6 +38313,8 @@ var Controllers;
                         if (self._overflowManager != null) {
                             self._overflowManager.clear();
                         }
+                        console.log(data.args.study);
+                        $scope.studyInstanceUID = data.args.study.InstanceUID;
                         if (singleSeries) {
                             $scope.seriesList.length = 0;
                         }
@@ -41763,6 +41800,45 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                     zoomToInteractiveMode.set_mouseButtons(lt.Controls.MouseButtons.right);
                     return zoomToInteractiveMode;
                 }
+            }
+        };
+    }]);
+directives.directive('bottomToolbar', ['$modal', '$translate', function ($modal, $translate) {
+        return {
+            replace: true,
+            restrict: "E",
+            scope: {
+                api: '=',
+                study: '='
+            },
+            template: '<div></div>',
+            link: function (scope, elem) {
+                scope.api = scope.api || {};
+                $translate('ServiceRequestInfor').then(function (translation) {
+                    var serviceInfoButton = angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                    serviceInfoButton.bind('click', function () {
+                        alert("service request: " + scope.study);
+                    });
+                    elem.append(serviceInfoButton);
+                });
+                $translate('Conclusion').then(function (translation) {
+                    var conclusionButton = angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                    conclusionButton.bind('click', function () {
+                        var modalInstance = $modal.open({
+                            templateUrl: 'views/dialogs/Conclusion.html',
+                            controller: Controllers.ConclusionController,
+                            backdrop: 'static'
+                        });
+                    });
+                    elem.append(conclusionButton);
+                });
+                $translate('ZoomMetting').then(function (translation) {
+                    var zoomMeetingButton = angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                    zoomMeetingButton.bind('click', function () {
+                        alert("zoom: " + scope.study);
+                    });
+                    elem.append(zoomMeetingButton);
+                });
             }
         };
     }]);
