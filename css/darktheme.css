@@ -7489,11 +7489,22 @@ button.toolbar-button {
 
 .viewer .ui-layout-south {
 	border: 1px solid #333333 !important;
-	border-bottom: 0 !important;
+	/*border-bottom: 0 !important;
 	display: flex !important;
 	flex-direction: column;
-	background: #282828 !important;
+	background: #282828 !important;*/
 }
+
+.viewer-box {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.viewer-box .viewer {
+	flex: 1;
+}
+
 
 .ui-layout-south-box {
 	flex: 1

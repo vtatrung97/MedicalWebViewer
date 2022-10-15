@@ -1,47 +1,50 @@
-﻿<div layout layout-config="layoutConfig" id='mainLayoutWindow' api="layoutApi" hide-south="hideTimeline" position="center" class="viewer" style="height:100px">
-    >
-    <div class="ui-layout-center">
-        <div medicalviewer class="selectDisable" viewer-id="{{viewerId}}" viewer-config="viewerConfig" series="seriesList" viewerapi="viewerapi" stack-changed="stackChanged(sender,e)"
-             style="position: relative; background-color: black; width: 100%; height: 100%; border: 0; margin: 0; padding: 0"
-             series-dropped="seriesDropped(viewer, oldSeriesInstanceUID, seriesInstanceUID, position, rowPosition, colPosition, bounds)">
-        </div>
-    </div>
-    <div class="ui-layout-north" style="padding: 0px !important; overflow: visible !important">
-        <div resize-to-parent class="ToolBar">
-            <div class="ag-viewer-toolbar" scroller resize-to-parent style="overflow: visible" ng-repeat="toolbar in toolbars">
-                <toolbar buttons="toolbar.items" name="toolbar.name" key="{{tabId}}" />
+﻿<div class="viewer-box">
+    <div layout layout-config="layoutConfig" id='mainLayoutWindow' api="layoutApi" hide-south="hideTimeline" position="center" class="viewer" style="height:100px">
+        >
+        <div class="ui-layout-center">
+            <div medicalviewer class="selectDisable" viewer-id="{{viewerId}}" viewer-config="viewerConfig" series="seriesList" viewerapi="viewerapi" stack-changed="stackChanged(sender,e)"
+                 style="position: relative; background-color: black; width: 100%; height: 100%; border: 0; margin: 0; padding: 0"
+                 series-dropped="seriesDropped(viewer, oldSeriesInstanceUID, seriesInstanceUID, position, rowPosition, colPosition, bounds)">
             </div>
         </div>
-    </div>
-    <div class="ui-layout-south">
-
-        <div study-timeline api="timelineApi" class="ui-layout-south-box" style="overflow: auto; position: relative; height: 10px; width: 100%; background-color: black" retrieve-url="retrieveUrl"
-             replace-cell="replaceCell(seriesInstanceUID)" append-cell="appendCell(seriesInstanceUID)">
-        </div>
-
-        <div class="view-medical-accessory">
-            <button class="form-btn" title="Conclusion">
-                <i class="fa fa-file"></i>
-            </button>
-            <button class="form-btn" title="Zoom Meeting">
-                <i class="fa fa-video-camera" aria-hidden="true"></i>
-            </button>
-            <button class="form-btn" title="Service request infor">
-                <i class="fa fa-info-circle"></i>
-            </button>
-        </div>
-    </div>
-
-    <div class="ui-layout-east">
-        <div class="panel panel-default" style="width: inherit; overflow: hidden; height: 100%; margin-bottom: 0px">
-            <div class="panel-heading">{{ 'OVERFLOW' | translate}}</div>
-            <div style="width: 100%; height:calc(100% - 35px); background-color: black; overflow-y:auto; position:absolute">
-                <div id="{{overflowId}}" style="width: 100%; position:absolute; overflow:hidden" />
+        <div class="ui-layout-north" style="padding: 0px !important; overflow: visible !important">
+            <div resize-to-parent class="ToolBar">
+                <div class="ag-viewer-toolbar" scroller resize-to-parent style="overflow: visible" ng-repeat="toolbar in toolbars">
+                    <toolbar buttons="toolbar.items" name="toolbar.name" key="{{tabId}}" />
+                </div>
             </div>
         </div>
-    </div>
-    <div id="processingScreen" style="position:absolute; display:block;width:100%; height:100%; z-index:10000; background-color:rgba(5, 5, 5, 0.8);visibility:hidden;">
+        <div class="ui-layout-south">
+
+            <div study-timeline api="timelineApi" class="ui-layout-south-box" style="overflow: auto; position: relative; height: 10px; width: 100%; background-color: black" retrieve-url="retrieveUrl"
+                 replace-cell="replaceCell(seriesInstanceUID)" append-cell="appendCell(seriesInstanceUID)">
+            </div>
+
+        </div>
+
+        <div class="ui-layout-east">
+            <div class="panel panel-default" style="width: inherit; overflow: hidden; height: 100%; margin-bottom: 0px">
+                <div class="panel-heading">{{ 'OVERFLOW' | translate}}</div>
+                <div style="width: 100%; height:calc(100% - 35px); background-color: black; overflow-y:auto; position:absolute">
+                    <div id="{{overflowId}}" style="width: 100%; position:absolute; overflow:hidden" />
+                </div>
+            </div>
+        </div>
+        <div id="processingScreen" style="position:absolute; display:block;width:100%; height:100%; z-index:10000; background-color:rgba(5, 5, 5, 0.8);visibility:hidden;">
+
+        </div>
 
     </div>
 
+    <div class="view-medical-accessory">
+        <button class="form-btn" title="Conclusion">
+            <i class="fa fa-file"></i>
+        </button>
+        <button class="form-btn" title="Zoom Meeting">
+            <i class="fa fa-video-camera" aria-hidden="true"></i>
+        </button>
+        <button class="form-btn" title="Service request infor">
+            <i class="fa fa-info-circle"></i>
+        </button>
+    </div>
 </div>
