@@ -39,8 +39,8 @@ module Directives {
         }
 
         public mergeSelectedCells() {
-            this._viewer.mergeSelected();            
-        }        
+            this._viewer.mergeSelected();
+        }
 
         public clearLayout() {
             delete this._config["studyLayout"];
@@ -90,7 +90,7 @@ var MedicalViewerAction = {
 }
 
 var Spyglass = {
-    Default: 0,    
+    Default: 0,
     Invert: 1,
     CLAHE: 2,
     Equalization: 3
@@ -239,7 +239,7 @@ class MedicalViewerSeries {
     public type;
     public modality;
 
-    constructor(seriesInstanceUID: string, patientID: string, sdID? : string, rows?: number, columns?: number) {
+    constructor(seriesInstanceUID: string, patientID: string, sdID?: string, rows?: number, columns?: number) {
         this.seriesInstanceUID = seriesInstanceUID;
         this.patientID = patientID;
         this.rows = rows || 1;
@@ -259,7 +259,7 @@ class MedicalViewerSeries {
 
 
 interface FindBoxCallback {
-   (box: Models.ImageBox): boolean;
+    (box: Models.ImageBox): boolean;
 }
 
 directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "objectRetrieveService", "queryArchiveService", "optionsService", "dicomLoaderService", "seriesManagerService", "overlayManagerService", "dataService", "cinePlayerService", "tabService", "templateService", function (eventService: EventService, $timeout, $parse, objectRetrieveService: ObjectRetrieveService, queryArchiveService: QueryArchiveService, optionsService: OptionsService, dicomLoaderService: DicomLoaderService, seriesManagerService: SeriesManagerService, overlayManagerService: OverlayManagerService, dataService: DataService, cinePlayerService: CinePlayerService, tabService: TabService, templateService: TemplateService): ng.IDirective {
@@ -1607,7 +1607,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                                 var bounds = emptyCell.bounds;
 
                                 viewer.emptyDivs.items.remove(emptyCell);
-                                cell.bounds = bounds; 
+                                cell.bounds = bounds;
                             }
                         }
                         else
@@ -1725,7 +1725,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                         }
                     }
 
-                  
+
                 }
             }
 
@@ -1758,14 +1758,13 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                 }
                 else {
                     var rect: lt.LeadRectD = Utils.createLeadRect(box.Position.leftTop.x, box.Position.leftTop.y,
-                        box.Position.rightBottom.x, box.Position.rightBottom.y);                                                     
+                        box.Position.rightBottom.x, box.Position.rightBottom.y);
 
                     cell.bounds = rect;
                 }
             }
 
-            function getCellWithPosition(rowPosition, colPosition, position)
-            {
+            function getCellWithPosition(rowPosition, colPosition, position) {
                 var index = 0;
                 var length = viewer.layout.items.count;
                 var cell: lt.Controls.Medical.LayoutManagerItem;
@@ -1923,7 +1922,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                 }
             }
 
-            function cell_mousedown(sender:lt.Controls.Medical.Cell, e) {
+            function cell_mousedown(sender: lt.Controls.Medical.Cell, e) {
                 var seriesInstanceUID: string = sender.get_seriesInstanceUID();
                 var series = dataService.get_Series(seriesInstanceUID);
                 var click: boolean = false;
@@ -1932,11 +1931,11 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
 
                 if (sender != seriesManagerService.get_activeCell()) {
                     seriesManagerService.set_activeCell(sender.divID);
-                    eventService.publish(EventNames.ActiveSeriesChanged, { seriesInstanceUID: seriesInstanceUID, id:sender.divID });
+                    eventService.publish(EventNames.ActiveSeriesChanged, { seriesInstanceUID: seriesInstanceUID, id: sender.divID });
                 }
 
                 if (click) {
-                scope.cellClicked({ seriesInstanceUID: seriesInstanceUID });
+                    scope.cellClicked({ seriesInstanceUID: seriesInstanceUID });
                 }
 
                 if (sender.getCommandInteractiveMode) {
@@ -1945,13 +1944,13 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                 }
             }
 
-            function stack_changed(sender: lt.Controls.Medical.Cell, e) { 
+            function stack_changed(sender: lt.Controls.Medical.Cell, e) {
                 var index: number = sender.get_currentOffset();
                 var frame = null;
 
                 if (index != -1) {
                     frame = sender.get_frames().item(index);
-                }               
+                }
                 scope.stackChanged({ sender: sender, e: e });
                 eventService.publish(EventNames.StackChanged, { viewer: viewer, cell: sender, frame: frame });
             }
@@ -1961,8 +1960,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                 var desiredNumber = viewer.layout.items.count + roomFor;
 
                 if (viewer.cellsArrangement == lt.Controls.Medical.CellsArrangement.grid) {
-                    if (desiredNumber >= viewer.gridLayout.rows * viewer.gridLayout.columns)
-                    {
+                    if (desiredNumber >= viewer.gridLayout.rows * viewer.gridLayout.columns) {
                         var rows = Math.round(Math.sqrt(desiredNumber));
                         var col = Math.ceil(desiredNumber / rows);
 
@@ -1970,7 +1968,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                         viewer.layout.beginUpdate();
 
                         viewer.gridLayout.rows = rows;
-                        viewer.gridLayout.columns  = col ;
+                        viewer.gridLayout.columns = col;
 
                         viewer.layout.endUpdate();
                     }
@@ -1990,9 +1988,9 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
 
             }
 
-            function intializeActions(cell:lt.Controls.Medical.Cell) {
+            function intializeActions(cell: lt.Controls.Medical.Cell) {
                 var spyGlass = new lt.Controls.Medical.SpyGlassAction();
-                var scaleAction: lt.Controls.Medical.ScaleAction = new lt.Controls.Medical.ScaleAction();                
+                var scaleAction: lt.Controls.Medical.ScaleAction = new lt.Controls.Medical.ScaleAction();
                 var probeTool = new lt.Controls.Medical.ProbeToolAction();
                 var lineProfile = new lt.Controls.Medical.LineProfileAction();
 
@@ -2004,7 +2002,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                 spyGlass.add_positionChanged(spyGlassPositionChanged);
 
 
-                
+
 
                 probeTool.add_probeToolUpdated(probeToolUpdated);
 
@@ -2115,33 +2113,33 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
                     case Spyglass.Invert:
                         {
                             var context = canvas.getContext("2d");
-                                try {
+                            try {
                                 var imageCanvas = canvas;
-                                    var context1 = imageCanvas.getContext('2d');
-                                    var imageData = context1.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
-                                    var pixels = imageData.data;
-                                    var length = pixels.length;
-                                    for (var i = 0; i < length;) {
-                                        pixels[i] = 255 - pixels[i];
-                                        pixels[i + 1] = 255 - pixels[i + 1];
-                                        pixels[i + 2] = 255 - pixels[i + 2];
-                                        i += 4;
-                                    }
-                                    context.putImageData(imageData, 0, 0);
+                                var context1 = imageCanvas.getContext('2d');
+                                var imageData = context1.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+                                var pixels = imageData.data;
+                                var length = pixels.length;
+                                for (var i = 0; i < length;) {
+                                    pixels[i] = 255 - pixels[i];
+                                    pixels[i + 1] = 255 - pixels[i + 1];
+                                    pixels[i + 2] = 255 - pixels[i + 2];
+                                    i += 4;
                                 }
-                                finally {
-                                    pixels = null;
-                                    imageData = null;
-                                    context = null;
-                                }
+                                context.putImageData(imageData, 0, 0);
                             }
+                            finally {
+                                pixels = null;
+                                imageData = null;
+                                context = null;
+                            }
+                        }
                         break;
                     case Spyglass.CLAHE:
                         {
                             var imageCanvas = canvas;
                             var imageContext = imageCanvas.getContext("2d");
                             var imageData = imageContext.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
-                            var ip:lt.ImageProcessing = new lt.ImageProcessing();
+                            var ip: lt.ImageProcessing = new lt.ImageProcessing();
 
                             _spyGlass.set_text("Filter: CLAHE (Loading)");
                             ip.set_jsFilePath(_jsFileCorePath);
@@ -2303,7 +2301,7 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
 
 
             function createPanZoomInteractiveMode() {
-                var zoomToInteractiveMode:lt.Controls.ImageViewerPanZoomInteractiveMode = new lt.Controls.ImageViewerPanZoomInteractiveMode();
+                var zoomToInteractiveMode: lt.Controls.ImageViewerPanZoomInteractiveMode = new lt.Controls.ImageViewerPanZoomInteractiveMode();
 
                 zoomToInteractiveMode.set_idleCursor("default");
                 zoomToInteractiveMode.set_workingCursor("crosshair");
@@ -2320,13 +2318,61 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
             }
         }
     };
-}]); 
+}]);
 
 
 
 
 
 
+directives.directive('bottomToolbar', ['$modal', '$translate', function ($modal, $translate): ng.IDirective {
+    return {
+        replace: true,
+        restrict: "E",
+        scope: {
+            api: '=',
+            study: '='
+        },
+        template: '<div></div>',
+        link: function (scope: any, elem: ng.IAugmentedJQuery) {
+            scope.api = scope.api || {};
+
+            $translate('ServiceRequestInfor').then(function (translation) {
+                var serviceInfoButton: ng.IAugmentedJQuery =
+                    angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+
+                serviceInfoButton.bind('click', function () {
+                    alert("service request: " + scope.study);
+                });
+                elem.append(serviceInfoButton);
+            });
+            $translate('Conclusion').then(function (translation) {
+                var conclusionButton: ng.IAugmentedJQuery =
+                    angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                conclusionButton.bind('click', function () {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'views/dialogs/Conclusion.html',
+                        controller: Controllers.ConclusionController,
+                        backdrop: 'static'
+                    });
+                });
+                elem.append(conclusionButton);
+            });
+
+            $translate('ZoomMetting').then(function (translation) {
+                var zoomMeetingButton: ng.IAugmentedJQuery =
+                    angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+
+                zoomMeetingButton.bind('click', function () {
+                    alert("zoom: " + scope.study);
+                });
+                elem.append(zoomMeetingButton);
+            });
+
+           
+        }
+    }
+}]);
 
 
 
