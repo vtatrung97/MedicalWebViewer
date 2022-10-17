@@ -7533,3 +7533,16 @@ button.toolbar-button {
 	border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+.view-medical-accessory-images {
+	display: flex;
+}
+
+.view-medical-accessory-images .images {
+	width: 26px;
+    height: 26px;
+    position: relative;
+    top: 2px;
+    right: 2px;
+    padding: 2px;
+}
