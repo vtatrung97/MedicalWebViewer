@@ -2333,22 +2333,31 @@ directives.directive('bottomToolbar', ['$modal', '$translate', function ($modal,
             api: '=',
             study: '='
         },
-        template: '<div></div>',
+        template: '',
         link: function (scope: any, elem: ng.IAugmentedJQuery) {
             scope.api = scope.api || {};
 
             $translate('ServiceRequestInfor').then(function (translation) {
                 var serviceInfoButton: ng.IAugmentedJQuery =
-                    angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                    angular.element('<button class="form-btn" title="' + translation + '"></button>');
 
                 serviceInfoButton.bind('click', function () {
-                    alert("service request: " + scope.study);
+                    var modalInstance = $modal.open({
+                        templateUrl: 'views/dialogs/ServiceRequestInfor.html',
+                        controller: Controllers.ServiceRequestInfoController,
+                        backdrop: 'static'
+                    });
+                    //alert("service request: " + scope.study);
                 });
+
+                var serviceInfoButtonIcon: ng.IAugmentedJQuery = angular.element('<i class="fa fa-info-circle"></i>');
+                serviceInfoButton.append(serviceInfoButtonIcon);
                 elem.append(serviceInfoButton);
             });
+
             $translate('Conclusion').then(function (translation) {
                 var conclusionButton: ng.IAugmentedJQuery =
-                    angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                    angular.element('<button class="form-btn" title="' + translation + '"></button>');
                 conclusionButton.bind('click', function () {
                     var modalInstance = $modal.open({
                         templateUrl: 'views/dialogs/Conclusion.html',
@@ -2356,20 +2365,26 @@ directives.directive('bottomToolbar', ['$modal', '$translate', function ($modal,
                         backdrop: 'static'
                     });
                 });
+                var conclusionButtonIcon: ng.IAugmentedJQuery = angular.element('<i class="fa fa-file"></i>');
+                conclusionButton.append(conclusionButtonIcon);
+
                 elem.append(conclusionButton);
             });
 
             $translate('ZoomMetting').then(function (translation) {
                 var zoomMeetingButton: ng.IAugmentedJQuery =
-                    angular.element('<button class="btn-sm btn-primary">' + translation + '</button>');
+                    angular.element('<button class="form-btn" title="' + translation + '"></button>');
 
                 zoomMeetingButton.bind('click', function () {
                     alert("zoom: " + scope.study);
                 });
+                var zoomButtonIcon: ng.IAugmentedJQuery = angular.element('<i class="fa fa-users"></i>');
+                zoomMeetingButton.append(zoomButtonIcon);
+
                 elem.append(zoomMeetingButton);
             });
 
-           
+
         }
     }
 }]);

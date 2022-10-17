@@ -10,6 +10,7 @@ app.constant("app.config", {
         serviceUrl: document.location.protocol + "//192.168.1.104/MedicalViewerServiceAsp22/api/",
         threeDserviceUrl: document.location.protocol + "//192.168.1.104/MedicalViewerServiceAsp22/api/",
         idpServiceUrl: document.location.protocol + "//192.168.1.104/MedicalViewerIdp22/",
+        fhirServiceUrl: document.location.protocol + "//192.168.1.104:8030/FhirV4/",
         // Use empty string to disable help button.
         oktaHelpUrl: "https://www.leadtools.com/help/leadtools/v22/dh/medical/to/sign-in-to-the-medical-web-viewer-demo-using-okta.html",
         loginShibbolethHelpUrl: "https://www.leadtools.com/help/leadtools/v22/dh/medical/to/sign-in-to-the-medical-web-viewer-demo-using-shibboleth.html",
