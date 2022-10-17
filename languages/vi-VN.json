@@ -645,5 +645,7 @@
   "ImagingServiceRequestList": "Danh sách y/c chụp",
   "Search": "Tìm kiếm",
   "ServiceRequestInfor": "Thông tin chỉ định",
-  "ZoomMetting": "Họp Zoom"
+  "ZoomMetting": "Họp Zoom",
+  "DIALOGS_SERVICEREQUESTINFO_TITLE": "THÔNG TIN CHỈ ĐỊNH",
+  "DIALOGS_CONCLUSION_TITLE": "THÔNG TIN KẾT LUẬN"
 }

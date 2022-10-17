@@ -34,13 +34,15 @@ module Controllers {
         InitializeOverflowManager: Function;
         getCurrentImage: Function;
         studyInstanceUID: string;
+        serviceRequestReference: string;
+        imagingStudy: any;
     }
 
 
     export class ViewerController {
         static $inject = ['$scope', 'eventService', 'toolbarService', '$modal', 'tabService', 'optionsService', 'dataService',
             'seriesManagerService', 'safeApply', 'app.config', 'hotkeys', '$timeout', '$commangular', 'auditLogService',
-            'objectRetrieveService', 'dicomLoaderService', 'templateService', 'exportManagerService'];
+            'objectRetrieveService', 'dicomLoaderService', 'templateService', 'exportManagerService','fhirService'];
 
         private _scope: IViewerControllerScope;
         private _seriesManagerService: SeriesManagerService;
@@ -54,6 +56,7 @@ module Controllers {
         private _viewerApi: Directives.MedicalViewerApi;
         private _toolbarService: ToolbarService;
         private _exportManagerService: ExportManagerService;
+        private _fhirService: FhirService;
         private _templateService;
 
         // this is a timer to keep trying to see if the layout is ready for the overflow manager to be created.
@@ -75,7 +78,7 @@ module Controllers {
             optionsService: OptionsService, dataService: DataService, seriesManagerService: SeriesManagerService,
             safeApply, config, hotkeys, $timeout: ng.ITimeoutService, $commangular, auditLogService: AuditLogService,
             objectRetrieveService: ObjectRetrieveService, dicomLoaderService: DicomLoaderService,
-            templateService: TemplateService, exportManagerService: ExportManagerService) {
+            templateService: TemplateService, exportManagerService: ExportManagerService, fhirService: FhirService) {
             var spacingSize = Utils.get_spacingSize();
             var singleSeries: boolean = optionsService.get(OptionNames.SingleSeriesMode);
             var rows: number = optionsService.get(OptionNames.DefaultSeriesRowCount);
@@ -94,6 +97,7 @@ module Controllers {
             this._toolbarService = toolbarService;
             this._templateService = templateService;
             this._exportManagerService = exportManagerService;
+            this._fhirService = fhirService;
 
             $scope.query = new Models.QueryOptions();
             $scope.retrieveUrl = config.urls.serviceUrl + config.urls.objectRetrieveLocalServiceName;
@@ -366,8 +370,15 @@ module Controllers {
                         if (self._overflowManager != null) {
                             self._overflowManager.clear();
                         }
-                        console.log(data.args.study);
                         $scope.studyInstanceUID = data.args.study.InstanceUID;
+                        //self._fhirService.search("ImagingStudy", ["identifier=" + data.args.study.InstanceUID]).then(result => {
+                        //    if (result.data.total > 0) {
+                        //        $scope.imagingStudy = result.data.entry[0].resource;
+                        //        $scope.serviceRequestReference = $scope.imagingStudy.basedOn[0].reference;
+                        //        console.log($scope.serviceRequestReference);
+                        //    }
+                        //});
+
                         if (singleSeries) {
                             $scope.seriesList.length = 0;
                         }

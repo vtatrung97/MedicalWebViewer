@@ -42,6 +42,7 @@
     <TypeScriptCompile Include="Scripts\controllers\HSLController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\PrintController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\RolePatientsAccessController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\ServiceRequestInfoController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ServiceRequestsController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\UISettingsController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\UploadFileController.ts" />
@@ -560,6 +561,7 @@
     <TypeScriptCompile Include="Scripts\externalCommand\AutoService.ts" />
     <TypeScriptCompile Include="Scripts\HangingProtocolHelper.ts" />
     <TypeScriptCompile Include="Scripts\models\TemplateModels.ts" />
+    <TypeScriptCompile Include="Scripts\services\FhirService.ts" />
     <TypeScriptCompile Include="Scripts\services\TemplateEditorService.ts" />
     <TypeScriptCompile Include="Scripts\services\TemplateService.ts" />
     <Content Include="Scripts\LEADTOOLS\Leadtools.Controls.Medical.js" />
@@ -673,6 +675,7 @@
     <Content Include="views\dialogs\AddWadoServer.html" />
     <Content Include="views\dialogs\CodeSequenceEditor.html" />
     <Content Include="views\dialogs\Conclusion.html" />
+    <Content Include="views\dialogs\ServiceRequestInfor.html" />
     <Content Include="views\dialogs\ServiceRequests.html" />
     <Content Include="views\dialogs\TokenSelection.html" />
     <Content Include="views\dialogs\EmailTemplate.html" />
