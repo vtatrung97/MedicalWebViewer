@@ -2325,17 +2325,26 @@ directives.directive('medicalviewer', ["eventService", "$timeout", "$parse", "ob
 
 
 
-directives.directive('bottomToolbar', ['$modal', '$translate', function ($modal, $translate): ng.IDirective {
+directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', function ($modal,
+    fhirService: FhirService, $translate): ng.IDirective {
     return {
         replace: true,
         restrict: "E",
         scope: {
             api: '=',
-            study: '='
+            study: '=',
+            request:'='
         },
         template: '',
         link: function (scope: any, elem: ng.IAugmentedJQuery) {
             scope.api = scope.api || {};
+            var serviceRequest = {};
+            fhirService.search("ImagingStudy", ["identifier=" + scope.study]).then(result => {
+                if (result.data.total > 0) {
+                    serviceRequest = result.data.entry[0].resource;
+                    console.log(serviceRequest);
+                }
+            });
 
             $translate('ServiceRequestInfor').then(function (translation) {
                 var serviceInfoButton: ng.IAugmentedJQuery =

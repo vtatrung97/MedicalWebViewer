@@ -34,6 +34,7 @@ module Controllers {
         InitializeOverflowManager: Function;
         getCurrentImage: Function;
         studyInstanceUID: string;
+        serviceRequestReference: string;
         imagingStudy: any;
     }
 
@@ -370,12 +371,13 @@ module Controllers {
                             self._overflowManager.clear();
                         }
                         $scope.studyInstanceUID = data.args.study.InstanceUID;
-                        self._fhirService.search("ImagingStudy", ["identifier=" + data.args.study.InstanceUID]).then(result => {
-                            if (result.data.total > 0) {
-                                $scope.imagingStudy = result.data.entry[0];
-                                console.log($scope.imagingStudy);
-                            }
-                        });
+                        //self._fhirService.search("ImagingStudy", ["identifier=" + data.args.study.InstanceUID]).then(result => {
+                        //    if (result.data.total > 0) {
+                        //        $scope.imagingStudy = result.data.entry[0].resource;
+                        //        $scope.serviceRequestReference = $scope.imagingStudy.basedOn[0].reference;
+                        //        console.log($scope.serviceRequestReference);
+                        //    }
+                        //});
 
                         if (singleSeries) {
                             $scope.seriesList.length = 0;
