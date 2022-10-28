@@ -20,6 +20,11 @@ class FhirService {
         this._fhirUrl = config.urls.fhirServiceUrl;
     }
 
+
+    read(reference: string): ng.IPromise<any> {
+        return this._http.get(this._fhirUrl + reference);
+    }
+
     search(resourceType: string, params?: string[]): ng.IPromise<any> {
         var fullUrl: string = resourceType;
         var queryURI: string = '';
@@ -36,6 +41,11 @@ class FhirService {
         if (queryURI.length > 0)
             fullUrl += queryURI;
         return this._http.get(this._fhirUrl + fullUrl);
+    }
+
+
+    create(resourceType: string, resource: any): ng.IPromise<any> {
+        return this._http.post(this._fhirUrl + resourceType, JSON.stringify(resource));
     }
 }
 

@@ -61,6 +61,7 @@ module Controllers {
         isNotTempOrExter(): boolean;
         isNotExt(): boolean;
         getCurrentTasks();
+        openCarePlanManagement();
     }
 
     export class MedicalWebViewerController {
@@ -474,7 +475,16 @@ module Controllers {
                     });
                  }
               );
-           };
+            };
+
+            $scope.openCarePlanManagement = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/CarePlansManagement.html',
+                    controller: CarePlansManagementController,
+                    backdrop: 'static',
+                    size:'lg'
+                });
+            }
 
             $scope.openPermissionsManagement = function () {
                 var modalInstance = $modal.open({

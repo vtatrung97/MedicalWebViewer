@@ -2338,11 +2338,10 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
         template: '',
         link: function (scope: any, elem: ng.IAugmentedJQuery) {
             scope.api = scope.api || {};
-            var serviceRequest = {};
+            var imagingStudy = { basedOn :[]};
             fhirService.search("ImagingStudy", ["identifier=" + scope.study]).then(result => {
                 if (result.data.total > 0) {
-                    serviceRequest = result.data.entry[0].resource;
-                    console.log(serviceRequest);
+                    imagingStudy = result.data.entry[0].resource;
                 }
             });
 
@@ -2354,7 +2353,13 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
                     var modalInstance = $modal.open({
                         templateUrl: 'views/dialogs/ServiceRequestInfor.html',
                         controller: Controllers.ServiceRequestInfoController,
-                        backdrop: 'static'
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            imagingStudyBasedOn: function () {
+                                return imagingStudy.basedOn;
+                            }
+                        }
                     });
                     //alert("service request: " + scope.study);
                 });
@@ -2371,7 +2376,7 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
                     var modalInstance = $modal.open({
                         templateUrl: 'views/dialogs/Conclusion.html',
                         controller: Controllers.ConclusionController,
-                        backdrop: 'static'
+                        backdrop: 'static',
                     });
                 });
                 var conclusionButtonIcon: ng.IAugmentedJQuery = angular.element('<i class="fa fa-file"></i>');
@@ -2380,12 +2385,22 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
                 elem.append(conclusionButton);
             });
 
-            $translate('ZoomMetting').then(function (translation) {
+            $translate('MedicalConferencing').then(function (translation) {
                 var zoomMeetingButton: ng.IAugmentedJQuery =
                     angular.element('<button class="form-btn" title="' + translation + '"></button>');
 
                 zoomMeetingButton.bind('click', function () {
-                    alert("zoom: " + scope.study);
+                    var modalInstance = $modal.open({
+                        templateUrl: 'views/dialogs/MedicalConference.html',
+                        controller: Controllers.MedicalConferencingController,
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            studyInstanceUID: function () {
+                                return scope.study;
+                            }
+                        }
+                    });
                 });
                 var zoomButtonIcon: ng.IAugmentedJQuery = angular.element('<i class="fa fa-users"></i>');
                 zoomMeetingButton.append(zoomButtonIcon);
@@ -2393,7 +2408,25 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
                 elem.append(zoomMeetingButton);
             });
 
+            $translate('SelectedImages').then(function (translation) {
+                var divElemet: ng.IAugmentedJQuery = angular.element('<div class="m-auto"></div>');
+                elem.append(divElemet);
 
+                var zoomMeetingButton: ng.IAugmentedJQuery =
+                    angular.element('<button class="form-btn" title="' + translation + '"></button>');
+
+                zoomMeetingButton.bind('click', function () {
+                   
+                });
+                var zoomButtonIcon: ng.IAugmentedJQuery = angular.element('<i class="fa fa-image"></i>');
+                zoomMeetingButton.append(zoomButtonIcon);
+
+                var nummberBox: ng.IAugmentedJQuery = angular.element('<span class="nav-box-number"><span class="nav-number">14</span></span>');
+                zoomMeetingButton.append(nummberBox);
+
+
+                elem.append(zoomMeetingButton);
+            });
         }
     }
 }]);

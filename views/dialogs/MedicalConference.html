@@ -1,0 +1,83 @@
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50">{{'MEDICALCONFERENCE' | translate}}</h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="close()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <!--<div class="form-column">
+        <h5 class="text-uppercase">{{ "Information" | translate }}</h5>
+    </div>-->
+    <div class="row">
+        <div class="col-md-4 flex-column h-100 background-secondary">
+            <div class="form-column scroll-hidden">
+                <h5 class="text-uppercase">{{ 'MeetingManagement' | translate }}</h5>
+                <div class="divider_pri mart-0"></div>
+
+                <div class="flex-column flex-grow-1 scroll-secondary" style="padding-right: 6px;">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><strong class="sidebar-item">&#9658&nbsp {{ 'ZoomMeeting' | translate }}</strong></li>
+                        <li><a class="menuOption" name="Create New Zoom Meeting" href="javascript:void(0)" ng-click="edit.view = 'NewMeeting'"><strong class="sidebar-item" ng-class="{'text-danger': edit.view == 'NewMeeting'}">&nbsp&nbsp&nbsp&#149&nbsp {{ 'NewMeeting' | translate }}</strong></a></li>
+                        <li><a class="menuOption" name="Update Zoom Meeting" href="javascript:void(0)" ng-click="edit.view = 'UpdateMeeting'"><strong class="sidebar-item" ng-class="{'text-danger': edit.view == 'UpdateMeeting'}">&nbsp&nbsp&nbsp&#149&nbsp {{ 'ScheduledMeetings' | translate }}</strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 flex-column h-100 scroll-auto">
+            <div class="form-column">
+                <div class="flex-column scroll-auto" ng-include src="'views/templates/' + edit.view + '.html'"></div>
+                <!--<div class="flex-column scroll-auto" ng-include src="'views/templates/' + edit.view + '.html'"></div>-->
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-md-12 flex-column h-100 background-secondary">
+            <div class="form-column scroll-hidden">
+                <h5 class="text-uppercase">{{'MeetingInformation' | translate}}</h5>
+                <div class="divider_pri mart-0"></div>
+
+                <div class="flex-column flex-grow-1 scroll-secondary" style="padding-right: 6px;">
+                    <div class="form-group">
+                        <label class="" for="patientid">{{'Topic' | translate}}:</label>
+                        <input type="text" ng-model="createZoomMeeting.topic" autocomplete="off" class="text-field" id="patientid" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="patientid">{{'Description' | translate}}:</label>
+                        <textarea class="text-field" ng-model="createZoomMeeting.agenda"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="birthdate">{{'StartTime' | translate}}:</label>
+                       
+                        <input kendo-date-time-picker class="text-field"
+                               k-ng-model="scheduleDateTime.scheduleDate"
+                               style="width: 30%;" />
+                          <label class="" for="patientid">{{'Duration' | translate}}:</label>
+                        <input type="number" style="width: 20%;" ng-model="createZoomMeeting.duration" class="text-field" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                      
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>-->
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="close()" translate="DIALOGS_CLOSE"></a>
+    </div>
+</div>
+

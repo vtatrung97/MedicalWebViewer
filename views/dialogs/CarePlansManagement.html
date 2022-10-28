@@ -4,7 +4,7 @@
     </div>
     <div class="flex-rgh flex-center">
         <div class="scroll-hidden">
-            <h4 class="text-ellipsis p50" translate="DIALOGS_CONCLUSION_TITLE"></h4>
+            <h4 class="text-ellipsis p50" translate="DIALOGS_CAREPLANS_TITLE"></h4>
         </div>
     </div>
     <div class="modal-toolbar">
@@ -15,8 +15,8 @@
 </div>
 
 <div class="modal-body">
-    <div kendo-pdfviewer id="pdfViewer" k-options="pdfViewerOptions">
-    </div>
+    <kendo-grid id="carePlansGrid" options="gridCarePlanOptions" k-data-source="carePlansGridData">
+    </kendo-grid>
 </div>
 
 <div class="modal-footer">

@@ -223,6 +223,18 @@ interface JQueryParam {
     (obj: any, traditional: boolean): string;
 }
 
+interface kendo {
+    template(arg0: string);
+    parseDate(RequestedDate: any): any;
+    stringify(models: any);
+    toString(item: any, format: string);
+    data: any;
+    htmlEncode(item: any);
+    drawing: any;
+    saveAs: any;
+}
+
+
 /*
     Static members of jQuery (those on $ and jQuery themselves)
 */
@@ -815,3 +827,9 @@ declare module "jquery" {
 declare var jQuery: JQueryStatic;
 declare var $: JQueryStatic;
 declare var signalR: Signalr;
+
+declare module "kendo" {
+    export = kendo;
+}
+
+declare var kendo: kendo;

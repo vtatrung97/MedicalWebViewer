@@ -1,0 +1,32 @@
+﻿<form class="flex-column scroll-auto" name="newMeetingForm" novalidate>
+    <div class="form-column scroll-hidden">
+        <h5 class="text-uppercase">{{'MeetingInformation' | translate}}</h5>
+        <div class="divider_pri mart-0"></div>
+
+        <div class="flex-column flex-grow-1 scroll-secondary" style="padding-right: 6px;">
+            <div class="form-group">
+                <label class="" for="patientid">{{'Topic' | translate}}:</label>
+                <input type="text" ng-model="createZoomMeeting.topic" autocomplete="off" class="text-field" id="patientid" required>
+            </div>
+            <div class="form-group">
+                <label class="" for="patientid">{{'Description' | translate}}:</label>
+                <textarea class="text-field" ng-model="createZoomMeeting.agenda"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="" for="birthdate">{{'StartTime' | translate}}:</label>
+                <input kendo-date-time-picker class="text-field"
+                       k-ng-model="scheduleDateTime.scheduleDate" />
+            </div>
+            <div class="form-group">
+                <label class="" for="patientid">{{'Duration' | translate}}:</label>
+                <input type="number" ng-model="createZoomMeeting.duration" class="text-field" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <div class="flex-row">
+                    <div class="flex-horizontal"></div>
+                    <a class="form-btn" ng-disabled="newMeetingForm.$invalid" ng-click="scheduleZoomMeeting()">{{'Schedule' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

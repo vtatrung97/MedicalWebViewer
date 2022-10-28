@@ -49,6 +49,94 @@ var Controllers;
     }());
     Controllers.AddWadoServerController = AddWadoServerController;
 })(Controllers || (Controllers = {}));
+var Controllers;
+(function (Controllers) {
+    var CarePlansManagementController = /** @class */ (function () {
+        function CarePlansManagementController($scope, $modal, $modalInstance, fhirService) {
+            this._scope = $scope;
+            this._fhirService = fhirService;
+            $scope.gridCarePlanOptions = {
+                dataSource: $scope.carePlansGridData,
+                sortable: true,
+                pageable: false,
+                scrollable: true,
+                filterable: true,
+                resizable: true,
+                toolbar: [{ text: "Thêm quy trình mới", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createCarePlan()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
+                change: function (e) {
+                    var selectedTypes = this.selectedKeyNames();
+                    var rows = e.sender.select();
+                    //$scope.selectedTypes = [];
+                },
+                height: 550,
+                dataBound: function (e) {
+                    //this.expandRow(this.tbody.find("tr.k-master-row").first());
+                },
+                page: function (e) {
+                    var pageIndex = e.page;
+                },
+                columns: [
+                    {
+                        field: "title",
+                        title: "Tiêu đề",
+                        width: "120px",
+                        attributes: {
+                            style: "text-align: center; font-size: 14px;"
+                        }
+                    },
+                    {
+                        field: "description",
+                        title: "Mô tả",
+                        width: "120px"
+                    }
+                ]
+            };
+            $scope.createCarePlan = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/CreateUpdateCarePlan.html',
+                    controller: Controllers.CreateUpdateCarePlanController,
+                    backdrop: 'static',
+                    size: 'ep',
+                    resolve: {
+                        _carePlan: function () {
+                            return {};
+                        },
+                    }
+                });
+                modalInstance.result.then(function (result) {
+                    $scope.getCarePlans();
+                });
+            };
+            $scope.ok = function () {
+                $modalInstance.close();
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            $scope.getCarePlans = function () {
+                fhirService.search("CarePlan").then(function (result) {
+                    console.log(result);
+                    if (result.data.total > 0) {
+                        var entries = result.data.entry;
+                        var data = new kendo.data.ObservableArray(entries);
+                        $scope.carePlansGridData = new kendo.data.DataSource({
+                            data: data,
+                            schema: {
+                                model: {
+                                    id: "id"
+                                }
+                            }
+                        });
+                    }
+                });
+            };
+            $scope.getCarePlans();
+        }
+        CarePlansManagementController.$inject = ['$scope', '$modal', '$modalInstance', 'fhirService'];
+        return CarePlansManagementController;
+    }());
+    Controllers.CarePlansManagementController = CarePlansManagementController;
+})(Controllers || (Controllers = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
 /*! All Rights Reserved.                                          */
@@ -121,6 +209,28 @@ var Controllers;
 (function (Controllers) {
     var ConclusionController = /** @class */ (function () {
         function ConclusionController($scope, $modalInstance) {
+            //$scope.pdfViewerOptions = {
+            //    pdfjsProcessing: {
+            //        file: "http://localhost:8030/Files/Exports/test.pdf"
+            //    },
+            //    width: "100%",
+            //    height: 400
+            //};
+            $.ajax({
+                url: "http://localhost:8030/PdfProcess/Get",
+                type: 'GET'
+            }).done(function (data) {
+                $scope.pdfViewerOptions = {
+                    pdfjsProcessing: {
+                        file: {
+                            //retain the base64 data
+                            data: data
+                        }
+                    },
+                    width: "100%",
+                    height: 1200
+                };
+            });
             $scope.ok = function () {
                 $modalInstance.close();
             };
@@ -132,6 +242,69 @@ var Controllers;
         return ConclusionController;
     }());
     Controllers.ConclusionController = ConclusionController;
+})(Controllers || (Controllers = {}));
+var Controllers;
+(function (Controllers) {
+    var CreateUpdateCarePlanController = /** @class */ (function () {
+        function CreateUpdateCarePlanController($scope, $modalInstance, carePlan) {
+            $scope.carePlan = carePlan;
+            if (carePlan.id == null) {
+                $scope.carePlan = {
+                    activity: []
+                };
+            }
+            $scope.gridActivityOptions = {
+                dataSource: $scope.gridActivitiesGridData,
+                sortable: true,
+                pageable: false,
+                scrollable: true,
+                filterable: true,
+                resizable: true,
+                toolbar: [{ text: "Thêm danh mục đi kèm", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createActivity()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
+                change: function (e) {
+                    var selectedTypes = this.selectedKeyNames();
+                    var rows = e.sender.select();
+                    //$scope.selectedTypes = [];
+                },
+                height: 550,
+                dataBound: function (e) {
+                    //this.expandRow(this.tbody.find("tr.k-master-row").first());
+                },
+                page: function (e) {
+                    var pageIndex = e.page;
+                },
+                detailExpand: function (e) {
+                    e.sender.tbody.find('.k-detail-row').each(function (idx, item) {
+                        if (item !== e.detailRow[0]) {
+                            e.sender.collapseRow($(item).prev());
+                        }
+                    });
+                },
+                columns: [
+                    {
+                        field: "status",
+                        title: "Trạng thái",
+                        width: "120px",
+                        attributes: {
+                            style: "text-align: center; font-size: 14px;"
+                        }
+                    }
+                ]
+            };
+            $scope.addActivity = function () {
+                $scope.carePlan.activity.push({});
+            };
+            $scope.ok = function () {
+                $modalInstance.close();
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+        CreateUpdateCarePlanController.$inject = ['$scope', '$modalInstance', '_carePlan'];
+        return CreateUpdateCarePlanController;
+    }());
+    Controllers.CreateUpdateCarePlanController = CreateUpdateCarePlanController;
 })(Controllers || (Controllers = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
@@ -2252,6 +2425,61 @@ var Controllers;
     }());
     Controllers.HPTimeBasedImageSetsEditorController = HPTimeBasedImageSetsEditorController;
 })(Controllers || (Controllers = {}));
+var Controllers;
+(function (Controllers) {
+    var MedicalConferencingController = /** @class */ (function () {
+        function MedicalConferencingController($scope, $modalInstance, zoomMeetingService, fhirService, dialogs, studyInstanceUID) {
+            $scope.edit = {};
+            $scope.createZoomMeeting = new Models.CreateZoomMeetingModel();
+            $scope.scheduleDateTime = {
+                scheduleDate: new Date()
+            };
+            fhirService.search("ImagingStudy", ["identifier=" + studyInstanceUID]).then(function (result) {
+                console.log(result);
+                if (result.data.total != null && result.data.total > 0) {
+                    var imagingStudy = result.data.entry[0].resource;
+                    $scope.imagingStudy = imagingStudy;
+                    $scope.createZoomMeeting.topic = "H\u1ED9i ch\u1EA9n tr\u1EF1c tuy\u1EBFn b\u1EC7nh nh\u00E2n";
+                    $scope.createZoomMeeting.agenda = "Hội chẩn bệnh nhân ";
+                    $scope.createZoomMeeting.schedule_for = "viet@pacs.net.vn";
+                    if (imagingStudy.subject != null) {
+                        var patientReference = imagingStudy.subject.reference;
+                        fhirService.read(patientReference).then(function (res) {
+                            var patient = res.data;
+                            console.log(patient);
+                            $scope.patient = patient;
+                            $scope.createZoomMeeting.topic = $scope.createZoomMeeting.topic + " " + patient.name[0].text;
+                            $scope.createZoomMeeting.agenda = $scope.createZoomMeeting.agenda + " " + patient.name[0].text;
+                        });
+                    }
+                }
+            });
+            $scope.edit.view = "NewMeeting";
+            //zoomMeetingService.listUsers().then(result => {
+            //    console.log(result.data);
+            //})
+            $scope.scheduleZoomMeeting = function () {
+                $scope.createZoomMeeting.start_time = $scope.scheduleDateTime.scheduleDate;
+                zoomMeetingService.create($scope.createZoomMeeting).then(function (result) {
+                    dialogs.notify("Thông báo", "Cuộc họp đã được lên lịch");
+                });
+            };
+            //$scope.ok = function () {
+            //    $modalInstance.close();
+            //}
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            $scope.close = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+        MedicalConferencingController.$inject = ['$scope', '$modalInstance', 'zoomMeetingService', 'fhirService',
+            'dialogs', 'studyInstanceUID'];
+        return MedicalConferencingController;
+    }());
+    Controllers.MedicalConferencingController = MedicalConferencingController;
+})(Controllers || (Controllers = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
 /*! All Rights Reserved.                                          */
@@ -2795,13 +3023,18 @@ var Controllers;
 var Controllers;
 (function (Controllers) {
     var ServiceRequestInfoController = /** @class */ (function () {
-        function ServiceRequestInfoController($scope, $modalInstance, fhirService) {
+        function ServiceRequestInfoController($scope, $modalInstance, fhirService, imagingStudyBasedOn) {
             this._fhirService = fhirService;
+            $scope.imagingServiceBasedOn = imagingStudyBasedOn;
             $scope.loadData = function () {
-                fhirService.search("ImagingStudy").then(function (resuls) {
-                    console.log(resuls);
-                });
             };
+            if (imagingStudyBasedOn.length > 0) {
+                //imagingStudyBasedOn.forEach((item, index) => {
+                //    fhirService.read(item.reference).then(result => {
+                //    })
+                //})
+                $scope.currentServiceRequest = imagingStudyBasedOn[0];
+            }
             $scope.loadData();
             $scope.ok = function () {
                 $modalInstance.close();
@@ -2810,7 +3043,7 @@ var Controllers;
                 $modalInstance.dismiss('cancel');
             };
         }
-        ServiceRequestInfoController.$inject = ['$scope', '$modalInstance', 'fhirService'];
+        ServiceRequestInfoController.$inject = ['$scope', '$modalInstance', 'fhirService', 'imagingStudyBasedOn'];
         return ServiceRequestInfoController;
     }());
     Controllers.ServiceRequestInfoController = ServiceRequestInfoController;
@@ -5894,7 +6127,7 @@ agGrid.initialiseAgGridWithAngular1(angular);
 var app = angular.module("MedicalWebViewer", ['controllers', 'services', 'directives', 'filters', 'ui.bootstrap', 'ngAnimate', 'ngRoute', 'angular-loading-bar',
     'ngIdle', 'blockUI', 'colorpicker.module', 'dialogs.main', 'ngSanitize', 'pascalprecht.translate', 'commangular', 'cfp.hotkeys', 'ui.slider',
     'ui.grid', 'ui.grid.selection', 'ui.grid.expandable', 'ui.grid.autoResize', 'ui.grid.pinning', 'ui.grid.autoResize', 'ui.grid.pagination', 'agGrid',
-    'ngFileUpload', 'ui.codemirror', 'angularNumberPicker', 'multiStepForm', 'isteven-multi-select', 'ngPatternRestrict']);
+    'ngFileUpload', 'ui.codemirror', 'angularNumberPicker', 'multiStepForm', 'isteven-multi-select', 'ngPatternRestrict', 'kendo.directives']);
 var controllers = angular.module('controllers', []);
 var services = angular.module('services', []);
 var directives = angular.module('directives', []);
@@ -5903,7 +6136,9 @@ var providers = angular.module('providers', []);
 var commangularProvider;
 var _jsFileCorePath = "Scripts/LEADTOOLS/Leadtools.ImageProcessing.Core.js";
 var _jsFileCoreColorPath = "Scripts/LEADTOOLS/Leadtools.ImageProcessing.Color.js";
-app.config(["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarProvider", "$idleProvider", "blockUIConfigProvider", "dialogsProvider", "$translateProvider", "$commangularProvider", "$httpProvider", "$keepaliveProvider", "$controllerProvider",
+app.config(["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarProvider", "$idleProvider",
+    "blockUIConfigProvider", "dialogsProvider", "$translateProvider", "$commangularProvider",
+    "$httpProvider", "$keepaliveProvider", "$controllerProvider",
     function (config, $routeProvider, $locationProvider, cfpLoadingBarProvider, $idleProvider, blockUIConfigProvider, dialogsProvider, $translateProvider, $commangularProvider, $httpProvider, $keepaliveProvider, $controllerProvider) {
         cfpLoadingBarProvider.includeSpinner = false;
         commangularProvider = $commangularProvider;
@@ -13709,6 +13944,87 @@ var StructuredDisplayHelper = /** @class */ (function () {
     };
     return StructuredDisplayHelper;
 }());
+var Models;
+(function (Models) {
+    var CreateZoomMeetingModel = /** @class */ (function () {
+        function CreateZoomMeetingModel() {
+            this.default_password = true;
+            this.duration = 60;
+            this.template_id = "Dv4YdINdTk+Z5RToadh5ug==";
+            this.timezone = "Asia/Saigon";
+            this.settings = new ZoomMeetingSetting();
+        }
+        return CreateZoomMeetingModel;
+    }());
+    Models.CreateZoomMeetingModel = CreateZoomMeetingModel;
+    var ZoomMeetingSetting = /** @class */ (function () {
+        function ZoomMeetingSetting() {
+            this.allow_multiple_devices = true;
+            this.alternative_hosts_email_notification = true;
+            this.approval_type = 2;
+            this.audio = "telephony";
+            this.authentication_domains = "example.com";
+            this.authentication_exception = [{
+                    email: "viet@pacs.net.vn",
+                    name: "Viet Nguyen"
+                }];
+            this.authentication_option = "signIn_D8cJuqWVQ623CI4Q8yQK0Q";
+            this.auto_recording = "cloud";
+            this.breakout_room = {
+                enable: true,
+                rooms: [
+                    {
+                        name: "room11",
+                        participants: ["vietnguyen8392@gmail.com"]
+                    }
+                ]
+            };
+            this.calendar_type = 1;
+            this.close_registration = false;
+            this.contact_email = "viet@pacs.net.vn";
+            this.contact_name = "Viet Nguyen";
+            this.email_notification = true;
+            this.encryption_type = "enhanced_encryption";
+            this.focus_mode = true;
+            this.host_video = true;
+            this.jbh_time = 0;
+            this.join_before_host = true;
+            this.language_interpretation = {
+                enable: true,
+                interpreters: [
+                    {
+                        email: "interpreter@example.com",
+                        languages: "US,FR"
+                    }
+                ]
+            };
+            this.meeting_authentication = false;
+            this.meeting_invitees = [{
+                    email: "viet@pacs.net.vn"
+                }];
+            this.mute_upon_entry = false;
+            this.participant_video = false;
+            this.private_meeting = false;
+            this.registrants_confirmation_email = true;
+            this.registrants_email_notification = true;
+            this.registration_type = 1;
+            this.show_share_button = true;
+            this.use_pmi = false;
+            this.waiting_room = false;
+            this.waiting_room_options = {
+                enable: false,
+                admit_type: 1,
+                auto_admit: 1,
+                internal_user_auto_admit: 1
+            };
+            this.watermark = false;
+            this.host_save_video_order = true;
+            this.alternative_host_update_polls = true;
+        }
+        return ZoomMeetingSetting;
+    }());
+    Models.ZoomMeetingSetting = ZoomMeetingSetting;
+})(Models || (Models = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
 /*! All Rights Reserved.                                          */
@@ -13843,6 +14159,9 @@ var FhirService = /** @class */ (function () {
         this._optionsService = optionsService;
         this._fhirUrl = config.urls.fhirServiceUrl;
     }
+    FhirService.prototype.read = function (reference) {
+        return this._http.get(this._fhirUrl + reference);
+    };
     FhirService.prototype.search = function (resourceType, params) {
         var fullUrl = resourceType;
         var queryURI = '';
@@ -13858,6 +14177,9 @@ var FhirService = /** @class */ (function () {
         if (queryURI.length > 0)
             fullUrl += queryURI;
         return this._http.get(this._fhirUrl + fullUrl);
+    };
+    FhirService.prototype.create = function (resourceType, resource) {
+        return this._http.post(this._fhirUrl + resourceType, JSON.stringify(resource));
     };
     FhirService.$inject = ['app.config', 'authenticationService', '$http', 'optionsService'];
     return FhirService;
@@ -32708,6 +33030,14 @@ var Controllers;
                     });
                 });
             };
+            $scope.openCarePlanManagement = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/CarePlansManagement.html',
+                    controller: Controllers.CarePlansManagementController,
+                    backdrop: 'static',
+                    size: 'lg'
+                });
+            };
             $scope.openPermissionsManagement = function () {
                 var modalInstance = $modal.open({
                     templateUrl: 'views/dialogs/PermissionsManagement.html',
@@ -41877,11 +42207,10 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
             template: '',
             link: function (scope, elem) {
                 scope.api = scope.api || {};
-                var serviceRequest = {};
+                var imagingStudy = { basedOn: [] };
                 fhirService.search("ImagingStudy", ["identifier=" + scope.study]).then(function (result) {
                     if (result.data.total > 0) {
-                        serviceRequest = result.data.entry[0].resource;
-                        console.log(serviceRequest);
+                        imagingStudy = result.data.entry[0].resource;
                     }
                 });
                 $translate('ServiceRequestInfor').then(function (translation) {
@@ -41890,7 +42219,13 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
                         var modalInstance = $modal.open({
                             templateUrl: 'views/dialogs/ServiceRequestInfor.html',
                             controller: Controllers.ServiceRequestInfoController,
-                            backdrop: 'static'
+                            backdrop: 'static',
+                            size: 'lg',
+                            resolve: {
+                                imagingStudyBasedOn: function () {
+                                    return imagingStudy.basedOn;
+                                }
+                            }
                         });
                         //alert("service request: " + scope.study);
                     });
@@ -41904,20 +42239,42 @@ directives.directive('bottomToolbar', ['$modal', 'fhirService', '$translate', fu
                         var modalInstance = $modal.open({
                             templateUrl: 'views/dialogs/Conclusion.html',
                             controller: Controllers.ConclusionController,
-                            backdrop: 'static'
+                            backdrop: 'static',
                         });
                     });
                     var conclusionButtonIcon = angular.element('<i class="fa fa-file"></i>');
                     conclusionButton.append(conclusionButtonIcon);
                     elem.append(conclusionButton);
                 });
-                $translate('ZoomMetting').then(function (translation) {
+                $translate('MedicalConferencing').then(function (translation) {
                     var zoomMeetingButton = angular.element('<button class="form-btn" title="' + translation + '"></button>');
                     zoomMeetingButton.bind('click', function () {
-                        alert("zoom: " + scope.study);
+                        var modalInstance = $modal.open({
+                            templateUrl: 'views/dialogs/MedicalConference.html',
+                            controller: Controllers.MedicalConferencingController,
+                            backdrop: 'static',
+                            size: 'lg',
+                            resolve: {
+                                studyInstanceUID: function () {
+                                    return scope.study;
+                                }
+                            }
+                        });
                     });
                     var zoomButtonIcon = angular.element('<i class="fa fa-users"></i>');
                     zoomMeetingButton.append(zoomButtonIcon);
+                    elem.append(zoomMeetingButton);
+                });
+                $translate('SelectedImages').then(function (translation) {
+                    var divElemet = angular.element('<div class="m-auto"></div>');
+                    elem.append(divElemet);
+                    var zoomMeetingButton = angular.element('<button class="form-btn" title="' + translation + '"></button>');
+                    zoomMeetingButton.bind('click', function () {
+                    });
+                    var zoomButtonIcon = angular.element('<i class="fa fa-image"></i>');
+                    zoomMeetingButton.append(zoomButtonIcon);
+                    var nummberBox = angular.element('<span class="nav-box-number"><span class="nav-number">14</span></span>');
+                    zoomMeetingButton.append(nummberBox);
                     elem.append(zoomMeetingButton);
                 });
             }
@@ -45607,4 +45964,26 @@ var ToolbarService = /** @class */ (function () {
     return ToolbarService;
 }());
 services.service('toolbarService', ToolbarService);
+/*! ************************************************************* */
+/*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
+/*! All Rights Reserved.                                          */
+/*! ************************************************************* */
+/// <reference path="AuthenticationService.ts" />
+var ZoomMeetingService = /** @class */ (function () {
+    function ZoomMeetingService(config, authenticationService, $http, optionsService) {
+        this._http = $http;
+        this._authenticationService = authenticationService;
+        this._optionsService = optionsService;
+        this._zoomMeetingUrl = config.urls.zoomMeetingServiceUrl;
+    }
+    ZoomMeetingService.prototype.create = function (data) {
+        return this._http.post(this._zoomMeetingUrl + "Create-Meeting", JSON.stringify(data));
+    };
+    ZoomMeetingService.prototype.listUsers = function () {
+        return this._http.get(this._zoomMeetingUrl + "Users");
+    };
+    ZoomMeetingService.$inject = ['app.config', 'authenticationService', '$http', 'optionsService'];
+    return ZoomMeetingService;
+}());
+services.service('zoomMeetingService', ZoomMeetingService);
 //# sourceMappingURL=MedicalViewerDemo.js.map

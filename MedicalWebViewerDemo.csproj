@@ -27,8 +27,10 @@
     <TypeScriptCompile Include="lib\esprima.d.ts" />
     <TypeScriptCompile Include="lib\estree.d.ts" />
     <TypeScriptCompile Include="Scripts\controllers\AddWadoServerController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\CarePlansManagementController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\CodeSequenceEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ConclusionController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\CreateUpdateCarePlanController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\EmailURLController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPDefinitionSequenceDialogController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPDialogController.ts" />
@@ -36,6 +38,7 @@
     <TypeScriptCompile Include="Scripts\controllers\DSFilterOperationEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPImageSetSelectorEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPTimeBasedImageSetsEditorController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\MedicalConferencingController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\RemoteWadoController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ScriptEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\PromptController.ts" />
@@ -66,6 +69,14 @@
     <Content Include="css\fonts\glyphs\KendoUIGlyphs.svg" />
     <Content Include="css\fonts\glyphs\WebComponentsIcons.svg" />
     <Content Include="css\jquery.contextMenu.min.css" />
+    <Content Include="css\kendo.bootstrap.min.css" />
+    <Content Include="css\kendo.bootstrap.mobile.min.css" />
+    <Content Include="css\kendo.common.min.css" />
+    <Content Include="css\kendo.default.min.css" />
+    <Content Include="css\kendo.default.mobile.min.css" />
+    <Content Include="css\kendo.moonlight.min.css" />
+    <Content Include="css\kendo.rtl.min.css" />
+    <Content Include="css\kendo.uniform.min.css" />
     <Content Include="css\theme-fresh.css" />
     <Content Include="css\theme-light.css" />
     <Content Include="css\toolbarSVG.css" />
@@ -560,10 +571,13 @@
     <Content Include="Scripts\jquery\jquery.ui.touch-punch.min.js" />
     <TypeScriptCompile Include="Scripts\externalCommand\AutoService.ts" />
     <TypeScriptCompile Include="Scripts\HangingProtocolHelper.ts" />
+    <TypeScriptCompile Include="Scripts\models\CreateZoomMeetingModel.ts" />
     <TypeScriptCompile Include="Scripts\models\TemplateModels.ts" />
     <TypeScriptCompile Include="Scripts\services\FhirService.ts" />
     <TypeScriptCompile Include="Scripts\services\TemplateEditorService.ts" />
     <TypeScriptCompile Include="Scripts\services\TemplateService.ts" />
+    <Content Include="Scripts\KendoUI\kendo.all.min.js" />
+    <Content Include="Scripts\KendoUI\kendo.angular.min.js" />
     <Content Include="Scripts\LEADTOOLS\Leadtools.Controls.Medical.js" />
     <Content Include="Scripts\microsoft\signalr.js" />
     <Content Include="SeriesLayouts.xml" />
@@ -675,6 +689,9 @@
     <Content Include="views\dialogs\AddWadoServer.html" />
     <Content Include="views\dialogs\CodeSequenceEditor.html" />
     <Content Include="views\dialogs\Conclusion.html" />
+    <Content Include="views\dialogs\CarePlansManagement.html" />
+    <Content Include="views\dialogs\CreateUpdateCarePlan.html" />
+    <Content Include="views\dialogs\MedicalConference.html" />
     <Content Include="views\dialogs\ServiceRequestInfor.html" />
     <Content Include="views\dialogs\ServiceRequests.html" />
     <Content Include="views\dialogs\TokenSelection.html" />
@@ -718,6 +735,8 @@
     <Content Include="views\TemplateEditorView.html" />
     <Content Include="views\templates\BottomToolbar.html" />
     <Content Include="views\templates\ExpandableRowTemplate.html" />
+    <Content Include="views\templates\NewMeeting.html" />
+    <Content Include="views\templates\UpdateMeeting.html" />
     <Content Include="views\templates\UpdateRole.html" />
     <Content Include="views\templates\NewRole.html" />
     <Content Include="views\templates\UpdateTheme.html" />
@@ -805,6 +824,7 @@
     <TypeScriptCompile Include="Scripts\services\DataService.ts" />
     <TypeScriptCompile Include="Scripts\services\TabService.ts" />
     <TypeScriptCompile Include="Scripts\services\ToolbarService.ts" />
+    <TypeScriptCompile Include="Scripts\services\ZoomMeetingService.ts" />
     <TypeScriptCompile Include="Scripts\Utils.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -845,6 +865,8 @@
     <Content Include="css\fonts\webfonts\fa-solid-900.ttf" />
     <Content Include="css\fonts\webfonts\fa-solid-900.woff2" />
     <Content Include="languages\vi-VN.json" />
+    <Content Include="css\kendoui.ttf" />
+    <Content Include="css\kendoui.woff" />
     <None Include="packages.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>

@@ -25,7 +25,7 @@ agGrid.initialiseAgGridWithAngular1(angular);
 var app = angular.module("MedicalWebViewer", ['controllers', 'services', 'directives', 'filters', 'ui.bootstrap', 'ngAnimate', 'ngRoute', 'angular-loading-bar',
    'ngIdle', 'blockUI', 'colorpicker.module', 'dialogs.main', 'ngSanitize', 'pascalprecht.translate', 'commangular', 'cfp.hotkeys', 'ui.slider',
    'ui.grid', 'ui.grid.selection', 'ui.grid.expandable', 'ui.grid.autoResize', 'ui.grid.pinning', 'ui.grid.autoResize', 'ui.grid.pagination', 'agGrid',
-   'ngFileUpload', 'ui.codemirror', 'angularNumberPicker', 'multiStepForm', 'isteven-multi-select', 'ngPatternRestrict']);
+    'ngFileUpload', 'ui.codemirror', 'angularNumberPicker', 'multiStepForm', 'isteven-multi-select', 'ngPatternRestrict', 'kendo.directives']);
 var controllers = angular.module('controllers', []);
 var services = angular.module('services', []);
 var directives = angular.module('directives', []);
@@ -36,7 +36,9 @@ var _jsFileCorePath = "Scripts/LEADTOOLS/Leadtools.ImageProcessing.Core.js";
 var _jsFileCoreColorPath = "Scripts/LEADTOOLS/Leadtools.ImageProcessing.Color.js";
 
 app.config(
-   ["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarProvider", "$idleProvider", "blockUIConfigProvider", "dialogsProvider", "$translateProvider", "$commangularProvider", "$httpProvider", "$keepaliveProvider", "$controllerProvider", 
+    ["app.config", "$routeProvider", "$locationProvider", "cfpLoadingBarProvider", "$idleProvider",
+        "blockUIConfigProvider", "dialogsProvider", "$translateProvider", "$commangularProvider",
+        "$httpProvider", "$keepaliveProvider", "$controllerProvider", 
       function (config, $routeProvider: ng.route.IRouteProvider, $locationProvider: ng.ILocationProvider, cfpLoadingBarProvider, $idleProvider, blockUIConfigProvider, dialogsProvider, $translateProvider, $commangularProvider, $httpProvider: ng.IHttpProvider, $keepaliveProvider, $controllerProvider) {
          cfpLoadingBarProvider.includeSpinner = false;
          commangularProvider = $commangularProvider;

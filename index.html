@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="css/hotkeys.min.css" type="text/css" />
     <link rel="stylesheet" href="css/treeGrid.css" type="text/css" />
     <link rel="stylesheet" href="css/bootstrap-colorpicker.css" type="text/css" />
+    <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/kendo.rtl.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/kendo.bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="css/ui-grid-unstable.css" type="text/css" />
     <link rel="stylesheet" href="css/ag-grid.css" type="text/css" />
     <link rel="stylesheet" href="css/codemirror.css" type="text/css">
@@ -138,6 +141,8 @@
     <script src="Scripts/jquery/jquery.contextMenu.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
 
+    <script src="Scripts/KendoUI/kendo.all.min.js"></script>
+    <script src="Scripts/KendoUI/kendo.angular.min.js"></script>
 
     <!--<script src="Scripts/controls/PropertyGrid.js" type="text/javascript"></script>
     <script src="Scripts/controls/InteractiveVerticalSlider.js" type="text/javascript"></script>
@@ -274,6 +279,10 @@
         </div>
 
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf.js"></script>
+    <script>
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf.worker.js';
+    </script>
     <div elheightresize="" ng-view id="mainView" style="margin-top: 0px; height:100%; width:100px !important" class="hbox boxItem"></div>
     <!--<script src="Scripts/filters/PluralizeFilter.js"></script>-->
     <!--<script src="Scripts/models/Tab.js"></script>
@@ -295,7 +304,7 @@
     <script src="Scripts/externalCommand/WebViewerCommands.js"></script>-->
 
 
-    <div class="footer">		 
+    <div class="footer">
         <p id="verionNumberFooter"></p>
     </div>
     <script>

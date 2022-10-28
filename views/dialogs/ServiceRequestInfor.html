@@ -15,7 +15,26 @@
 </div>
 
 <div class="modal-body">
+    <div class="row">
+        <div class="col-md-4 flex-column h-100 background-secondary">
+            <div class="form-column scroll-hidden">
+                <h5 class="text-uppercase">{{ 'ServiceRequests' | translate }}</h5>
+                <div class="divider_pri mart-0"></div>
 
+                <div class="flex-column flex-grow-1 scroll-secondary" style="padding-right: 6px;">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><strong class="sidebar-item">&#9658&nbsp {{ 'ServiceCodes' | translate }}</strong></li>
+                        <li><a class="menuOption" name="Update Zoom Meeting" href="javascript:void(0)" ng-click="currentServiceRequest=serviceRequest" ng-repeat="serviceRequest in imagingServiceBasedOn"><strong class="sidebar-item" ng-class="{'text-danger': currentServiceRequest.reference == serviceRequest.reference}">
+    &nbsp&nbsp&nbsp&#149&nbsp{{ serviceRequest.display }}</strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 flex-column h-100 scroll-auto">
+           
+        </div>
+    </div>
 </div>
 
 <div class="modal-footer">

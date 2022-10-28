@@ -5,19 +5,28 @@
 
 
         loadData();
+        imagingServiceBasedOn: any[];
+        currentServiceRequest: any;
     }
 
     export class ServiceRequestInfoController {
-        static $inject = ['$scope', '$modalInstance', 'fhirService'];
+        static $inject = ['$scope', '$modalInstance', 'fhirService', 'imagingStudyBasedOn'];
         private _fhirService: FhirService;
 
-        constructor($scope: IServiceRequestInfoController, $modalInstance, fhirService: FhirService) {
+        constructor($scope: IServiceRequestInfoController, $modalInstance, fhirService: FhirService, imagingStudyBasedOn: any[]) {
             this._fhirService = fhirService;
 
+
+            $scope.imagingServiceBasedOn = imagingStudyBasedOn;
             $scope.loadData = function () {
-                fhirService.search("ImagingStudy").then(resuls => {
-                    console.log(resuls);
-                })
+
+            }
+            if (imagingStudyBasedOn.length > 0) {
+                //imagingStudyBasedOn.forEach((item, index) => {
+                //    fhirService.read(item.reference).then(result => {
+                //    })
+                //})
+                $scope.currentServiceRequest = imagingStudyBasedOn[0];
             }
             $scope.loadData();
 

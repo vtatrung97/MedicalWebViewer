@@ -1,0 +1,99 @@
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50" translate="DIALOGS_CAREPLAN_TITLE"></h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+<form name="carePlanForm" novalidate>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4 flex-column h-100 background-secondary">
+                <div class="form-column scroll-hidden">
+                    <h5 class="text-uppercase">{{'CarePlanInformation' | translate}}</h5>
+                    <div class="divider_pri mart-0"></div>
+
+                    <div class="flex-column flex-grow-1 scroll-secondary" style="padding-right: 6px;">
+                        <div class="form-group">
+                            <label class="" for="patientid">{{'Title' | translate}}:</label>
+                            <input type="text" ng-model="carePlan.title" autocomplete="off" class="text-field" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="patientid">{{'Description' | translate}}:</label>
+                            <textarea class="text-field" ng-model="carePlan.description"></textarea>
+                        </div>
+                        <!--<div class="form-group">
+                            <div class="flex-row">
+                                <div class="flex-horizontal"></div>
+                                <a class="form-btn" ng-disabled="carePlanForm.$invalid" ng-click="scheduleZoomMeeting()">{{'Schedule' | translate}}</a>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 flex-column h-100 scroll-secondary">
+                <div class="mb-2">
+                    <!--TABLE 2-->
+                    <div class="table_menu flex-column position-relative border-grey mt-2 tag_p" style="background: white; color: black">
+                        <!--Hiển thị nút tạo mục nếu mục chưa có danh sách -->
+                        <div ng-repeat="activity in carePlan.activity track by $index">
+                            <div class="flex-row">
+                                <div class="flex-column flex1">
+                                    <div class="flex-column flex1 p-2">
+                                        <p>
+                                            <label class="m-0">
+                                                {{$index + 1}}
+                                                <input type="text" placeholder="Tên mục" />
+                                            </label>
+                                        </p>
+                                        <textarea placeholder="Nội dung"></textarea>
+                                    </div>
+                                </div>
+                                <div class="divider_table"></div>
+                                <div class="flex-column flex1 position-relative">
+                                    <div class="flex-column flex1 p-2">
+                                        <p>
+                                            <input type="text"  placeholder="Tên mục con" />
+                                        </p>
+                                        <textarea ></textarea>
+                                    </div>
+                                </div>
+                                <!--<div class="over-table_input over_right flex-column position-absolute">
+                                    <div class="btn-table_input btn-table_add btn-primary">
+                                        <button  title="Thêm mục con">
+                                            <i class="far fa-plus-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="divider_hor_table"></div>
+                        </div>
+                        <!--Hiển thị nút tạo mục nếu danh sách mục lớn hơn 0-->
+                        <div class="btn-table_input btn-primary" >
+                            <button title="Thêm mục" ng-click="addActivity()">
+                                {{'AddComponent'|translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--<kendo-grid id="activitiesGrid" options="gridActivityOptions" k-data-source="gridActivitiesGridData">
+                </kendo-grid>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="flex-row marl-auto">
+
+            <button class="form-btn" ng-disabled="carePlanForm.$invalid" ng-click="ok()" translate="DIALOGS_OK"></button>
+        </div>
+    </div>
+</form>
