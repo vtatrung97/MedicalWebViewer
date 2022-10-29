@@ -47,6 +47,10 @@ class FhirService {
     create(resourceType: string, resource: any): ng.IPromise<any> {
         return this._http.post(this._fhirUrl + resourceType, JSON.stringify(resource));
     }
+
+    put(resourceType: string, resource: any): ng.IPromise<any> {
+        return this._http.put(this._fhirUrl + resourceType + "/" + resource.id, JSON.stringify(resource));
+    }
 }
 
 services.service('fhirService', FhirService);

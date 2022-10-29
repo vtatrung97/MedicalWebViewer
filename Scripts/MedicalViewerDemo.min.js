@@ -51,6 +51,144 @@ var Controllers;
 })(Controllers || (Controllers = {}));
 var Controllers;
 (function (Controllers) {
+    var BodyStructureManagementController = /** @class */ (function () {
+        function BodyStructureManagementController($scope, $modal, $modalInstance, dialogs, fhirService) {
+            $scope.getBodyStructure = function () {
+                fhirService.read("CodeSystem/body-structure").then(function (result) {
+                    $scope.codeSystem = result.data;
+                    $scope.conceptGridData = new kendo.data.DataSource({
+                        data: result.data.concept,
+                        schema: {
+                            model: {
+                                id: "code"
+                            }
+                        }
+                    });
+                }).catch(function (reason) {
+                    if (reason.status == 404) {
+                        $scope.codeSystem = {
+                            resourceType: "CodeSystem",
+                            id: "body-structure",
+                            url: "codeSystem/body-structure",
+                            meta: {
+                                tag: [{
+                                        system: "http://terminology.hl7.org/CodeSystem/v3-ObservationValue", code: "SUBSETTED"
+                                    }]
+                            },
+                            name: "body-structure",
+                            title: "body-structure",
+                            publisher: "Delta Intelligent System",
+                            caseSensitive: true,
+                            hierarchyMeaning: "is-a",
+                            content: "fragment",
+                            concept: []
+                        };
+                    }
+                });
+            };
+            $scope.gridConceptOptions = {
+                dataSource: $scope.conceptGridData,
+                sortable: true,
+                pageable: false,
+                scrollable: true,
+                filterable: true,
+                resizable: true,
+                //toolbar: [{ text: "Thêm quy trình mới", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createCarePlan()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
+                toolbar: ["create"],
+                remove: function (e) {
+                    var index = $scope.codeSystem.concept.map(function (e) { return e.code; }).indexOf(e.model.id);
+                    $scope.codeSystem.concept.splice(index, 1);
+                    fhirService.put("CodeSystem", $scope.codeSystem).then(function (result) {
+                        dialogs.notify("Cập nhật", "Danh mục đã được xóa");
+                    });
+                },
+                change: function (e) {
+                    console.log(e);
+                    var selectedTypes = this.selectedKeyNames();
+                    var rows = e.sender.select();
+                    //$scope.selectedTypes = [];
+                },
+                save: function (e) {
+                    if (e.model.code !== "") {
+                        if ($scope.codeSystem.concept == undefined) {
+                            $scope.codeSystem.concept = [];
+                        }
+                        if (e.model.id === "") {
+                            var newConcept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
+                            //$scope.concepts.push(newConcept);
+                            $scope.codeSystem.concept.push(newConcept);
+                        }
+                        else {
+                            var index = $scope.codeSystem.concept.map(function (e) { return e.code; }).indexOf(e.model.id);
+                            var concept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
+                            if (index > -1) {
+                                $scope.codeSystem.concept[index] = concept;
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                    fhirService.put("CodeSystem", $scope.codeSystem).then(function (result) {
+                        dialogs.notify("Cập nhật", "Danh mục đã được cập nhật");
+                    });
+                    //if (e.values.code !== "") {
+                    //    // the user changed the name field
+                    //    if (e.values.name !== e.model.name) {
+                    //        /* The result can be observed in the DevTools(F12) console of the browser. */
+                    //        console.log("code is modified");
+                    //    }
+                    //} else {
+                    //    e.preventDefault();
+                    //    /* The result can be observed in the DevTools(F12) console of the browser. */
+                    //    console.log("code cannot be empty");
+                    //}
+                },
+                height: 550,
+                dataBound: function (e) {
+                    //this.expandRow(this.tbody.find("tr.k-master-row").first());
+                },
+                page: function (e) {
+                    var pageIndex = e.page;
+                },
+                columns: [
+                    {
+                        field: "code",
+                        title: "Mã bộ phận",
+                        width: "120px",
+                        attributes: {
+                            style: "text-align: center; font-size: 14px;"
+                        }
+                    },
+                    {
+                        field: "display",
+                        title: "Tên bộ phận",
+                        attributes: {
+                            style: "text-align: center; font-size: 14px;"
+                        }
+                    },
+                    {
+                        field: "definition",
+                        title: "Định nghĩa"
+                    },
+                    { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }
+                ],
+                editable: "inline"
+            };
+            $scope.ok = function () {
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            $scope.getBodyStructure();
+        }
+        BodyStructureManagementController.$inject = ['$scope', '$modal', '$modalInstance', 'dialogs', 'fhirService'];
+        return BodyStructureManagementController;
+    }());
+    Controllers.BodyStructureManagementController = BodyStructureManagementController;
+})(Controllers || (Controllers = {}));
+var Controllers;
+(function (Controllers) {
     var CarePlansManagementController = /** @class */ (function () {
         function CarePlansManagementController($scope, $modal, $modalInstance, fhirService) {
             this._scope = $scope;
@@ -246,13 +384,25 @@ var Controllers;
 var Controllers;
 (function (Controllers) {
     var CreateUpdateCarePlanController = /** @class */ (function () {
-        function CreateUpdateCarePlanController($scope, $modalInstance, carePlan) {
+        function CreateUpdateCarePlanController($scope, $modalInstance, fhirService, carePlan) {
+            this._fhirService = fhirService;
             $scope.carePlan = carePlan;
+            $scope.selectedCodes = [];
             if (carePlan.id == null) {
                 $scope.carePlan = {
                     activity: []
                 };
             }
+            $scope.getBodyStructure = function () {
+                fhirService.read("CodeSystem/body-structure").then(function (result) {
+                    $scope.bodyStructure = result.data;
+                });
+            };
+            $scope.getProcedureCodes = function () {
+                fhirService.read("CodeSystem/procedure-code").then(function (result) {
+                    $scope.procedureCodes = result.data;
+                });
+            };
             $scope.gridActivityOptions = {
                 dataSource: $scope.gridActivitiesGridData,
                 sortable: true,
@@ -293,6 +443,16 @@ var Controllers;
             };
             $scope.addActivity = function () {
                 $scope.carePlan.activity.push({});
+                $scope.selectedCodes.push({});
+            };
+            $scope.codeChanged = function (index) {
+                console.log($scope.selectedCodes);
+                var concept = $scope.selectedCodes[index];
+                var code = {
+                    coding: [{ code: concept.code, display: concept.display }],
+                    text: concept.display
+                };
+                $scope.carePlan.activity[index].detail.code = code;
             };
             $scope.ok = function () {
                 $modalInstance.close();
@@ -300,8 +460,10 @@ var Controllers;
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
+            $scope.getBodyStructure();
+            $scope.getProcedureCodes();
         }
-        CreateUpdateCarePlanController.$inject = ['$scope', '$modalInstance', '_carePlan'];
+        CreateUpdateCarePlanController.$inject = ['$scope', '$modalInstance', 'fhirService', '_carePlan'];
         return CreateUpdateCarePlanController;
     }());
     Controllers.CreateUpdateCarePlanController = CreateUpdateCarePlanController;
@@ -2479,6 +2641,128 @@ var Controllers;
         return MedicalConferencingController;
     }());
     Controllers.MedicalConferencingController = MedicalConferencingController;
+})(Controllers || (Controllers = {}));
+/*! ************************************************************* */
+/*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
+/*! All Rights Reserved.                                          */
+/*! ************************************************************* */
+var Controllers;
+(function (Controllers) {
+    var ProcedureCodesController = /** @class */ (function () {
+        function ProcedureCodesController($scope, $modal, $modalInstance, dialogs, fhirService) {
+            $scope.getProcedureCodes = function () {
+                fhirService.read("CodeSystem/procedure-code").then(function (result) {
+                    $scope.codeSystem = result.data;
+                    $scope.concepts = result.data.concept;
+                    $scope.conceptGridData = new kendo.data.DataSource({
+                        data: result.data.concept,
+                        schema: {
+                            model: {
+                                id: "code"
+                            }
+                        }
+                    });
+                });
+            };
+            $scope.gridConceptOptions = {
+                dataSource: $scope.conceptGridData,
+                sortable: true,
+                pageable: false,
+                scrollable: true,
+                filterable: true,
+                resizable: true,
+                //toolbar: [{ text: "Thêm quy trình mới", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createCarePlan()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
+                toolbar: ["create"],
+                remove: function (e) {
+                    console.log("Removing", e.model.display);
+                    var index = $scope.codeSystem.concept.map(function (e) { return e.code; }).indexOf(e.model.id);
+                    $scope.codeSystem.concept.splice(index, 1);
+                    fhirService.put("CodeSystem", $scope.codeSystem).then(function (result) {
+                        dialogs.notify("Cập nhật", "Danh mục đã được xóa");
+                    });
+                },
+                change: function (e) {
+                    console.log(e);
+                    var selectedTypes = this.selectedKeyNames();
+                    var rows = e.sender.select();
+                    //$scope.selectedTypes = [];
+                },
+                save: function (e) {
+                    if (e.model.code !== "") {
+                        if (e.model.id === "") {
+                            var newConcept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
+                            //$scope.concepts.push(newConcept);
+                            $scope.codeSystem.concept.push(newConcept);
+                        }
+                        else {
+                            var index = $scope.codeSystem.concept.map(function (e) { return e.code; }).indexOf(e.model.id);
+                            var concept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
+                            if (index > -1) {
+                                $scope.codeSystem.concept[index] = concept;
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                    fhirService.put("CodeSystem", $scope.codeSystem).then(function (result) {
+                        dialogs.notify("Cập nhật", "Danh mục đã được cập nhật");
+                    });
+                    //if (e.values.code !== "") {
+                    //    // the user changed the name field
+                    //    if (e.values.name !== e.model.name) {
+                    //        /* The result can be observed in the DevTools(F12) console of the browser. */
+                    //        console.log("code is modified");
+                    //    }
+                    //} else {
+                    //    e.preventDefault();
+                    //    /* The result can be observed in the DevTools(F12) console of the browser. */
+                    //    console.log("code cannot be empty");
+                    //}
+                },
+                height: 550,
+                dataBound: function (e) {
+                    //this.expandRow(this.tbody.find("tr.k-master-row").first());
+                },
+                page: function (e) {
+                    var pageIndex = e.page;
+                },
+                columns: [
+                    {
+                        field: "code",
+                        title: "Mã",
+                        width: "120px",
+                        attributes: {
+                            style: "text-align: center; font-size: 14px;"
+                        }
+                    },
+                    {
+                        field: "display",
+                        title: "Hiển thị",
+                        attributes: {
+                            style: "text-align: center; font-size: 14px;"
+                        }
+                    },
+                    {
+                        field: "definition",
+                        title: "Định nghĩa"
+                    },
+                    { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }
+                ],
+                editable: "inline"
+            };
+            $scope.ok = function () {
+                $modalInstance.close();
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            $scope.getProcedureCodes();
+        }
+        ProcedureCodesController.$inject = ['$scope', '$modal', '$modalInstance', 'dialogs', 'fhirService'];
+        return ProcedureCodesController;
+    }());
+    Controllers.ProcedureCodesController = ProcedureCodesController;
 })(Controllers || (Controllers = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
@@ -14180,6 +14464,9 @@ var FhirService = /** @class */ (function () {
     };
     FhirService.prototype.create = function (resourceType, resource) {
         return this._http.post(this._fhirUrl + resourceType, JSON.stringify(resource));
+    };
+    FhirService.prototype.put = function (resourceType, resource) {
+        return this._http.put(this._fhirUrl + resourceType + "/" + resource.id, JSON.stringify(resource));
     };
     FhirService.$inject = ['app.config', 'authenticationService', '$http', 'optionsService'];
     return FhirService;
@@ -32814,6 +33101,22 @@ var Controllers;
                     }
                 });
                 return foundTab;
+            };
+            $scope.openProcedureCodes = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/ProcedureCodes.html',
+                    controller: Controllers.ProcedureCodesController,
+                    backdrop: 'static',
+                    size: 'lg'
+                });
+            };
+            $scope.openBodyStructure = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/BodyStructureManagement.html',
+                    controller: Controllers.BodyStructureManagementController,
+                    backdrop: 'static',
+                    size: 'lg'
+                });
             };
             eventService.subscribe(EventNames.DeleteTab, function (event, data) {
                 $scope.deleteTab(data.args.id);

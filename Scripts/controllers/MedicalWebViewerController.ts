@@ -62,6 +62,8 @@ module Controllers {
         isNotExt(): boolean;
         getCurrentTasks();
         openCarePlanManagement();
+        openProcedureCodes();
+        openBodyStructure();
     }
 
     export class MedicalWebViewerController {
@@ -207,6 +209,24 @@ module Controllers {
                     }
                 });
                 return foundTab;
+            }
+
+            $scope.openProcedureCodes = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/ProcedureCodes.html',
+                    controller: ProcedureCodesController,
+                    backdrop: 'static',
+                    size: 'lg'
+                });
+            }
+
+            $scope.openBodyStructure = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/BodyStructureManagement.html',
+                    controller: BodyStructureManagementController,
+                    backdrop: 'static',
+                    size: 'lg'
+                });
             }
             
 

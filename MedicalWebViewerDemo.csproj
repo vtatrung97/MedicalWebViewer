@@ -27,6 +27,7 @@
     <TypeScriptCompile Include="lib\esprima.d.ts" />
     <TypeScriptCompile Include="lib\estree.d.ts" />
     <TypeScriptCompile Include="Scripts\controllers\AddWadoServerController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\BodyStructureManagementController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\CarePlansManagementController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\CodeSequenceEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ConclusionController.ts" />
@@ -39,6 +40,7 @@
     <TypeScriptCompile Include="Scripts\controllers\HPImageSetSelectorEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPTimeBasedImageSetsEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\MedicalConferencingController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\ProcedureCodesController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\RemoteWadoController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ScriptEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\PromptController.ts" />
@@ -687,11 +689,13 @@
     <Content Include="Scripts\services\PatientService.ts" />
     <Content Include="Scripts\uuid.js" />
     <Content Include="views\dialogs\AddWadoServer.html" />
+    <Content Include="views\dialogs\BodyStructureManagement.html" />
     <Content Include="views\dialogs\CodeSequenceEditor.html" />
     <Content Include="views\dialogs\Conclusion.html" />
     <Content Include="views\dialogs\CarePlansManagement.html" />
     <Content Include="views\dialogs\CreateUpdateCarePlan.html" />
     <Content Include="views\dialogs\MedicalConference.html" />
+    <Content Include="views\dialogs\ProcedureCodes.html" />
     <Content Include="views\dialogs\ServiceRequestInfor.html" />
     <Content Include="views\dialogs\ServiceRequests.html" />
     <Content Include="views\dialogs\TokenSelection.html" />

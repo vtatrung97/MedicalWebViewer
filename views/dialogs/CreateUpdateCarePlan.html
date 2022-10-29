@@ -51,21 +51,22 @@
                                         <p>
                                             <label class="m-0">
                                                 {{$index + 1}}
-                                                <input type="text" placeholder="Tên mục" />
+                                                <select class="text-select" ng-model="selectedCodes[$index]" ng-options="i.display for i in procedureCodes.concept track by i.code" force-blur ng-change="codeChanged($index)"></select>
+                                                <!--<input type="text" placeholder="Tên mục" />-->
                                             </label>
                                         </p>
                                         <textarea placeholder="Nội dung"></textarea>
                                     </div>
                                 </div>
                                 <div class="divider_table"></div>
-                                <div class="flex-column flex1 position-relative">
+                                <!--<div class="flex-column flex1 position-relative">
                                     <div class="flex-column flex1 p-2">
                                         <p>
                                             <input type="text"  placeholder="Tên mục con" />
                                         </p>
                                         <textarea ></textarea>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!--<div class="over-table_input over_right flex-column position-absolute">
                                     <div class="btn-table_input btn-table_add btn-primary">
                                         <button  title="Thêm mục con">

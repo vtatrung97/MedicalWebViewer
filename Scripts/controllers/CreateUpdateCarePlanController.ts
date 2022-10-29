@@ -4,23 +4,48 @@
         cancel();
         createActivity();
         addActivity();
-
+        getProcedureCodes();
+        getBodyStructure();
         gridActivityOptions: any;
         gridActivitiesGridData: any;
         activityDefinition: any;
+        selectedCodes: any[];
         carePlan: any;
+
+        procedureCodes: any;
+        bodyStructure: any;
+        codeChanged(index: number);
     }
 
     export class CreateUpdateCarePlanController {
-        static $inject = ['$scope', '$modalInstance','_carePlan'];
+
+        private _fhirService: FhirService;
+        static $inject = ['$scope', '$modalInstance','fhirService','_carePlan'];
 
 
-        constructor($scope: ICreateUpdateCarePlanController, $modalInstance, carePlan) {
+        constructor($scope: ICreateUpdateCarePlanController, $modalInstance, fhirService: FhirService, carePlan) {
+            this._fhirService = fhirService;
+
             $scope.carePlan = carePlan;
+
+            $scope.selectedCodes = [];
+
             if (carePlan.id == null) {
                 $scope.carePlan = {
                     activity:[]
                 }
+            }
+
+            $scope.getBodyStructure = function () {
+                fhirService.read("CodeSystem/body-structure").then(result => {
+                    $scope.bodyStructure=result.data
+                });
+            }
+
+            $scope.getProcedureCodes = function () {
+                fhirService.read("CodeSystem/procedure-code").then(result => {
+                    $scope.procedureCodes = result.data;
+                });
             }
 
 
@@ -65,6 +90,18 @@
 
             $scope.addActivity = function () {
                 $scope.carePlan.activity.push({});
+                $scope.selectedCodes.push({});
+            }
+
+            $scope.codeChanged = function (index: number) {
+                console.log($scope.selectedCodes);
+                var concept = $scope.selectedCodes[index];
+                var code = {
+                    coding: [{ code: concept.code, display: concept.display }],
+                    text: concept.display
+                };
+                $scope.carePlan.activity[index].detail.code = code;
+               
             }
 
             $scope.ok = function () {
@@ -74,6 +111,9 @@
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
+
+            $scope.getBodyStructure();
+            $scope.getProcedureCodes();
         }
     }
 }
