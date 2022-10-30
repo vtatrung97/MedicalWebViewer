@@ -40,6 +40,7 @@
     <TypeScriptCompile Include="Scripts\controllers\HPImageSetSelectorEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\HPTimeBasedImageSetsEditorController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\MedicalConferencingController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\ObservationCodesController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ProcedureCodesController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\RemoteWadoController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ScriptEditorController.ts" />
@@ -695,6 +696,7 @@
     <Content Include="views\dialogs\CarePlansManagement.html" />
     <Content Include="views\dialogs\CreateUpdateCarePlan.html" />
     <Content Include="views\dialogs\MedicalConference.html" />
+    <Content Include="views\dialogs\ObservationCodes.html" />
     <Content Include="views\dialogs\ProcedureCodes.html" />
     <Content Include="views\dialogs\ServiceRequestInfor.html" />
     <Content Include="views\dialogs\ServiceRequests.html" />

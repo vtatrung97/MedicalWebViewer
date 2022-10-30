@@ -64,6 +64,7 @@ module Controllers {
         openCarePlanManagement();
         openProcedureCodes();
         openBodyStructure();
+        openObservationCodes();
     }
 
     export class MedicalWebViewerController {
@@ -209,6 +210,15 @@ module Controllers {
                     }
                 });
                 return foundTab;
+            }
+
+            $scope.openObservationCodes = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/ObservationCodes.html',
+                    controller: ObservationCodesController,
+                    backdrop: 'static',
+                    size: 'lg'
+                });
             }
 
             $scope.openProcedureCodes = function () {

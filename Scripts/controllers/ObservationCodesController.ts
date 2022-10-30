@@ -1,9 +1,5 @@
-﻿/*! ************************************************************* */
-/*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */
-/*! All Rights Reserved.                                          */
-/*! ************************************************************* */
-module Controllers {
-    export interface IProcedureCodesControllerScope extends ng.IScope {
+﻿module Controllers {
+    export interface IObservationCodesController extends ng.IScope {
         gridConceptOptions: any;
         conceptGridData: any;
         codeSystem: any;
@@ -11,17 +7,17 @@ module Controllers {
 
         ok();
         cancel();
-        getProcedureCodes();
+        getObservationCodes();
     }
 
-    export class ProcedureCodesController {
-        static $inject = ['$scope', '$modal', '$modalInstance','dialogs', 'fhirService'];
+    export class ObservationCodesController {
+        static $inject = ['$scope', '$modal', '$modalInstance','dialogs','fhirService'];
 
 
-        constructor($scope: IProcedureCodesControllerScope, $modal, $modalInstance, dialogs, fhirService: FhirService) {
+        constructor($scope: IObservationCodesController, $modal, $modalInstance, dialogs, fhirService: FhirService) {
 
-            $scope.getProcedureCodes = function () {
-                fhirService.read("CodeSystem/procedure-code").then(result => {
+            $scope.getObservationCodes = function () {
+                fhirService.read("CodeSystem/observation-codes").then(result => {
                     $scope.codeSystem = result.data;
                     $scope.concepts = result.data.concept;
                     $scope.conceptGridData = new kendo.data.DataSource({
@@ -32,7 +28,27 @@ module Controllers {
                             }
                         }
                     })
-                });
+                }).catch(reason => {
+                    if (reason.status == 404) {
+                        $scope.codeSystem = {
+                            resourceType: "CodeSystem",
+                            id: "observation-codes",
+                            url: "codeSystem/observation-codes",
+                            meta: {
+                                tag: [{
+                                    system: "http://terminology.hl7.org/CodeSystem/v3-ObservationValue", code: "SUBSETTED"
+                                }]
+                            },
+                            name: "observation-codes",
+                            title: "observation-codes",
+                            publisher: "Delta Intelligent System",
+                            caseSensitive: true,
+                            hierarchyMeaning: "is-a",
+                            content: "fragment",
+                            concept: []
+                        }
+                    }
+                });;
             };
 
             $scope.gridConceptOptions = {
@@ -45,6 +61,7 @@ module Controllers {
                 //toolbar: [{ text: "Thêm quy trình mới", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createCarePlan()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
                 toolbar: ["create"],
                 remove: function (e) {
+                    console.log("Removing", e.model.display);
                     var index = $scope.codeSystem.concept.map(e => e.code).indexOf(e.model.id);
                     $scope.codeSystem.concept.splice(index, 1);
                     fhirService.put("CodeSystem", $scope.codeSystem).then(result => {
@@ -60,6 +77,9 @@ module Controllers {
                 },
                 save: function (e) {
                     if (e.model.code !== "") {
+                        if ($scope.codeSystem.concept == undefined) {
+                            $scope.codeSystem.concept = [];
+                        }
                         if (e.model.id === "") {
                             var newConcept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
                             //$scope.concepts.push(newConcept);
@@ -76,7 +96,7 @@ module Controllers {
                         e.preventDefault();
                     }
                     fhirService.put("CodeSystem", $scope.codeSystem).then(result => {
-                        dialogs.notify("Cập nhật","Danh mục đã được cập nhật");
+                        dialogs.notify("Cập nhật", "Danh mục đã được cập nhật");
                     });
                     //if (e.values.code !== "") {
                     //    // the user changed the name field
@@ -129,8 +149,7 @@ module Controllers {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
-
-            $scope.getProcedureCodes();
+            $scope.getObservationCodes();
         }
     }
 }

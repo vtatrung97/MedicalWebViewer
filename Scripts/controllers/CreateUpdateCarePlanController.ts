@@ -7,14 +7,16 @@
         getProcedureCodes();
         getBodyStructure();
         gridActivityOptions: any;
-        gridActivitiesGridData: any;
-        activityDefinition: any;
+        //gridActivitiesGridData: any;
+        //activityDefinition: any;
         selectedCodes: any[];
         carePlan: any;
 
         procedureCodes: any;
         bodyStructure: any;
         codeChanged(index: number);
+        addGoal(activity: any, index: number);
+        goalSetting(activity, $index);
     }
 
     export class CreateUpdateCarePlanController {
@@ -49,52 +51,65 @@
             }
 
 
-            $scope.gridActivityOptions = {
-                dataSource: $scope.gridActivitiesGridData,
-                sortable: true,
-                pageable: false,
-                scrollable: true,
-                filterable: true,
-                resizable: true,
-                toolbar: [{ text: "Thêm danh mục đi kèm", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createActivity()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
-                change: function (e) {
-                    var selectedTypes: string[] = this.selectedKeyNames();
-                    var rows = e.sender.select();
-                    //$scope.selectedTypes = [];
-                },
-                height: 550,
-                dataBound: function (e) {
-                    //this.expandRow(this.tbody.find("tr.k-master-row").first());
-                },
-                page: function (e) {
-                    var pageIndex = e.page;
-                },
-                detailExpand: function (e) {
-                    e.sender.tbody.find('.k-detail-row').each(function (idx, item) {
-                        if (item !== e.detailRow[0]) {
-                            e.sender.collapseRow($(item).prev());
-                        }
-                    })
-                },
-                columns: [
-                    {
-                        field: "status",
-                        title: "Trạng thái",
-                        width: "120px",
-                        attributes: {
-                            style: "text-align: center; font-size: 14px;"
-                        }
-                    }]
+            //$scope.gridActivityOptions = {
+            //    dataSource: $scope.gridActivitiesGridData,
+            //    sortable: true,
+            //    pageable: false,
+            //    scrollable: true,
+            //    filterable: true,
+            //    resizable: true,
+            //    toolbar: [{ text: "Thêm danh mục đi kèm", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createActivity()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
+            //    change: function (e) {
+            //        var selectedTypes: string[] = this.selectedKeyNames();
+            //        var rows = e.sender.select();
+            //        //$scope.selectedTypes = [];
+            //    },
+            //    height: 550,
+            //    dataBound: function (e) {
+            //        //this.expandRow(this.tbody.find("tr.k-master-row").first());
+            //    },
+            //    page: function (e) {
+            //        var pageIndex = e.page;
+            //    },
+            //    detailExpand: function (e) {
+            //        e.sender.tbody.find('.k-detail-row').each(function (idx, item) {
+            //            if (item !== e.detailRow[0]) {
+            //                e.sender.collapseRow($(item).prev());
+            //            }
+            //        })
+            //    },
+            //    columns: [
+            //        {
+            //            field: "status",
+            //            title: "Trạng thái",
+            //            width: "120px",
+            //            attributes: {
+            //                style: "text-align: center; font-size: 14px;"
+            //            }
+            //        }]
+            //}
+
+            $scope.goalSetting = function (activity: any, index: number) {
+
             }
 
 
             $scope.addActivity = function () {
-                $scope.carePlan.activity.push({});
+                $scope.carePlan.activity.push({
+                    detail: {
+                        kind:"ServiceRequest",
+                        code: {},
+                        goal:[]
+                    }
+                });
                 $scope.selectedCodes.push({});
             }
 
+            $scope.addGoal = function (activity, index: number) {
+                $scope.carePlan.activity[index].detail.goal.push({})
+            }
+
             $scope.codeChanged = function (index: number) {
-                console.log($scope.selectedCodes);
                 var concept = $scope.selectedCodes[index];
                 var code = {
                     coding: [{ code: concept.code, display: concept.display }],

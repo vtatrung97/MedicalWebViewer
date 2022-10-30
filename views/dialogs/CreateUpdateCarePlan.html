@@ -55,7 +55,29 @@
                                                 <!--<input type="text" placeholder="Tên mục" />-->
                                             </label>
                                         </p>
-                                        <textarea placeholder="Nội dung"></textarea>
+                                        <p>
+                                            <a href="javascript:void(0);" ng-click="goalSetting(activity,$index)"
+                                               style="text-decoration:underline;color:blue">{{'GoalSetting' | translate}}</a>
+                                            <!--<table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th ng-repeat="goal in activity.detail.goal"></th>
+                                                        <th>
+                                                            <a href="javascript:void(0);"
+                                                               ng-click="addGoal(activity,$index)">Add goal</a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td ng-repeat="goal in activity.detail.goal">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>-->
+                                            <!--<h3>Noi dung</h3>-->
+                                        </p>
+                                        <!--<textarea placeholder="Nội dung"></textarea>-->
                                     </div>
                                 </div>
                                 <div class="divider_table"></div>
@@ -78,7 +100,7 @@
                             <div class="divider_hor_table"></div>
                         </div>
                         <!--Hiển thị nút tạo mục nếu danh sách mục lớn hơn 0-->
-                        <div class="btn-table_input btn-primary" >
+                        <div class="btn-table_input btn-primary">
                             <button title="Thêm mục" ng-click="addActivity()">
                                 {{'AddComponent'|translate}}
                             </button>
