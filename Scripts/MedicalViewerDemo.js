@@ -253,7 +253,6 @@ var Controllers;
             };
             $scope.getCarePlans = function () {
                 fhirService.search("CarePlan").then(function (result) {
-                    console.log(result);
                     if (result.data.total > 0) {
                         var entries = result.data.entry;
                         var data = new kendo.data.ObservableArray(entries);
@@ -384,15 +383,48 @@ var Controllers;
 var Controllers;
 (function (Controllers) {
     var CreateUpdateCarePlanController = /** @class */ (function () {
-        function CreateUpdateCarePlanController($scope, $modalInstance, fhirService, carePlan) {
+        function CreateUpdateCarePlanController($scope, $modal, $modalInstance, fhirService, carePlan) {
             this._fhirService = fhirService;
             $scope.carePlan = carePlan;
             $scope.selectedCodes = [];
+            $scope.goals = [{
+                    target: []
+                }];
             if (carePlan.id == null) {
                 $scope.carePlan = {
-                    activity: []
+                    activity: [{
+                            detail: {
+                                kind: "ServiceRequest",
+                                code: {},
+                                goal: []
+                            }
+                        }]
                 };
             }
+            $scope.observationDropdownOptions = {};
+            $scope.observationCodeCodeSystemData = {};
+            $scope.getObservationCodes = function () {
+                fhirService.read("CodeSystem/observation-codes").then(function (result) {
+                    $scope.observationCodeCodeSystem = result.data;
+                    //$scope.concepts = result.data.concept;
+                    $scope.observationCodeCodeSystemData = new kendo.data.DataSource({
+                        data: result.data.concept,
+                        schema: {
+                            model: {
+                                id: "code"
+                            }
+                        }
+                    });
+                    $scope.observationDropdownOptions = {
+                        dataSource: $scope.observationCodeCodeSystemData,
+                        dataTextField: "display",
+                        dataValueField: "code",
+                    };
+                }).catch(function (reason) {
+                    if (reason.status == 404) {
+                    }
+                });
+            };
             $scope.getBodyStructure = function () {
                 fhirService.read("CodeSystem/body-structure").then(function (result) {
                     $scope.bodyStructure = result.data;
@@ -403,44 +435,43 @@ var Controllers;
                     $scope.procedureCodes = result.data;
                 });
             };
-            //$scope.gridActivityOptions = {
-            //    dataSource: $scope.gridActivitiesGridData,
-            //    sortable: true,
-            //    pageable: false,
-            //    scrollable: true,
-            //    filterable: true,
-            //    resizable: true,
-            //    toolbar: [{ text: "Thêm danh mục đi kèm", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createActivity()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
-            //    change: function (e) {
-            //        var selectedTypes: string[] = this.selectedKeyNames();
-            //        var rows = e.sender.select();
-            //        //$scope.selectedTypes = [];
-            //    },
-            //    height: 550,
-            //    dataBound: function (e) {
-            //        //this.expandRow(this.tbody.find("tr.k-master-row").first());
-            //    },
-            //    page: function (e) {
-            //        var pageIndex = e.page;
-            //    },
-            //    detailExpand: function (e) {
-            //        e.sender.tbody.find('.k-detail-row').each(function (idx, item) {
-            //            if (item !== e.detailRow[0]) {
-            //                e.sender.collapseRow($(item).prev());
-            //            }
-            //        })
-            //    },
-            //    columns: [
-            //        {
-            //            field: "status",
-            //            title: "Trạng thái",
-            //            width: "120px",
-            //            attributes: {
-            //                style: "text-align: center; font-size: 14px;"
-            //            }
-            //        }]
-            //}
+            $scope.onChangeObservation = function (goalIndex, index, e) {
+                var selectedIndex = e.sender.selectedIndex;
+                var concept = $scope.observationCodeCodeSystem.concept[selectedIndex];
+                $scope.goals[goalIndex].target[index].measure = {
+                    coding: [
+                        { code: concept.code, display: concept.display },
+                    ],
+                    text: concept.display
+                };
+                console.log($scope.goals);
+            };
+            $scope.detailTarget = function (goalIndex, index) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/TargetDetail.html',
+                    controller: Controllers.TargetDetailController,
+                    backdrop: 'static',
+                    resolve: {
+                        _target: function () {
+                            return $scope.goals[goalIndex].target[index];
+                        }
+                    }
+                });
+                modalInstance.result.then(function (target) {
+                    console.log(target);
+                });
+            };
+            $scope.onSelectObservation = function (e) {
+                console.log(e.dataItem);
+            };
             $scope.goalSetting = function (activity, index) {
+            };
+            $scope.removeGoal = function (parentIndex, index) {
+                $scope.goals.splice(index, 1);
+            };
+            $scope.addTarget = function (parentIndex, index) {
+                //$scope.carePlan.activity[parentIndex].detail.goal[index].target.push({});
+                $scope.goals[index].target.push({});
             };
             $scope.addActivity = function () {
                 $scope.carePlan.activity.push({
@@ -453,7 +484,8 @@ var Controllers;
                 $scope.selectedCodes.push({});
             };
             $scope.addGoal = function (activity, index) {
-                $scope.carePlan.activity[index].detail.goal.push({});
+                //$scope.carePlan.activity[index].detail.goal.push({ target: [] });
+                $scope.goals.push({ target: [] });
             };
             $scope.codeChanged = function (index) {
                 var concept = $scope.selectedCodes[index];
@@ -471,8 +503,9 @@ var Controllers;
             };
             $scope.getBodyStructure();
             $scope.getProcedureCodes();
+            $scope.getObservationCodes();
         }
-        CreateUpdateCarePlanController.$inject = ['$scope', '$modalInstance', 'fhirService', '_carePlan'];
+        CreateUpdateCarePlanController.$inject = ['$scope', '$modal', '$modalInstance', 'fhirService', '_carePlan'];
         return CreateUpdateCarePlanController;
     }());
     Controllers.CreateUpdateCarePlanController = CreateUpdateCarePlanController;
@@ -3500,6 +3533,45 @@ var Controllers;
         return ServiceRequestsController;
     }());
     Controllers.ServiceRequestsController = ServiceRequestsController;
+})(Controllers || (Controllers = {}));
+var Controllers;
+(function (Controllers) {
+    var TargetDetailController = /** @class */ (function () {
+        function TargetDetailController($scope, $modalInstance, _target) {
+            $scope.target = _target;
+            $scope.detailType = {
+                name: ''
+            };
+            if (_target.detailQuantity != null) {
+                $scope.detailQuantity = _target.detailQuantity;
+                $scope.detailType.name = "Quantity";
+            }
+            else if (_target.detailRange != null) {
+                $scope.detailRange = _target.detailRange;
+                $scope.detailType.name = "Range";
+            }
+            else if (_target.detailString != null) {
+                $scope.detailString = _target.detailString;
+                $scope.detailType.name = "string";
+            }
+            else {
+                $scope.detailType = {
+                    name: ''
+                };
+            }
+            $scope.onChangedDetailType = function (value) {
+            };
+            $scope.ok = function () {
+                $modalInstance.close($scope.target);
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+        TargetDetailController.$inject = ['$scope', '$modalInstance', '_target'];
+        return TargetDetailController;
+    }());
+    Controllers.TargetDetailController = TargetDetailController;
 })(Controllers || (Controllers = {}));
 /*! ************************************************************* */
 /*! Copyright (c) 1991-2022 LEAD Technologies, Inc.               */

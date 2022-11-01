@@ -85,7 +85,6 @@
 
             $scope.getCarePlans = function () {
                 fhirService.search("CarePlan").then(result => {
-                    console.log(result);
                     if (result.data.total > 0) {
                         var entries= result.data.entry;
                         var data = new kendo.data.ObservableArray(entries);

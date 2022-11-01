@@ -1,0 +1,67 @@
+﻿<div class="modal-header">
+    <div class="delta-logo">
+        <img src="./images/viewer/deltapacs.png" />
+    </div>
+    <div class="flex-rgh flex-center">
+        <div class="scroll-hidden">
+            <h4 class="text-ellipsis p50" translate="DIALOGS_TARGETDETAIL_TITLE"></h4>
+        </div>
+    </div>
+    <div class="modal-toolbar">
+        <span title="{{'Close' | translate}}" ng-click="cancel()">
+            <i class="fa fa-close"></i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-12">
+            <h4 style="color:#fff">{{'SelectDetailType' | translate}}</h4>
+
+            <label>
+                <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Quantity">
+                {{'Quantity'|translate}}
+            </label>
+            <label>
+                <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Range">
+                {{'Range'|translate}}
+            </label>
+            <!--<label>
+            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="CodeableConcept">
+            {{'CodeableConcept'|translate}}
+        </label>-->
+            <label>
+                <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="string">
+                {{'string'|translate}}
+            </label>
+            <!--<label>
+            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="boolean">
+            {{'boolean'|translate}}
+        </label>
+        <label>
+            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="integer">
+            {{'integer'|translate}}
+        </label>
+        <label>
+            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Ratio">
+            {{'Ratio'|translate}}
+        </label>-->
+        </div>
+        <div class="col-12" ng-if="detailType.name=='Quantity'">
+            <h3>Quantity</h3>
+        </div>
+        <div class="col-12" ng-if="detailType.name=='Range'">
+            <h3>Range</h3>
+        </div>
+        <div class="col-12" ng-if="detailType.name=='string'">
+            <h3>string</h3>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="flex-row marl-auto">
+        <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK"></a>
+    </div>
+</div>

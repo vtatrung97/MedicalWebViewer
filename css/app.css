@@ -1562,3 +1562,21 @@ ui-grid {
 	}
 }
 
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.k-card {
+    width: 285px;
+    margin: 5%;
+}
+
+.k-card-footer {
+    text-align: center;
+}
+
+.k-card-action > .k-button {
+    width: 100%;
+}

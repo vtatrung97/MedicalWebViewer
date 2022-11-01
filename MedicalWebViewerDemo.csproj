@@ -50,6 +50,7 @@
     <TypeScriptCompile Include="Scripts\controllers\RolePatientsAccessController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ServiceRequestInfoController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\ServiceRequestsController.ts" />
+    <TypeScriptCompile Include="Scripts\controllers\TargetDetailController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\UISettingsController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\UploadFileController.ts" />
     <TypeScriptCompile Include="Scripts\controllers\UserPatientsAccessController.ts" />
@@ -700,6 +701,7 @@
     <Content Include="views\dialogs\ProcedureCodes.html" />
     <Content Include="views\dialogs\ServiceRequestInfor.html" />
     <Content Include="views\dialogs\ServiceRequests.html" />
+    <Content Include="views\dialogs\TargetDetail.html" />
     <Content Include="views\dialogs\TokenSelection.html" />
     <Content Include="views\dialogs\EmailTemplate.html" />
     <Content Include="views\dialogs\EmailURL.html" />

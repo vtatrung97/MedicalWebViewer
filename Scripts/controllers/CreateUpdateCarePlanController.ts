@@ -9,38 +9,87 @@
         gridActivityOptions: any;
         //gridActivitiesGridData: any;
         //activityDefinition: any;
+        goals: any[];
+        detailGridDatas: any[];
         selectedCodes: any[];
         carePlan: any;
+        observationCodeCodeSystem: any;
+        observationDropdownOptions: any;
+        observationCodeCodeSystemData: any;
 
+        onChangeObservation(goalIndex: number, index: number, event: any)
+        onSelectObservation(e);
+        getObservationCodes();
         procedureCodes: any;
         bodyStructure: any;
         codeChanged(index: number);
         addGoal(activity: any, index: number);
         goalSetting(activity, $index);
+        removeGoal(activityIndex: number, index: number);
+        addTarget(activityIndex: number, index: number);
+        detailTarget(goalindex: number, index: number);
     }
 
     export class CreateUpdateCarePlanController {
 
         private _fhirService: FhirService;
-        static $inject = ['$scope', '$modalInstance','fhirService','_carePlan'];
+        static $inject = ['$scope', '$modal', '$modalInstance', 'fhirService', '_carePlan'];
 
 
-        constructor($scope: ICreateUpdateCarePlanController, $modalInstance, fhirService: FhirService, carePlan) {
+        constructor($scope: ICreateUpdateCarePlanController, $modal, $modalInstance, fhirService: FhirService, carePlan) {
             this._fhirService = fhirService;
 
             $scope.carePlan = carePlan;
 
             $scope.selectedCodes = [];
+            $scope.goals = [{
+                target: []
+            }];
 
             if (carePlan.id == null) {
                 $scope.carePlan = {
-                    activity:[]
+                    activity: [{
+                        detail: {
+                            kind: "ServiceRequest",
+                            code: {},
+                            goal: []
+                        }
+                    }]
                 }
+
             }
+
+            $scope.observationDropdownOptions = {};
+            $scope.observationCodeCodeSystemData = {};
+
+
+            $scope.getObservationCodes = function () {
+                fhirService.read("CodeSystem/observation-codes").then(result => {
+                    $scope.observationCodeCodeSystem = result.data;
+                    //$scope.concepts = result.data.concept;
+                    $scope.observationCodeCodeSystemData = new kendo.data.DataSource({
+                        data: result.data.concept,
+                        schema: {
+                            model: {
+                                id: "code"
+                            }
+                        }
+                    });
+                    $scope.observationDropdownOptions = {
+                        dataSource: $scope.observationCodeCodeSystemData,
+                        dataTextField: "display",
+                        dataValueField: "code",
+                    }
+                }).catch(reason => {
+                    if (reason.status == 404) {
+
+                    }
+                });
+            };
 
             $scope.getBodyStructure = function () {
                 fhirService.read("CodeSystem/body-structure").then(result => {
-                    $scope.bodyStructure=result.data
+                    $scope.bodyStructure = result.data
                 });
             }
 
@@ -50,63 +99,67 @@
                 });
             }
 
+            $scope.onChangeObservation = function (goalIndex: number, index: number, e) {
+                var selectedIndex: number = e.sender.selectedIndex;
+                var concept = $scope.observationCodeCodeSystem.concept[selectedIndex];
+                $scope.goals[goalIndex].target[index].measure = {
+                    coding: [
+                        { code: concept.code, display: concept.display },
+                    ],
+                    text: concept.display
+                }
+                console.log($scope.goals);
+            }
 
-            //$scope.gridActivityOptions = {
-            //    dataSource: $scope.gridActivitiesGridData,
-            //    sortable: true,
-            //    pageable: false,
-            //    scrollable: true,
-            //    filterable: true,
-            //    resizable: true,
-            //    toolbar: [{ text: "Thêm danh mục đi kèm", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createActivity()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
-            //    change: function (e) {
-            //        var selectedTypes: string[] = this.selectedKeyNames();
-            //        var rows = e.sender.select();
-            //        //$scope.selectedTypes = [];
-            //    },
-            //    height: 550,
-            //    dataBound: function (e) {
-            //        //this.expandRow(this.tbody.find("tr.k-master-row").first());
-            //    },
-            //    page: function (e) {
-            //        var pageIndex = e.page;
-            //    },
-            //    detailExpand: function (e) {
-            //        e.sender.tbody.find('.k-detail-row').each(function (idx, item) {
-            //            if (item !== e.detailRow[0]) {
-            //                e.sender.collapseRow($(item).prev());
-            //            }
-            //        })
-            //    },
-            //    columns: [
-            //        {
-            //            field: "status",
-            //            title: "Trạng thái",
-            //            width: "120px",
-            //            attributes: {
-            //                style: "text-align: center; font-size: 14px;"
-            //            }
-            //        }]
-            //}
+            $scope.detailTarget = function (goalIndex: number, index: number) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'views/dialogs/TargetDetail.html',
+                    controller: TargetDetailController,
+                    backdrop: 'static',
+                    resolve: {
+                        _target: function () {
+                            return $scope.goals[goalIndex].target[index];
+                        }
+                    }
+                });
+                modalInstance.result.then(function (target: any) {
+                    console.log(target);
+                });
+            }
+
+
+            $scope.onSelectObservation = function (e) {
+                console.log(e.dataItem);
+            }
 
             $scope.goalSetting = function (activity: any, index: number) {
 
+            }
+
+            $scope.removeGoal = function (parentIndex: number, index: number) {
+                $scope.goals.splice(index, 1);
+            }
+
+            $scope.addTarget = function (parentIndex: number, index: number) {
+                //$scope.carePlan.activity[parentIndex].detail.goal[index].target.push({});
+                $scope.goals[index].target.push({});
             }
 
 
             $scope.addActivity = function () {
                 $scope.carePlan.activity.push({
                     detail: {
-                        kind:"ServiceRequest",
+                        kind: "ServiceRequest",
                         code: {},
-                        goal:[]
+                        goal: []
                     }
                 });
                 $scope.selectedCodes.push({});
             }
 
             $scope.addGoal = function (activity, index: number) {
-                $scope.carePlan.activity[index].detail.goal.push({})
+                //$scope.carePlan.activity[index].detail.goal.push({ target: [] });
+                $scope.goals.push({ target: [] });
             }
 
             $scope.codeChanged = function (index: number) {
@@ -116,7 +169,7 @@
                     text: concept.display
                 };
                 $scope.carePlan.activity[index].detail.code = code;
-               
+
             }
 
             $scope.ok = function () {
@@ -129,6 +182,7 @@
 
             $scope.getBodyStructure();
             $scope.getProcedureCodes();
+            $scope.getObservationCodes();
         }
     }
 }

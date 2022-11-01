@@ -673,5 +673,10 @@
   "DIALOGS_CAREPLAN_TITLE": "Dịch vụ kỹ thuật",
   "DIALOGS_BODYSTRUCTURE_TITLE": "Bộ phận cơ thể",
   "DIALOGS_OBSERVATIONCODES_TITLE": "Danh mục cận lâm sàng",
-  "MeetingInformation": "Thông tin lịch họp"
+  "MeetingInformation": "Thông tin lịch họp",
+  "Observation": "Dịch vụ y tế",
+  "AddTarget": "Thêm quy trình",
+  "Remove": "Xóa",
+  "AddGoal": "Thêm mục",
+  "Goal": "Mục"
 }
