@@ -51,6 +51,9 @@ class FhirService {
     put(resourceType: string, resource: any): ng.IPromise<any> {
         return this._http.put(this._fhirUrl + resourceType + "/" + resource.id, JSON.stringify(resource));
     }
+    delete(fullUrl: string): ng.IPromise<any> {
+        return this._http.delete(this._fhirUrl + fullUrl);
+    }
 }
 
 services.service('fhirService', FhirService);

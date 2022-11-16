@@ -33,7 +33,7 @@ app.constant("app.config", {
         threeDServiceName: "threed"
     },
     copyright: "Copyright (c) 1991-" + new Date().getFullYear() + " LEAD Technologies, Inc. ALL RIGHTS RESERVED.",
-    title: "DELTA Medical Web Viewer",
+    title: "AN PHAT Medical Web Viewer",
     defaultUserName: "",
     defaultPassword: "",
     runAsEval: true

@@ -8,6 +8,8 @@
         cancel();
         getCarePlans();
         createCarePlan();
+        delete(id);
+        detail(id);
     }
 
     export class CarePlansManagementController {
@@ -34,6 +36,9 @@
                     //$scope.selectedTypes = [];
                 },
                 height: 550,
+                remove: function (e) {
+                    console.log(e);
+                },
                 dataBound: function (e) {
                     //this.expandRow(this.tbody.find("tr.k-master-row").first());
                 },
@@ -42,18 +47,28 @@
                 },
                 columns: [
                     {
-                        field: "title",
+                        field: "resource.title",
+                        template: function (dataItem) {
+                            return "<a ng-click=\"detail('" + dataItem.id + "')\"  style='width:15px;color:#fff'>" + dataItem.resource.title + "</a>"
+                        },
                         title: "Tiêu đề",
-                        width: "120px",
+                        width: "220px",
                         attributes: {
                             style: "text-align: center; font-size: 14px;"
                         }
                     },
                     {
-                        field: "description",
+                        field: "resource.description",
                         title: "Mô tả",
-                        width: "120px"
-                    }]
+                        width: "300px"
+                    },
+                    {
+                        width: "150px",
+                        template: function (dataItem) {
+                            return "<a ng-click=\"delete('" + dataItem.id + "')\" class='k-button' style='width:15px'>Xóa</a>"
+                        }
+                    },
+                ]
             }
 
 
@@ -92,12 +107,35 @@
                             data: data,
                             schema: {
                                 model: {
-                                    id: "id"
+                                    id: "fullUrl"
                                 }
                             }
                         })
                     }
                 });
+            }
+
+            $scope.detail = function (id) {
+                fhirService.read(id).then(result => {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'views/dialogs/CreateUpdateCarePlan.html',
+                        controller: CreateUpdateCarePlanController,
+                        backdrop: 'static',
+                        size: 'ep',
+                        resolve: {
+                            _carePlan: function () {
+                                return result.data;
+                            },
+                        }
+                    });
+                });
+               
+            }
+
+            $scope.delete = function (id) {
+                fhirService.delete(id).then(result => {
+                    $scope.getCarePlans();
+                })
             }
 
             $scope.getCarePlans();

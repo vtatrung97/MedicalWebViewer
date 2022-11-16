@@ -37,15 +37,52 @@
             }
             else {
                 $scope.detailType = {
-                    name: ''
+                    name: 'Quantity'
+                };
+                $scope.detailQuantity = {
+                    comparator: ''
                 };
             }
 
 
             $scope.onChangedDetailType = function (value: string) {
+                switch ($scope.detailType.name) {
+                    case 'Quantity':
+                        $scope.detailQuantity = {
+                            comparator: ''
+                        };
+                        break;
+                    case 'Range':
+                        $scope.detailRange = {
+                            low: {
+                                value: 0
+                            },
+                            high: {
+                                value: 10
+                            }
+                        };
+                        break;
+                    case 'string':
+                        $scope.detailString = {
+                            value:''
+                        }
+                        break;
+                }
             }
 
             $scope.ok = function () {
+                switch ($scope.detailType.name) {
+                    case 'Quantity':
+                        $scope.target.detailQuantity = $scope.detailQuantity;
+                        break;
+                    case 'Range':
+                        $scope.target.detailRange = $scope.detailRange;
+
+                        break;
+                    case 'string':
+                        $scope.target.detailString = $scope.detailString.value;
+                        break;
+                }
                 $modalInstance.close($scope.target);
             }
 

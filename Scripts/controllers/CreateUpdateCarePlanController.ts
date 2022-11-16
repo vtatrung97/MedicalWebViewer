@@ -8,16 +8,21 @@
         getBodyStructure();
         gridActivityOptions: any;
         //gridActivitiesGridData: any;
-        //activityDefinition: any;
+        activityDefinition: any;
         goals: any[];
         detailGridDatas: any[];
         selectedCodes: any[];
         carePlan: any;
         observationCodeCodeSystem: any;
         observationDropdownOptions: any;
+        bodyStructureDropdownOptions: any;
+        bodyStructureCodeSystemData: any;
         observationCodeCodeSystemData: any;
 
-        onChangeObservation(goalIndex: number, index: number, event: any)
+        selectedObservation: any;
+        onChangeObservation(goalIndex: number, index: number, event: any);
+        onChangeBodyStructure(e);
+
         onSelectObservation(e);
         getObservationCodes();
         procedureCodes: any;
@@ -42,12 +47,11 @@
             $scope.carePlan = carePlan;
 
             $scope.selectedCodes = [];
-            $scope.goals = [{
-                target: []
-            }];
+            $scope.goals = [];
 
             if (carePlan.id == null) {
                 $scope.carePlan = {
+                    resourceType: "CarePlan",
                     activity: [{
                         detail: {
                             kind: "ServiceRequest",
@@ -56,7 +60,37 @@
                         }
                     }]
                 }
+                $scope.goals = [{
+                    resourceType: 'Goal',
+                    lifecycleStatus: 'active',
+                    target: []
+                }];
 
+                $scope.activityDefinition = {
+                    resourceType: "ActivityDefinition",
+                    name: "",
+                    title: "",
+                    status: "active",
+                    kind: "CarePlan",
+                    bodySite:[]
+                }
+
+            } else {
+                if ($scope.carePlan.activity.length > 0) {
+                    for (var i = 0; i < $scope.carePlan.activity.length; i++) {
+                        if ($scope.carePlan.activity[i].detail.goal.length > 0) {
+                            var goal = $scope.carePlan.activity[i].detail.goal;
+
+                            if (goal != null && goal.length > 0) {
+                                for (var goalIndex = 0; goalIndex < goal.length; goalIndex++) {
+                                    fhirService.read(goal[goalIndex].reference).then(result => {
+                                        $scope.goals.push(result.data);
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             $scope.observationDropdownOptions = {};
@@ -90,12 +124,30 @@
             $scope.getBodyStructure = function () {
                 fhirService.read("CodeSystem/body-structure").then(result => {
                     $scope.bodyStructure = result.data
+                    $scope.bodyStructureCodeSystemData = new kendo.data.DataSource({
+                        data: result.data.concept,
+                        schema: {
+                            model: {
+                                id: "code"
+                            }
+                        }
+                    });
+                    $scope.bodyStructureDropdownOptions = {
+                        dataSource: $scope.bodyStructureCodeSystemData,
+                        dataTextField: "display",
+                        dataValueField: "code",
+                    }
                 });
             }
 
             $scope.getProcedureCodes = function () {
                 fhirService.read("CodeSystem/procedure-code").then(result => {
                     $scope.procedureCodes = result.data;
+
+                    if ($scope.carePlan.id != null) {
+                        var selectedConcept = $scope.procedureCodes.concept.filter(x => x.code == $scope.carePlan.activity[0].detail.code.coding[0].code)[0];
+                        $scope.selectedCodes[0] = selectedConcept;
+                    }
                 });
             }
 
@@ -108,7 +160,19 @@
                     ],
                     text: concept.display
                 }
-                console.log($scope.goals);
+            }
+
+            $scope.onChangeBodyStructure = function (e) {
+                var selectedIndex: number = e.sender.selectedIndex;
+                var concept = $scope.bodyStructure.concept[selectedIndex];
+                $scope.activityDefinition.bodySite[0] = {
+                    coding: [
+                        {
+                            code: concept.code, display: concept.display
+                        }
+                    ],
+                    text:concept.display
+                }
             }
 
             $scope.detailTarget = function (goalIndex: number, index: number) {
@@ -123,13 +187,12 @@
                     }
                 });
                 modalInstance.result.then(function (target: any) {
-                    console.log(target);
+                    $scope.goals[goalIndex].target[index] = target;
                 });
             }
 
 
             $scope.onSelectObservation = function (e) {
-                console.log(e.dataItem);
             }
 
             $scope.goalSetting = function (activity: any, index: number) {
@@ -159,7 +222,11 @@
 
             $scope.addGoal = function (activity, index: number) {
                 //$scope.carePlan.activity[index].detail.goal.push({ target: [] });
-                $scope.goals.push({ target: [] });
+                $scope.goals.push({
+                    resourceType: 'Goal',
+                    lifecycleStatus: 'active',
+                    target: []
+                });
             }
 
             $scope.codeChanged = function (index: number) {
@@ -173,7 +240,31 @@
             }
 
             $scope.ok = function () {
-                $modalInstance.close();
+                var goals = [];
+                console.log($scope.activityDefinition);
+                $scope.activityDefinition.name = $scope.carePlan.title;
+                $scope.activityDefinition.title = $scope.carePlan.title;
+
+                fhirService.create("ActivityDefinition", $scope.activityDefinition).then(result => {
+
+                })
+                //$scope.goals.forEach((goal, index: number) => {
+                //    fhirService.create("Goal", goal).then(resultGoal => {
+                //        goals.push({ reference: "Goal/" + resultGoal.data.id });
+
+                //    }).finally(() => {
+                //        goals.forEach((goalReference, goalIndex: number) => {
+                //            $scope.carePlan.activity[0].detail.goal.push(goalReference);
+                //        });
+                //        fhirService.create("CarePlan", $scope.carePlan).then(resul => {
+                //            $modalInstance.close('cancel');
+
+                //        })
+
+                //    });
+
+                //});
+
             }
 
             $scope.cancel = function () {

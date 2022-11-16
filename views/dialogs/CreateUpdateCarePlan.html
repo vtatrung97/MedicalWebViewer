@@ -30,12 +30,6 @@
                             <label class="" for="patientid">{{'Description' | translate}}:</label>
                             <textarea class="text-field" ng-model="carePlan.description"></textarea>
                         </div>
-                        <!--<div class="form-group">
-                            <div class="flex-row">
-                                <div class="flex-horizontal"></div>
-                                <a class="form-btn" ng-disabled="carePlanForm.$invalid" ng-click="scheduleZoomMeeting()">{{'Schedule' | translate}}</a>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -49,10 +43,17 @@
                                 <div class="flex-column flex1">
                                     <div class="flex-column flex1 p-2" style="display:block;">
                                         <p>
-                                            <label class="m-0">
-                                                <select class="text-select" ng-model="selectedCodes[$index]" ng-options="i.display for i in procedureCodes.concept track by i.code" force-blur ng-change="codeChanged($index)" required></select>
-                                                <!--<input type="text" placeholder="Tên mục" />-->
-                                            </label>
+                                            <label for="size">{{'ProcedureCode'|translate}}</label>
+                                            <select class="text-select" ng-model="selectedCodes[$index]" ng-options="i.display for i in procedureCodes.concept track by i.code" force-blur ng-change="codeChanged($index)" required></select>
+                                        </p>
+                                        <p>
+                                            <label for="size">{{'BodyStructure'|translate}}</label>
+                                            <select kendo-drop-down-list k-data-text-field="'display'"
+                                                     k-on-change="onChangeBodyStructure(kendoEvent)"
+                                                    ng-model="activityDefinition.bodySite[0].coding[0].code"
+                                                    k-data-value-field="'code'"
+                                                    k-data-source="bodyStructureCodeSystemData">
+                                            </select>
                                         </p>
                                         <button type="button" ng-click="addGoal(activity,$index)" title="{{'AddGoal'|translate}}" class="btn btn-primary">
                                             <i class="fa fa-plus"></i>&nbsp;{{'AddGoal'|translate}}
@@ -61,150 +62,58 @@
                                         <div class="cards-container">
                                             <div class="k-card" ng-repeat="goal in goals track by $index">
                                                 <div class="k-card-header">
-                                                    <h5 class="k-card-title">{{'Goal'|translate}}&nbsp;{{$index + 1}}</h5>
-                                                    <!--<h6 class="k-card-subtitle">{{'GoalCaption'|translate}}</h6>-->
+                                                    <h5 class="k-card-title">{{$index + 1}}</h5>
+
                                                 </div>
                                                 <div class="k-card-body" style="overflow: scroll;height: 270px;">
-                                                    <!--<p>
-                                                        <a style="text-decoration:underline;color:blue" ng-click="addTarget($parent.$index,$index)">{{'AddTarget'|translate}}</a>
-                                                    </p>-->
                                                     <p ng-repeat="target in goal.target track by $index">
+
                                                         <label for="size">{{'Observation'|translate}}</label>
                                                         <select kendo-drop-down-list k-data-text-field="'display'"
+                                                                ng-model="target.measure.coding[0].code"
                                                                 k-on-change="onChangeObservation($parent.$index,$index,kendoEvent)"
                                                                 k-data-value-field="'code'"
                                                                 k-data-source="observationCodeCodeSystemData">
                                                         </select>
+                                                        <span ng-if="target.detailString">
+                                                            {{target.detailString}}
+                                                        </span>
+                                                        <span ng-if="target.detailQuantity">
+                                                            {{target.detailQuantity.comparator}} {{target.detailQuantity.value}} ~ {{target.detailQuantity.unit}}
+                                                        </span>
+                                                        <span ng-if="target.detailRange">
+                                                            {{target.detailRange.low.value}} ~ {{target.detailRange.high.value}} {{target.detailRange.high.unit}}
+                                                        </span>
+                                                        <br />
                                                         <a style="text-decoration:underline;color:black" ng-click="detailTarget($parent.$index,$index)">{{'Detail'|translate}}</a>
-
                                                     </p>
                                                 </div>
-                                                <!--<div class="k-card-footer">
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-facebook"></span></a>
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-pinterest"></span></a>
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-twitter"></span></a>
-                                                </div>-->
                                                 <div class="k-card-actions k-card-actions-stretched">
-                                                    <!--<span class="k-card-action">
-                                                        <button ng-click="addTarget($parent.$index,$index)" class="btn btn-primary">Add</button>
-                                                    </span>
-                                                    <span class="k-card-action">
-                                                        <button class="btn btn-danger">Remove</button>
-                                                    </span>-->
-
-                                                    <!--<kendo-button class="k-button-solid-base" >Primary Button</kendo-button>-->
                                                     <span class="k-card-action"><span ng-click="addTarget($parent.$index,$index)" style="color: white;border: #3d84c2;background: #3d84c2;" class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md">{{'AddTarget'|translate}}</span></span>
                                                     <span class="k-card-action"><span style="color: white;background: #c82333;border: #c82333;" class="k-button k-button-flat-error k-button-flat k-button-md k-rounded-md" ng-click="removeGoal($parent.$index,$index)">{{'Remove'|translate}}</span></span>
                                                 </div>
                                             </div>
-
-                                            <!--<div class="k-card">
-                                                <img class="k-card-image" src="https://www.pngfind.com/pngs/m/278-2781613_blue-plus-icon-add-new-button-png-transparent.png" />
-                                            </div>-->
-                                            <!--<div class="k-card">
-                                                <div class="k-card-header">
-                                                    <h5 class="k-card-title">Barcelona</h5>
-                                                </div>
-                                                <img class="k-card-image" src="../content/web/cards/barcelona.jpg" />
-                                                <div class="k-card-body">
-                                                    <p>Barcelona, the cosmopolitan capital of Spain's Catalonia region, is known for its art and architecture.</p>
-                                                    <p>The fantastical Sagrada Família church and other modernist landmarks designed by Antoni Gaudí dot the city.</p>
-                                                </div>
-                                                <div class="k-card-actions">
-                                                    <span class="k-button k-button-flat-primary k-button-flat k-button-md k-rounded-md">Map</span>
-                                                    <span class="k-button k-button-flat-primary k-button-flat k-button-md k-rounded-md">Weather</span>
-                                                </div>
-                                                <div class="k-card-footer">
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-facebook"></span></a>
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-pinterest"></span></a>
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-twitter"></span></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="k-card">
-                                                <div class="k-card-header">
-                                                    <h5 class="k-card-title">San Francisco</h5>
-                                                    <h6 class="k-card-subtitle">City in California</h6>
-                                                </div>
-                                                <img class="k-card-image" src="../content/web/cards/sanfran.jpg" />
-                                                <div class="k-card-body">
-                                                    <p>San Francisco, officially City and County of San Francisco and colloquially known as SF, San Fran or "The City", is the cultural, commercial, and financial center of Northern California.</p>
-                                                </div>
-                                                <div class="k-card-actions k-card-actions-stretched k-card-actions-vertical">
-                                                    <span class="k-card-action"><span class="k-button k-button-flat-primary k-button-flat k-button-md k-rounded-md">Map</span></span>
-                                                    <span class="k-card-action"><span class="k-button k-button-flat-primary k-button-flat k-button-md k-rounded-md">Weather</span></span>
-                                                </div>
-                                                <div class="k-card-footer">
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-facebook"></span></a>
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-pinterest"></span></a>
-                                                    <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-twitter"></span></a>
-                                                </div>
-                                            </div>-->
                                         </div>
                                         <p>
 
-
-
-                                            <!--<a href="javascript:void(0);" ng-click="goalSetting(activity,$index)"
-                                               style="text-decoration:underline;color:blue">{{'GoalSetting' | translate}}</a>-->
-                                            <!--<table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th ng-repeat="goal in activity.detail.goal"></th>
-                                                        <th>
-                                                            <a href="javascript:void(0);"
-                                                               ng-click="addGoal(activity,$index)">Add goal</a>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td ng-repeat="goal in activity.detail.goal">
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>-->
-                                            <!--<h3>Noi dung</h3>-->
                                         </p>
-                                        <!--<textarea placeholder="Nội dung"></textarea>-->
                                     </div>
                                 </div>
                                 <div class="divider_table"></div>
-                                <!--<div class="flex-column flex1 position-relative">
-                                    <div class="flex-column flex1 p-2">
-                                        <p>
-                                            <input type="text"  placeholder="Tên mục con" />
-                                        </p>
-                                        <textarea ></textarea>
-                                    </div>
-                                </div>-->
-                                <!--<div class="over-table_input over_right flex-column position-absolute">
-                                    <div class="btn-table_input btn-table_add btn-primary">
-                                        <button  title="Thêm mục con">
-                                            <i class="far fa-plus-circle"></i>
-                                        </button>
-                                    </div>
-                                </div>-->
+
                             </div>
                             <div class="divider_hor_table"></div>
                         </div>
-                        <!--Hiển thị nút tạo mục nếu danh sách mục lớn hơn 0-->
-                        <!--<div class="btn-table_input btn-primary">
-                            <button title="Thêm mục" ng-click="addActivity()">
-                                {{'AddComponent'|translate}}
-                            </button>
-                        </div>-->
+
                     </div>
                 </div>
-                <!--<kendo-grid id="activitiesGrid" options="gridActivityOptions" k-data-source="gridActivitiesGridData">
-                </kendo-grid>-->
+
             </div>
         </div>
     </div>
 
     <div class="modal-footer">
         <div class="flex-row marl-auto">
-
             <button class="form-btn" ng-disabled="carePlanForm.$invalid" ng-click="ok()" translate="DIALOGS_OK"></button>
         </div>
     </div>

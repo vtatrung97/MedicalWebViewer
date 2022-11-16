@@ -207,6 +207,9 @@ var Controllers;
                     //$scope.selectedTypes = [];
                 },
                 height: 550,
+                remove: function (e) {
+                    console.log(e);
+                },
                 dataBound: function (e) {
                     //this.expandRow(this.tbody.find("tr.k-master-row").first());
                 },
@@ -215,18 +218,27 @@ var Controllers;
                 },
                 columns: [
                     {
-                        field: "title",
+                        field: "resource.title",
+                        template: function (dataItem) {
+                            return "<a ng-click=\"detail('" + dataItem.id + "')\"  style='width:15px;color:#fff'>" + dataItem.resource.title + "</a>";
+                        },
                         title: "Tiêu đề",
-                        width: "120px",
+                        width: "220px",
                         attributes: {
                             style: "text-align: center; font-size: 14px;"
                         }
                     },
                     {
-                        field: "description",
+                        field: "resource.description",
                         title: "Mô tả",
-                        width: "120px"
-                    }
+                        width: "300px"
+                    },
+                    {
+                        width: "150px",
+                        template: function (dataItem) {
+                            return "<a ng-click=\"delete('" + dataItem.id + "')\" class='k-button' style='width:15px'>Xóa</a>";
+                        }
+                    },
                 ]
             };
             $scope.createCarePlan = function () {
@@ -260,11 +272,31 @@ var Controllers;
                             data: data,
                             schema: {
                                 model: {
-                                    id: "id"
+                                    id: "fullUrl"
                                 }
                             }
                         });
                     }
+                });
+            };
+            $scope.detail = function (id) {
+                fhirService.read(id).then(function (result) {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'views/dialogs/CreateUpdateCarePlan.html',
+                        controller: Controllers.CreateUpdateCarePlanController,
+                        backdrop: 'static',
+                        size: 'ep',
+                        resolve: {
+                            _carePlan: function () {
+                                return result.data;
+                            },
+                        }
+                    });
+                });
+            };
+            $scope.delete = function (id) {
+                fhirService.delete(id).then(function (result) {
+                    $scope.getCarePlans();
                 });
             };
             $scope.getCarePlans();
@@ -387,11 +419,10 @@ var Controllers;
             this._fhirService = fhirService;
             $scope.carePlan = carePlan;
             $scope.selectedCodes = [];
-            $scope.goals = [{
-                    target: []
-                }];
+            $scope.goals = [];
             if (carePlan.id == null) {
                 $scope.carePlan = {
+                    resourceType: "CarePlan",
                     activity: [{
                             detail: {
                                 kind: "ServiceRequest",
@@ -400,6 +431,35 @@ var Controllers;
                             }
                         }]
                 };
+                $scope.goals = [{
+                        resourceType: 'Goal',
+                        lifecycleStatus: 'active',
+                        target: []
+                    }];
+                $scope.activityDefinition = {
+                    resourceType: "ActivityDefinition",
+                    name: "",
+                    title: "",
+                    status: "active",
+                    kind: "CarePlan",
+                    bodySite: []
+                };
+            }
+            else {
+                if ($scope.carePlan.activity.length > 0) {
+                    for (var i = 0; i < $scope.carePlan.activity.length; i++) {
+                        if ($scope.carePlan.activity[i].detail.goal.length > 0) {
+                            var goal = $scope.carePlan.activity[i].detail.goal;
+                            if (goal != null && goal.length > 0) {
+                                for (var goalIndex = 0; goalIndex < goal.length; goalIndex++) {
+                                    fhirService.read(goal[goalIndex].reference).then(function (result) {
+                                        $scope.goals.push(result.data);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
             }
             $scope.observationDropdownOptions = {};
             $scope.observationCodeCodeSystemData = {};
@@ -428,11 +488,28 @@ var Controllers;
             $scope.getBodyStructure = function () {
                 fhirService.read("CodeSystem/body-structure").then(function (result) {
                     $scope.bodyStructure = result.data;
+                    $scope.bodyStructureCodeSystemData = new kendo.data.DataSource({
+                        data: result.data.concept,
+                        schema: {
+                            model: {
+                                id: "code"
+                            }
+                        }
+                    });
+                    $scope.bodyStructureDropdownOptions = {
+                        dataSource: $scope.bodyStructureCodeSystemData,
+                        dataTextField: "display",
+                        dataValueField: "code",
+                    };
                 });
             };
             $scope.getProcedureCodes = function () {
                 fhirService.read("CodeSystem/procedure-code").then(function (result) {
                     $scope.procedureCodes = result.data;
+                    if ($scope.carePlan.id != null) {
+                        var selectedConcept = $scope.procedureCodes.concept.filter(function (x) { return x.code == $scope.carePlan.activity[0].detail.code.coding[0].code; })[0];
+                        $scope.selectedCodes[0] = selectedConcept;
+                    }
                 });
             };
             $scope.onChangeObservation = function (goalIndex, index, e) {
@@ -444,7 +521,18 @@ var Controllers;
                     ],
                     text: concept.display
                 };
-                console.log($scope.goals);
+            };
+            $scope.onChangeBodyStructure = function (e) {
+                var selectedIndex = e.sender.selectedIndex;
+                var concept = $scope.bodyStructure.concept[selectedIndex];
+                $scope.activityDefinition.bodySite[0] = {
+                    coding: [
+                        {
+                            code: concept.code, display: concept.display
+                        }
+                    ],
+                    text: concept.display
+                };
             };
             $scope.detailTarget = function (goalIndex, index) {
                 var modalInstance = $modal.open({
@@ -458,11 +546,10 @@ var Controllers;
                     }
                 });
                 modalInstance.result.then(function (target) {
-                    console.log(target);
+                    $scope.goals[goalIndex].target[index] = target;
                 });
             };
             $scope.onSelectObservation = function (e) {
-                console.log(e.dataItem);
             };
             $scope.goalSetting = function (activity, index) {
             };
@@ -485,7 +572,11 @@ var Controllers;
             };
             $scope.addGoal = function (activity, index) {
                 //$scope.carePlan.activity[index].detail.goal.push({ target: [] });
-                $scope.goals.push({ target: [] });
+                $scope.goals.push({
+                    resourceType: 'Goal',
+                    lifecycleStatus: 'active',
+                    target: []
+                });
             };
             $scope.codeChanged = function (index) {
                 var concept = $scope.selectedCodes[index];
@@ -496,7 +587,24 @@ var Controllers;
                 $scope.carePlan.activity[index].detail.code = code;
             };
             $scope.ok = function () {
-                $modalInstance.close();
+                var goals = [];
+                console.log($scope.activityDefinition);
+                $scope.activityDefinition.name = $scope.carePlan.title;
+                $scope.activityDefinition.title = $scope.carePlan.title;
+                fhirService.create("ActivityDefinition", $scope.activityDefinition).then(function (result) {
+                });
+                //$scope.goals.forEach((goal, index: number) => {
+                //    fhirService.create("Goal", goal).then(resultGoal => {
+                //        goals.push({ reference: "Goal/" + resultGoal.data.id });
+                //    }).finally(() => {
+                //        goals.forEach((goalReference, goalIndex: number) => {
+                //            $scope.carePlan.activity[0].detail.goal.push(goalReference);
+                //        });
+                //        fhirService.create("CarePlan", $scope.carePlan).then(resul => {
+                //            $modalInstance.close('cancel');
+                //        })
+                //    });
+                //});
             };
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
@@ -2705,7 +2813,7 @@ var Controllers;
                         $scope.codeSystem = {
                             resourceType: "CodeSystem",
                             id: "observation-codes",
-                            url: "codeSystem/observation-codes",
+                            url: "CodeSystem/observation-codes",
                             meta: {
                                 tag: [{
                                         system: "http://terminology.hl7.org/CodeSystem/v3-ObservationValue", code: "SUBSETTED"
@@ -2719,6 +2827,8 @@ var Controllers;
                             content: "fragment",
                             concept: []
                         };
+                        fhirService.create("CodeSystem", $scope.codeSystem).then(function (result) {
+                        });
                     }
                 });
                 ;
@@ -2733,7 +2843,6 @@ var Controllers;
                 //toolbar: [{ text: "Thêm quy trình mới", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createCarePlan()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
                 toolbar: ["create"],
                 remove: function (e) {
-                    console.log("Removing", e.model.display);
                     var index = $scope.codeSystem.concept.map(function (e) { return e.code; }).indexOf(e.model.id);
                     $scope.codeSystem.concept.splice(index, 1);
                     fhirService.put("CodeSystem", $scope.codeSystem).then(function (result) {
@@ -2755,6 +2864,9 @@ var Controllers;
                             var newConcept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
                             //$scope.concepts.push(newConcept);
                             $scope.codeSystem.concept.push(newConcept);
+                            //fhirService.create("CodeSystem", $scope.codeSystem).then(result => {
+                            //    dialogs.notify("Cập nhật", "Danh mục đã được cập nhật");
+                            //});
                         }
                         else {
                             var index = $scope.codeSystem.concept.map(function (e) { return e.code; }).indexOf(e.model.id);
@@ -3556,12 +3668,48 @@ var Controllers;
             }
             else {
                 $scope.detailType = {
-                    name: ''
+                    name: 'Quantity'
+                };
+                $scope.detailQuantity = {
+                    comparator: ''
                 };
             }
             $scope.onChangedDetailType = function (value) {
+                switch ($scope.detailType.name) {
+                    case 'Quantity':
+                        $scope.detailQuantity = {
+                            comparator: ''
+                        };
+                        break;
+                    case 'Range':
+                        $scope.detailRange = {
+                            low: {
+                                value: 0
+                            },
+                            high: {
+                                value: 10
+                            }
+                        };
+                        break;
+                    case 'string':
+                        $scope.detailString = {
+                            value: ''
+                        };
+                        break;
+                }
             };
             $scope.ok = function () {
+                switch ($scope.detailType.name) {
+                    case 'Quantity':
+                        $scope.target.detailQuantity = $scope.detailQuantity;
+                        break;
+                    case 'Range':
+                        $scope.target.detailRange = $scope.detailRange;
+                        break;
+                    case 'string':
+                        $scope.target.detailString = $scope.detailString.value;
+                        break;
+                }
                 $modalInstance.close($scope.target);
             };
             $scope.cancel = function () {
@@ -14689,6 +14837,9 @@ var FhirService = /** @class */ (function () {
     };
     FhirService.prototype.put = function (resourceType, resource) {
         return this._http.put(this._fhirUrl + resourceType + "/" + resource.id, JSON.stringify(resource));
+    };
+    FhirService.prototype.delete = function (fullUrl) {
+        return this._http.delete(this._fhirUrl + fullUrl);
     };
     FhirService.$inject = ['app.config', 'authenticationService', '$http', 'optionsService'];
     return FhirService;

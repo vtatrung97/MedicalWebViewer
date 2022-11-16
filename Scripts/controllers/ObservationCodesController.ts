@@ -33,7 +33,7 @@
                         $scope.codeSystem = {
                             resourceType: "CodeSystem",
                             id: "observation-codes",
-                            url: "codeSystem/observation-codes",
+                            url: "CodeSystem/observation-codes",
                             meta: {
                                 tag: [{
                                     system: "http://terminology.hl7.org/CodeSystem/v3-ObservationValue", code: "SUBSETTED"
@@ -47,6 +47,8 @@
                             content: "fragment",
                             concept: []
                         }
+                        fhirService.create("CodeSystem", $scope.codeSystem).then(result => {
+                        });
                     }
                 });;
             };
@@ -61,7 +63,6 @@
                 //toolbar: [{ text: "Thêm quy trình mới", className: "k-grid-addEmail", imageClass: "k-add", template: '<a ng-click="createCarePlan()" class="k-button k-button-icontext k-grid-upload" >Thêm mới</a>' }],
                 toolbar: ["create"],
                 remove: function (e) {
-                    console.log("Removing", e.model.display);
                     var index = $scope.codeSystem.concept.map(e => e.code).indexOf(e.model.id);
                     $scope.codeSystem.concept.splice(index, 1);
                     fhirService.put("CodeSystem", $scope.codeSystem).then(result => {
@@ -84,6 +85,9 @@
                             var newConcept = { code: e.model.code, display: e.model.display, definition: e.model.definition };
                             //$scope.concepts.push(newConcept);
                             $scope.codeSystem.concept.push(newConcept);
+                            //fhirService.create("CodeSystem", $scope.codeSystem).then(result => {
+                            //    dialogs.notify("Cập nhật", "Danh mục đã được cập nhật");
+                            //});
                         }
                         else {
                             var index = $scope.codeSystem.concept.map(e => e.code).indexOf(e.model.id);
@@ -91,6 +95,7 @@
                             if (index > -1) {
                                 $scope.codeSystem.concept[index] = concept;
                             }
+                            
                         }
                     } else {
                         e.preventDefault();

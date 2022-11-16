@@ -14,54 +14,91 @@
     </div>
 </div>
 
-<div class="modal-body">
-    <div class="row">
-        <div class="col-12">
-            <h4 style="color:#fff">{{'SelectDetailType' | translate}}</h4>
+<form name="targetDetailForm" novalidate>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <h4 style="color:#fff">{{'SelectDetailType' | translate}}</h4>
 
-            <label>
-                <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Quantity">
-                {{'Quantity'|translate}}
-            </label>
-            <label>
-                <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Range">
-                {{'Range'|translate}}
-            </label>
-            <!--<label>
-            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="CodeableConcept">
-            {{'CodeableConcept'|translate}}
-        </label>-->
-            <label>
-                <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="string">
-                {{'string'|translate}}
-            </label>
-            <!--<label>
-            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="boolean">
-            {{'boolean'|translate}}
-        </label>
-        <label>
-            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="integer">
-            {{'integer'|translate}}
-        </label>
-        <label>
-            <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Ratio">
-            {{'Ratio'|translate}}
-        </label>-->
-        </div>
-        <div class="col-12" ng-if="detailType.name=='Quantity'">
-            <h3>Quantity</h3>
-        </div>
-        <div class="col-12" ng-if="detailType.name=='Range'">
-            <h3>Range</h3>
-        </div>
-        <div class="col-12" ng-if="detailType.name=='string'">
-            <h3>string</h3>
+                <label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Quantity">
+                    {{'Quantity'|translate}}
+                </label>
+                <label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Range">
+                    {{'Range'|translate}}
+                </label>
+                <!--<label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="CodeableConcept">
+                    {{'CodeableConcept'|translate}}
+                </label>-->
+                <label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="string">
+                    {{'string'|translate}}
+                </label>
+                <!--<label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="boolean">
+                    {{'boolean'|translate}}
+                </label>
+                <label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="integer">
+                    {{'integer'|translate}}
+                </label>
+                <label>
+                    <input type="radio" ng-model="detailType.name" ng-change="onChangedDetailType()" value="Ratio">
+                    {{'Ratio'|translate}}
+                </label>-->
+            </div>
+            <div class="col-12" ng-if="detailType.name=='Quantity'">
+                <div class="form-group">
+                    <label>{{'Comparator' | translate}}:</label>
+                    <select ng-model="detailQuantity.comparator" class="text-field">
+                        <option value="<"><</option>
+                        <option value="<="><=</option>
+                        <option value=">=">>=</option>
+                        <option value=">-">>-</option>
+                    </select>
+                    <!--<input type="text" ng-model="detailQuantity.comparator" class="text-field" autocomplete="off">-->
+                </div>
+                <div class="form-group">
+                    <label>{{'Value' | translate}}:</label>
+                    <input type="number" ng-model="detailQuantity.value" class="text-field" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>{{'Unit' | translate}}:</label>
+                    <input type="number" ng-model="detailQuantity.unit" class="text-field" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-12" ng-if="detailType.name=='Range'">
+                <div class="form-group">
+                    <label>{{'Low' | translate}}:</label>
+                    <input type="number" ng-model="detailRange.low.value" class="text-field" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>{{'Unit' | translate}}:</label>
+                    <input type="text" ng-model="detailRange.low.unit" class="text-field" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>{{'High' | translate}}:</label>
+                    <input type="number" ng-model="detailRange.high.value" class="text-field" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>{{'Unit' | translate}}:</label>
+                    <input type="text" ng-model="detailRange.high.unit" class="text-field" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-12" ng-if="detailType.name=='string'">
+                <div class="form-group">
+                    <label>{{'Value' | translate}}:</label>
+                    <textarea type="text" ng-model="detailString.value" class="text-field" autocomplete="off"></textarea>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal-footer">
-    <div class="flex-row marl-auto">
-        <a class="form-btn" ng-click="ok()" translate="DIALOGS_OK"></a>
+    <div class="modal-footer">
+        <div class="flex-row marl-auto">
+            <a class="form-btn" ng-disabled="targetDetailForm.$invalid" ng-click="ok()" translate="DIALOGS_OK"></a>
+        </div>
     </div>
-</div>
+</form>
